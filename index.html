@@ -1,29 +1,151 @@
-<!doctype html><html lang="ja"><meta name="apple-mobile-web-app-title" content="3連比較電卓">
-<meta name="apple-mobile-web-app-capable" content="yes"><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"><meta name="theme-color" content="#0f172a"><title>接客用 3連比較電卓</title><script src="https://cdn.tailwindcss.com"></script><style>body{font-family:Arial,'Noto Sans JP',sans-serif;-webkit-tap-highlight-color:transparent}.slot.active{border-color:#2563eb!important;background:#eff6ff!important;box-shadow:0 0 0 3px #2563eb55}.dark .slot.active{background:#1e293b!important}</style><link rel="manifest" href="./manifest.json">
-</head><body class="bg-slate-100 text-slate-800 h-screen overflow-hidden"><header class="bg-white border-b shadow-sm px-3 py-2 flex items-center justify-between gap-2"><div class="flex items-center gap-2"><div class="bg-blue-600 text-white p-2 rounded-xl">🧮</div><b>接客用 3連比較電卓</b><span class="text-[10px] bg-blue-100 text-blue-700 px-2 py-1 rounded-full">iPad最適化</span></div><div class="flex gap-1"><button id="customerBtn" class="bg-emerald-600 text-white">🖥 お客様提示</button><button id="resetBtn" class="bg-rose-50 text-rose-600">↻ リセット</button><button id="darkBtn">☾</button></div></header><main class="h-[calc(100vh-58px)] p-2.5 flex gap-3 overflow-hidden"><aside class="w-72 sm:w-80 bg-white rounded-2xl border shadow-md p-3 flex flex-col gap-2 shrink-0 overflow-y-auto"><div class="border-b pb-2"><div class="flex justify-between text-xs font-bold mb-2"><span>🔖 プリセット</span><button id="manageBtn" class="text-blue-600">⚙ 管理・追加</button></div><select id="presetSelect" class="w-full border rounded-xl p-2 text-xs"><option value="">✨ 定番アイテム・工事費を選択</option></select></div><div class="bg-slate-900 text-white rounded-xl px-3 py-2 flex justify-between"><span class="text-xs text-slate-400">計算バッファ</span><b id="buffer" class="text-amber-400">0</b></div><div id="keypad" class="grid grid-cols-4 gap-1.5 mt-auto"></div><p class="text-[10px] text-slate-400 text-center border-t pt-2">金額枠を選んで入力</p></aside><section id="plans" class="grid grid-cols-3 gap-2.5 flex-1 min-w-0 overflow-y-auto"></section></main><div id="modal" class="hidden fixed inset-0 bg-black/60 z-50 items-center justify-center p-4"><div class="bg-white rounded-2xl p-5 w-full max-w-md"><div class="flex justify-between mb-3"><b>プリセット管理</b><button id="closeModal">✕</button></div><div class="grid grid-cols-2 gap-2 mb-2"><input id="newName" class="border rounded-lg p-2 text-sm" placeholder="項目名"><input id="newPrice" type="number" class="border rounded-lg p-2 text-sm" placeholder="金額"></div><button id="addPreset" class="w-full bg-blue-600 text-white p-2 rounded-lg">追加</button><div id="presetList" class="mt-3 space-y-2 max-h-60 overflow-auto"></div></div></div><div id="customer" class="hidden fixed inset-0 bg-slate-950 text-white z-50 p-5 overflow-auto"><div class="max-w-6xl mx-auto"><div class="flex justify-between items-center border-b border-slate-800 pb-3"><div><small class="text-blue-400">ESTIMATE COMPARISON</small><h2 class="text-xl font-black">お見積もり・プラン比較</h2></div><button id="closeCustomer" class="bg-slate-800 px-4 py-2 rounded-xl">✕ 閉じる</button></div><div id="presentation" class="grid grid-cols-3 gap-4 my-5"></div><div class="text-center text-xs text-slate-500">※表示金額はすべて消費税込みの総額表示です。</div></div></div><script>
-const defaultPresets=[['標準設置工事費',11000],['5年延長保証料',3300],['家電リサイクル収集運搬料',4180],['エアコン標準工事',16500],['室外機化粧カバー',8800],['HDMIケーブル',2480]];
-let presets=JSON.parse(localStorage.getItem('presets3ren')||'null')||defaultPresets.map((x,i)=>({id:'p'+i,name:x[0],price:x[1]}));
-let plans=[{code:'A',title:'標準単品プラン',items:[['商品本体',128000],['',''],['','']]},{code:'B',title:'標準工事・保証セット',items:[['商品本体',128000],['5年延長保証料',3300],['標準設置工事費',11000]]},{code:'C',title:'フル安心お得パック',items:[['商品本体',128000],['5年延長保証料',3300],['標準設置工事費',11000],['家電リサイクル収集運搬料',4180]]}];
-let active={p:0,i:0},expr='';
-const $=id=>document.getElementById(id); const money=n=>'¥'+(Number(n)||0).toLocaleString();
-function render(){
- $('plans').innerHTML=plans.map((p,pi)=>{let total=p.items.reduce((s,x)=>s+(Number(x[1])||0),0);let base=plans[0].items.reduce((s,x)=>s+(Number(x[1])||0),0);let diff=base-total;return `<article class="bg-white rounded-2xl border-2 ${pi===1?'border-blue-400':pi===2?'border-emerald-500':'border-slate-300'} shadow-sm overflow-hidden flex flex-col"><div class="bg-slate-50 px-2.5 py-2 flex items-center gap-2"><span class="bg-${pi===2?'emerald':pi===1?'blue':'slate'}-600 text-white px-2 py-1 rounded-lg font-black">${p.code}</span><input value="${esc(p.title)}" data-title="${pi}" class="bg-transparent font-bold text-xs flex-1 min-w-0"><button data-clear="${pi}" class="text-slate-400">🗑</button></div><div class="bg-slate-900 text-white p-3"><small class="text-slate-400">お支払総額 (税込)</small><div class="text-2xl font-black">${money(total)}</div><div class="border-t border-slate-700 mt-2 pt-1 text-xs ${diff>0?'text-amber-400':'text-slate-400'}">${pi===0?'基準プラン':diff>0?money(diff)+' おトク！':diff<0?'+'+money(-diff):'差額なし'}</div></div><div class="p-2 flex-1 overflow-auto"><div class="flex justify-between text-[10px] font-bold text-slate-400 mb-2"><span>📋 内訳明細</span><button data-add="${pi}" class="text-blue-600">＋ 行追加</button></div>${p.items.map((x,ii)=>`<div class="bg-slate-50 border rounded-xl p-1.5 mb-1.5"><div class="flex gap-1"><input value="${esc(x[0])}" data-name="${pi}-${ii}" placeholder="品名・項目名" class="w-full border rounded-lg p-1 text-xs font-bold"><button data-remove="${pi}-${ii}" class="text-slate-400">✕</button></div><div data-slot="${pi}-${ii}" class="slot ${active.p===pi&&active.i===ii?'active':''} mt-1 border rounded-lg bg-white p-1.5 text-right font-black cursor-pointer">${money(x[1])}</div></div>`).join('')}</div></article>`}).join('');bindPlanEvents();renderPresets();updateBuffer();}
-function esc(s){return String(s??'').replaceAll('&','&amp;').replaceAll('"','&quot;').replaceAll('<','&lt;').replaceAll('>','&gt;')}
-function bindPlanEvents(){document.querySelectorAll('[data-title]').forEach(e=>e.oninput=()=>plans[e.dataset.title].title=e.value);document.querySelectorAll('[data-slot]').forEach(e=>e.onclick=()=>{let[a,b]=e.dataset.slot.split('-').map(Number);active={p:a,i:b};expr=String(plans[a].items[b][1]||'');render()});document.querySelectorAll('[data-name]').forEach(e=>e.oninput=()=>{let[a,b]=e.dataset.name.split('-').map(Number);plans[a].items[b][0]=e.value});document.querySelectorAll('[data-remove]').forEach(e=>e.onclick=()=>{let[a,b]=e.dataset.remove.split('-').map(Number);plans[a].items.splice(b,1);if(!plans[a].items.length)plans[a].items.push(['','']);active={p:a,i:0};render()});document.querySelectorAll('[data-add]').forEach(e=>e.onclick=()=>{let p=+e.dataset.add;plans[p].items.push(['','']);active={p,i:plans[p].items.length-1};expr='';render()});document.querySelectorAll('[data-clear]').forEach(e=>e.onclick=()=>{let p=+e.dataset.clear;plans[p].items=[['商品本体',''],['',''],['','']];active={p,i:0};expr='';render()})}
-function updateBuffer(){$('buffer').textContent=expr||'0'}
-function key(k){let item=plans[active.p].items[active.i];if(k==='C'){expr='';item[1]=''}else if(k==='BS'){expr=expr.slice(0,-1)}else if(k==='='){try{let safe=expr.replace(/[^0-9+\-*/.]/g,'');let v=Math.floor(Function('return '+safe)());if(isFinite(v)){expr=String(Math.max(0,v));item[1]=expr}}catch{}}else if('+-*/'.includes(k)){if(expr&&!'+-*/'.includes(expr.slice(-1)))expr+=k}else{expr+=k}if(!isNaN(expr)&&expr!=='')item[1]=expr;updateBuffer();render()}
-function renderKeypad(){$('keypad').innerHTML=[['7','8','9','/'],['4','5','6','*'],['1','2','3','-'],['0','00','000','+'],['BS','C','=','NEXT']].flat().map(k=>`<button data-key="${k}" class="p-3 rounded-xl font-black ${'/ * - +'.includes(k)?'bg-amber-500 text-white':k==='C'?'bg-rose-600 text-white':k==='='?'bg-emerald-600 text-white':k==='NEXT'?'bg-blue-600 text-white':'bg-slate-100'}">${k==='/'?'÷':k==='*'?'×':k==='- ' ?'－':k==='NEXT'?'次へ':k==='BS'?'BS':k==='C'?'クリア':k}</button>`).join('');document.querySelectorAll('[data-key]').forEach(b=>b.onclick=()=>{let k=b.dataset.key;if(k==='NEXT'){let i=active.i+1,p=active.p;if(i>=plans[p].items.length){i=0;p=(p+1)%3}active={p,i};expr=String(plans[p].items[i][1]||'');render()}else key(k)})}
-function renderPresets(){$('presetSelect').innerHTML='<option value="">✨ 定番アイテム・工事費を選択</option>'+presets.map(p=>`<option value="${p.id}">${esc(p.name)} (${money(p.price)})</option>`).join('');$('presetList').innerHTML=presets.map((p,i)=>`<div class="flex justify-between items-center bg-slate-100 p-2 rounded-lg text-xs"><b>${esc(p.name)}</b><span>${money(p.price)} <button data-delpre="${i}" class="text-rose-500">✕</button></span></div>`).join('');document.querySelectorAll('[data-delpre]').forEach(b=>b.onclick=()=>{presets.splice(+b.dataset.delpre,1);savePresets();renderPresets()})}
-function savePresets(){localStorage.setItem('presets3ren',JSON.stringify(presets))}
-$('presetSelect').onchange=e=>{let p=presets.find(x=>x.id===e.target.value);if(p){plans[active.p].items[active.i]=[p.name,p.price];expr=String(p.price);render()}e.target.value=''};
-$('manageBtn').onclick=()=>{$('modal').classList.remove('hidden');$('modal').classList.add('flex');renderPresets()};$('closeModal').onclick=()=>{$('modal').classList.add('hidden');$('modal').classList.remove('flex')};$('addPreset').onclick=()=>{let n=$('newName').value.trim(),v=Number($('newPrice').value)||0;if(n){presets.push({id:'c'+Date.now(),name:n,price:v});savePresets();$('newName').value='';$('newPrice').value='';renderPresets()}};
-$('resetBtn').onclick=()=>{if(confirm('3プランを初期状態に戻しますか？')){location.reload()}};
-$('darkBtn').onclick=()=>{document.documentElement.classList.toggle('dark');document.body.classList.toggle('bg-slate-950')};
-$('customerBtn').onclick=showCustomer;$('closeCustomer').onclick=()=>{$('customer').classList.add('hidden')};function showCustomer(){$('presentation').innerHTML=plans.map((p,i)=>{let total=p.items.reduce((s,x)=>s+(Number(x[1])||0),0);return `<div class="bg-slate-900 border ${i===2?'border-emerald-500 ring-2 ring-emerald-500':'border-slate-800'} rounded-2xl p-4 flex flex-col justify-between"><h3 class="font-black mb-3">${p.code} ${esc(p.title)}</h3><div class="space-y-1 mb-4">${p.items.filter(x=>x[0]||x[1]).map(x=>`<div class="flex justify-between border-b border-slate-800 py-1 text-xs"><span>${esc(x[0]||'項目')}</span><b>${money(x[1])}</b></div>`).join('')}</div><div><small class="text-slate-400">お支払総額 (税込)</small><div class="text-3xl font-black">${money(total)}</div></div></div>`}).join('');$('customer').classList.remove('hidden')}
-renderKeypad();render();
-</script><script>
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js').catch(() => {}));
+<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"><link rel="manifest" href="./manifest.json"><title>接客用3連比較電卓</title><style>
+*{box-sizing:border-box}body{margin:0;background:#f1f5f9;font-family:-apple-system,BlinkMacSystemFont,"Noto Sans JP",sans-serif;color:#0f172a;height:100vh;overflow:hidden}button,input{font:inherit}.top{height:54px;background:white;border-bottom:1px solid #ddd;display:flex;align-items:center;justify-content:space-between;padding:0 12px}.brand{font-weight:900;font-size:17px}.tools{display:flex;gap:6px}.tools button{padding:8px 10px;border:1px solid #cbd5e1;border-radius:10px;background:white;font-weight:800;font-size:12px}.tools .show{background:#059669;color:white}.tools .iconOnly{width:34px;height:34px;padding:0;display:grid;place-items:center;font-size:16px}.main{height:calc(100vh - 54px);padding:10px;display:grid;grid-template-columns:350px 1fr;gap:10px}.left{display:flex;flex-direction:column;gap:9px;min-height:0;height:100%}.box{background:white;border:1px solid #cbd5e1;border-radius:15px;padding:9px}.left>.box:first-child{flex:1;min-height:0;overflow:auto}.label{font-size:12px;font-weight:900;color:#475569;margin-bottom:6px}.presets{display:flex;flex-wrap:wrap;align-content:flex-start;gap:6px;overflow:auto;padding:2px 0 6px;min-height:74px}.chip{flex:0 1 calc(50% - 3px);border:1px solid #cbd5e1;border-radius:9px;background:#f8fafc;padding:8px 6px;font-size:10px;font-weight:800;touch-action:none;user-select:none;-webkit-user-select:none}.chip.drag{opacity:.4}.chip.selected{border:2px solid #f59e0b;background:#fffbeb;padding:7px 5px}.cats{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}.cat{border:1.5px solid #cbd5e1;border-radius:12px;background:#fff;padding:6px 2px;font-size:10px;font-weight:900}.cat.on{border-color:#2563eb;background:#eff6ff}.cat.over{border-color:#f59e0b;background:#fffbeb;transform:scale(1.04)}svg{width:35px;height:31px;display:block;margin:auto;fill:none;stroke:#334155;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}.calc{display:flex;flex-direction:column;min-height:0;padding:8px;flex:none;margin-top:auto}.target{font-size:11px;color:#2563eb;font-weight:900}.display{background:#0f172a;color:#fff;text-align:right;padding:6px 9px;border-radius:9px;font-size:18px;font-weight:900;margin:4px 0 6px}.keys{display:grid;grid-template-columns:repeat(4,1fr);gap:5px}.key{border:0;border-radius:9px;background:#f1f5f9;font-size:16px;font-weight:900;height:39px}.op{background:#dbeafe;color:#1d4ed8}.eq{background:#2563eb;color:white}.del{background:#f59e0b;color:white}.clear{background:#e11d48;color:white;font-size:11px}.right{background:#e2e8f0;border-radius:16px;padding:8px;overflow:auto}.plans{display:grid;gap:8px;height:100%}.plan{background:#fff;border:2px solid #cbd5e1;border-radius:14px;overflow:hidden}.plan.B{border-color:#60a5fa}.plan.C{border-color:#34d399}.ph{display:flex;align-items:center;gap:6px;padding:7px;background:#f8fafc}.badge{width:25px;height:25px;border-radius:7px;background:#334155;color:#fff;display:grid;place-items:center;font-weight:900}.B .badge{background:#2563eb}.C .badge{background:#059669}.title{border:0;background:transparent;width:100%;font-weight:900}.trash{border:0;background:transparent}.total{background:#0f172a;color:#fff;padding:8px}.total small{color:#94a3b8}.total b{display:block;font-size:25px}.rows{padding:7px;display:flex;flex-direction:column;gap:6px}.row{background:#f8fafc;border:1px solid #e2e8f0;border-radius:9px;padding:6px}.rowhead{display:flex;gap:4px}.name{width:100%;padding:5px;border:1px solid #cbd5e1;border-radius:7px;font-size:11px;font-weight:800}.x{border:0;background:transparent;color:#e11d48}.price{margin-top:5px;padding:6px;border:1px solid #cbd5e1;border-radius:7px;background:#fff;text-align:right;font-weight:900}.price.active{border:2px solid #2563eb;background:#eff6ff;padding:5px}.add{border:1px dashed #94a3b8;background:#fff;border-radius:8px;padding:6px;color:#2563eb;font-size:11px;font-weight:900}.toast{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);background:#0f172a;color:#fff;padding:10px 14px;border-radius:10px;font-size:12px;font-weight:800;display:none;z-index:99}.modal{position:fixed;inset:0;background:#020617ed;display:none;z-index:90;padding:55px 18px 18px}.modal.on{display:block}.present{height:100%;display:grid;gap:12px}.pc{background:#0f172a;color:white;border:1px solid #334155;border-radius:16px;padding:15px}.line{display:flex;justify-content:space-between;border-bottom:1px solid #334155;padding:7px}.big{font-size:30px;font-weight:900;margin-top:15px}.close{position:absolute;right:15px;top:13px;background:#334155;color:white;border:0;border-radius:9px;padding:8px 12px;font-weight:900}
+</style></head><body><header class="top"><div class="brand">▣ 接客用 3連比較電卓</div><div class="tools"><button onclick="openHistory()">🕘 案内履歴</button><button onclick="openPresetManager()">🔖 プリセット管理</button><button class="show iconOnly" onclick="present()" title="お客様提示" aria-label="お客様提示">▣</button><button onclick="resetAll()">↻ リセット</button><button onclick="addPlan()">＋ プラン</button></div></header><main class="main"><section class="left"><div class="box"><div class="label">商品カテゴリ　<span style="font-size:9px;font-weight:600">タップで絞り込み／移動先</span></div><div class="cats">
+<button class="cat" data-c="air" onclick="categoryTap('air')"><svg viewBox="0 0 48 40"><rect x="5" y="4" width="38" height="17" rx="4"/><path d="M10 15h28"/><path d="M13 25c-3 3 3 5 0 8M24 25c-3 3 3 5 0 8M35 25c-3 3 3 5 0 8"/></svg>エアコン</button>
+<button class="cat" data-c="tv" onclick="categoryTap('tv')"><svg viewBox="0 0 48 40"><rect x="6" y="5" width="36" height="25" rx="2"/><path d="M18 35h12M24 30v5"/></svg>テレビ</button>
+<button class="cat" data-c="fridge" onclick="categoryTap('fridge')"><svg viewBox="0 0 48 40"><rect x="13" y="2" width="22" height="35" rx="3"/><path d="M13 17h22M30 9v4M30 22v6"/></svg>冷蔵庫</button>
+<button class="cat" data-c="washer" onclick="categoryTap('washer')"><svg viewBox="0 0 48 40"><rect x="9" y="3" width="30" height="34" rx="3"/><circle cx="24" cy="23" r="9"/><path d="M14 9h3M21 9h3M29 9h5"/></svg>洗濯機</button>
+</div><div class="label" style="margin-top:8px;display:flex;align-items:center;justify-content:space-between;gap:5px"><span>プリセット一覧　<span style="font-size:9px;font-weight:600">タップで計算欄へ反映</span></span><button id="moveModeBtn" onclick="toggleMoveMode()" style="border:1px solid #cbd5e1;background:#fff;border-radius:8px;padding:5px 7px;font-size:9px;font-weight:900">分類モード</button></div><div id="moveHint" style="display:none;font-size:10px;color:#b45309;background:#fffbeb;border:1px solid #fde68a;border-radius:8px;padding:6px;margin-bottom:5px">移動したいプリセットをタップ → 上のカテゴリをタップ</div><div id="preset" class="presets"></div></div><div class="box calc"><div id="target" class="target"></div><div id="display" class="display">0</div><div class="keys">
+<button class="key" onclick="key('7')">7</button><button class="key" onclick="key('8')">8</button><button class="key" onclick="key('9')">9</button><button class="key op" onclick="key('+')">＋</button>
+<button class="key" onclick="key('4')">4</button><button class="key" onclick="key('5')">5</button><button class="key" onclick="key('6')">6</button><button class="key op" onclick="key('-')">−</button>
+<button class="key" onclick="key('1')">1</button><button class="key" onclick="key('2')">2</button><button class="key" onclick="key('3')">3</button><button class="key del" onclick="key('back')">⌫</button>
+<button class="key" onclick="key('0')">0</button><button class="key" onclick="key('00')">00</button><button class="key clear" onclick="key('clear')">全削除</button><button class="key eq" onclick="key('=')">＝</button>
+</div></div></section><section class="right"><div id="plans" class="plans"></div></section></main><div id="toast" class="toast"></div>
+
+<div id="historyModal" class="modal" style="background:#0f172acc;padding:18px">
+  <div style="margin:auto;max-width:720px;background:white;border-radius:18px;padding:18px;color:#0f172a;position:relative">
+    <button onclick="closeHistory()" style="position:absolute;right:12px;top:10px;border:0;background:#e2e8f0;border-radius:8px;padding:6px 9px;font-weight:900">✕</button>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;padding-right:42px">
+      <div><h3 style="margin:0">過去案内履歴</h3><div style="font-size:10px;color:#64748b;margin-top:3px">名前を付けて保存して、後から呼び戻せます。</div></div>
+      <div style="display:flex;gap:6px;align-items:center">
+        <input id="historyName" placeholder="例：田中様 エアコン" maxlength="30" style="width:180px;padding:8px;border:1px solid #cbd5e1;border-radius:9px;font-size:11px;font-weight:700">
+        <button onclick="saveHistory()" style="border:0;background:#2563eb;color:white;border-radius:9px;padding:8px 10px;font-size:11px;font-weight:900;white-space:nowrap">＋ 名前を付けて保存</button>
+      </div>
+    </div>
+    <div id="historyList" style="max-height:470px;overflow:auto;display:flex;flex-direction:column;gap:7px;margin-top:12px"></div>
+  </div>
+</div>
+<div id="presetModal" class="modal" style="background:#0f172acc;padding:18px">
+  <div style="margin:auto;max-width:520px;background:white;border-radius:18px;padding:18px;color:#0f172a;position:relative">
+    <button onclick="closePresetManager()" style="position:absolute;right:12px;top:10px;border:0;background:#e2e8f0;border-radius:8px;padding:6px 9px;font-weight:900">✕</button>
+    <h3 style="margin:0 0 12px">プリセット管理</h3>
+    <div style="display:grid;grid-template-columns:1fr 140px;gap:8px">
+      <input id="newPresetName" placeholder="項目名（例：標準工事費）" style="padding:9px;border:1px solid #cbd5e1;border-radius:9px">
+      <input id="newPresetPrice" type="number" placeholder="金額" style="padding:9px;border:1px solid #cbd5e1;border-radius:9px">
+    </div>
+    <button onclick="addPreset()" style="width:100%;margin-top:8px;padding:9px;border:0;border-radius:9px;background:#2563eb;color:white;font-weight:900">＋ プリセットを追加</button>
+    <div style="font-size:11px;color:#64748b;margin:10px 0 6px">登録済みプリセット（カテゴリ解除／完全削除ができます）</div>
+    <div id="presetManageList" style="max-height:330px;overflow:auto;display:flex;flex-direction:column;gap:6px"></div>
+  </div>
+</div>
+<div id="modal" class="modal"><div style="position:absolute;right:105px;top:13px;display:flex;gap:6px"><button onclick="saveHistory()" style="background:#2563eb;color:white;border:0;border-radius:9px;padding:8px 10px;font-size:11px;font-weight:900">🕘 名前を付けて保存</button></div><button class="close" onclick="modal.classList.remove('on')">✕ 閉じる</button><div id="present" class="present"></div></div>
+<script>
+let presets=JSON.parse(localStorage.getItem('presets_drag_v2')||'null')||[{id:'1',name:'標準設置工事費',price:''},{id:'2',name:'5年延長保証料',price:''},{id:'3',name:'リサイクル収集運搬料',price:''},{id:'4',name:'エアコン標準工事',price:'',cat:'air'},{id:'5',name:'室外機化粧カバー',price:'',cat:'air'},{id:'6',name:'HDMIケーブル',price:'',cat:'tv'}];
+let ps=[{code:'A',title:'標準単品プラン',items:[{name:'商品本体',price:''},{name:'',price:''},{name:'',price:''}]}],active={p:0,i:0},expr='',filter=null,drag=null,timer=null,moveMode=false,movePresetId=null;
+const $=id=>document.getElementById(id),money=n=>'¥'+(Number(n)||0).toLocaleString(),esc=s=>String(s||'').replace(/[&<>"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]));
+function value(s){if(!s)return 0;if(!/^[0-9+\-*/(). ]+$/.test(s))return Number(s)||0;try{let n=Function('"use strict";return ('+s+')')();return Number.isFinite(n)?Math.trunc(n):0}catch{return 0}}
+function renderPreset(){let a=filter?presets.filter(x=>x.cat===filter):presets;$('preset').innerHTML=a.map(x=>`<button class="chip ${movePresetId===x.id?'selected':''}" type="button" data-id="${x.id}">${x.name}<br><b>${money(x.price)}</b></button>`).join('');document.querySelectorAll('.cat').forEach(x=>x.classList.toggle('on',x.dataset.c===filter));document.querySelectorAll('.chip').forEach(x=>x.onpointerdown=startDrag)}
+function startDrag(e){
+ let el=e.currentTarget,id=el.dataset.id,sx=e.clientX,sy=e.clientY,moved=false,longPressed=false;
+ clearTimeout(timer);
+ timer=setTimeout(()=>{longPressed=true;drag=id;el.classList.add('drag');try{el.setPointerCapture(e.pointerId)}catch(_){};if(navigator.vibrate)navigator.vibrate(20)},300);
+ el.onpointermove=v=>{
+   if(Math.hypot(v.clientX-sx,v.clientY-sy)>18){moved=true;if(!longPressed)clearTimeout(timer)}
+   document.querySelectorAll('.cat').forEach(c=>c.classList.remove('over'));
+   if(longPressed){let hit=document.elementFromPoint(v.clientX,v.clientY)?.closest('.cat');if(hit)hit.classList.add('over')}
+ };
+ el.onpointerup=v=>{
+   clearTimeout(timer);
+   let hit=document.elementFromPoint(v.clientX,v.clientY)?.closest('.cat');
+   if(longPressed&&hit){
+     let p=presets.find(x=>x.id===id);
+     if(p){p.cat=hit.dataset.c;localStorage.setItem('presets_drag_v2',JSON.stringify(presets));msg(p.name+' を '+hit.textContent.trim()+' に保存しました')}
+   }else if(!longPressed&&!moved){
+     if(moveMode){movePresetId=id;renderPreset();let p=presets.find(x=>x.id===id);msg((p?.name||'プリセット')+' を選択しました。移動先カテゴリをタップ')}
+     else apply(id);
+   }
+   drag=null;el.classList.remove('drag');document.querySelectorAll('.cat').forEach(c=>c.classList.remove('over'));renderPreset()
+ };
+ el.onpointercancel=()=>{clearTimeout(timer);drag=null;el.classList.remove('drag');document.querySelectorAll('.cat').forEach(c=>c.classList.remove('over'))}
 }
-</script>
-</body></html>
+function filterCat(c){filter=filter===c?null:c;renderPreset()}
+function toggleMoveMode(){
+ moveMode=!moveMode;movePresetId=null;
+ $('moveHint').style.display=moveMode?'block':'none';
+ $('moveModeBtn').style.background=moveMode?'#f59e0b':'#fff';
+ $('moveModeBtn').style.color=moveMode?'#fff':'#0f172a';
+ renderPreset();
+}
+function categoryTap(c){
+ if(moveMode&&movePresetId){
+   let p=presets.find(x=>x.id===movePresetId);
+   if(p){p.cat=c;localStorage.setItem('presets_drag_v2',JSON.stringify(presets));msg(p.name+' を '+catName(c)+' に移動しました')}
+   movePresetId=null;moveMode=false;$('moveHint').style.display='none';$('moveModeBtn').style.background='#fff';$('moveModeBtn').style.color='#0f172a';filter=c;renderPreset();return;
+ }
+ filterCat(c);
+}
+
+function getHistory(){try{return JSON.parse(localStorage.getItem('guide_history_v2')||'[]')}catch(e){return []}}
+function setHistory(h){localStorage.setItem('guide_history_v2',JSON.stringify(h))}
+function openHistory(){renderHistory();$('historyModal').classList.add('on')}
+function closeHistory(){$('historyModal').classList.remove('on')}
+function saveHistory(){
+ let h=getHistory(),now=new Date();
+ let fallback=now.toLocaleString('ja-JP',{month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'});
+ let input=$('historyName'),name=input&&$('historyModal').classList.contains('on')?input.value.trim():'';
+ if(!name){
+   let asked=prompt('保存する案内名を入力してください\n例：田中様 エアコン',fallback);
+   if(asked===null)return;
+   name=asked.trim()||fallback;
+ }
+ let snapshot={id:'h_'+Date.now(),savedAt:now.toISOString(),label:name,dateLabel:fallback,plans:JSON.parse(JSON.stringify(ps))};
+ h.unshift(snapshot);if(h.length>30)h=h.slice(0,30);setHistory(h);
+ if(input)input.value='';
+ renderHistory();msg('「'+name+'」で案内履歴を保存しました');
+}
+function renderHistory(){
+ let h=getHistory(),e=$('historyList');
+ if(!h.length){e.innerHTML='<div style="padding:28px;text-align:center;color:#94a3b8;font-size:12px">まだ保存した案内履歴はありません</div>';return}
+ e.innerHTML=h.map((x,i)=>{
+   let sums=(x.plans||[]).map(p=>money((p.items||[]).reduce((a,it)=>a+value(it.price),0))).join(' / ');
+   let titles=(x.plans||[]).map(p=>esc(p.title||('プラン'+p.code))).join('・');
+   return `<div style="border:1px solid #e2e8f0;background:#f8fafc;border-radius:11px;padding:9px;display:flex;align-items:center;gap:8px">
+     <div style="flex:1;min-width:0"><b style="font-size:12px">${esc(x.label)}</b>${x.dateLabel?`<span style="font-size:9px;color:#94a3b8;margin-left:6px">${esc(x.dateLabel)}</span>`:''}<div style="font-size:10px;color:#64748b;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${titles}</div><div style="font-size:11px;color:#2563eb;font-weight:900;margin-top:2px">${sums}</div></div>
+     <button onclick="loadHistory(${i})" style="border:0;background:#059669;color:white;border-radius:8px;padding:7px 9px;font-size:10px;font-weight:900">引き続き</button>
+     <button onclick="deleteHistory(${i})" style="border:1px solid #fecdd3;background:#fff1f2;color:#e11d48;border-radius:8px;padding:7px;font-size:10px;font-weight:900">削除</button>
+   </div>`
+ }).join('');
+}
+function loadHistory(i){
+ let h=getHistory(),x=h[i];if(!x||!x.plans?.length)return;
+ ps=JSON.parse(JSON.stringify(x.plans));ps.forEach((p,n)=>p.code='ABC'[n]);
+ active={p:0,i:0};expr=String(ps[0].items?.[0]?.price||'');closeHistory();render();msg('過去の案内内容を呼び戻しました');
+}
+function deleteHistory(i){if(!confirm('この案内履歴を削除しますか？'))return;let h=getHistory();h.splice(i,1);setHistory(h);renderHistory()}
+function openPresetManager(){renderPresetManager();$('presetModal').classList.add('on')}
+function closePresetManager(){$('presetModal').classList.remove('on');renderPreset()}
+function catName(c){return ({air:'エアコン',tv:'テレビ',fridge:'冷蔵庫',washer:'洗濯機'})[c]||'未分類'}
+function renderPresetManager(){
+ let e=$('presetManageList');
+ e.innerHTML=presets.map((p,i)=>`<div style="display:flex;align-items:center;gap:7px;padding:8px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px">
+   <div style="flex:1;min-width:0"><b>${esc(p.name)}</b> <span style="color:#2563eb;font-weight:900">${money(p.price)}</span><div style="font-size:10px;color:#64748b">${catName(p.cat)}</div></div>
+   ${p.cat?`<button onclick="unassignPreset(${i})" style="border:1px solid #cbd5e1;background:white;border-radius:8px;padding:6px;font-size:10px;font-weight:800">カテゴリ解除</button>`:''}
+   <button onclick="deletePreset(${i})" style="border:1px solid #fecdd3;background:#fff1f2;color:#e11d48;border-radius:8px;padding:6px;font-size:10px;font-weight:900">削除</button>
+ </div>`).join('');
+}
+function addPreset(){
+ let n=$('newPresetName').value.trim(), v=parseInt($('newPresetPrice').value);
+ if(!n||!Number.isFinite(v))return msg('項目名と金額を入力してください');
+ presets.push({id:'custom_'+Date.now(),name:n,price:v});
+ localStorage.setItem('presets_drag_v2',JSON.stringify(presets));
+ $('newPresetName').value='';$('newPresetPrice').value='';renderPresetManager();renderPreset();msg('プリセットを追加しました');
+}
+function unassignPreset(i){presets[i].cat=null;localStorage.setItem('presets_drag_v2',JSON.stringify(presets));renderPresetManager();renderPreset()}
+function deletePreset(i){if(!confirm('このプリセットを完全に削除しますか？'))return;presets.splice(i,1);localStorage.setItem('presets_drag_v2',JSON.stringify(presets));renderPresetManager();renderPreset()}
+function apply(id){let x=presets.find(p=>p.id===id);if(!x)return;let p=active.p,i=active.i;if(!ps[p]||!ps[p].items[i])return;ps[p].items[i].name=x.name;ps[p].items[i].price=String(x.price);expr=String(x.price);render();msg(x.name+' '+money(x.price)+' → プラン'+ps[p].code+'に反映しました')}
+function render(){let el=$('plans');el.style.gridTemplateColumns=`repeat(${ps.length},minmax(0,1fr))`;el.innerHTML=ps.map((p,pi)=>`<div class="plan ${p.code}"><div class="ph"><span class="badge">${p.code}</span><input class="title" value="${esc(p.title)}" oninput="ps[${pi}].title=this.value">${pi?`<button class="trash" onclick="removePlan(${pi})">🗑</button>`:''}</div><div class="total"><small>お支払総額（税込）</small><b>${money(total(pi))}</b></div><div class="rows">${p.items.map((x,ii)=>`<div class="row"><div class="rowhead"><input class="name" value="${esc(x.name)}" placeholder="品名・項目名" oninput="ps[${pi}].items[${ii}].name=this.value"><button class="x" onclick="removeRow(${pi},${ii})">×</button></div><div class="price ${active.p===pi&&active.i===ii?'active':''}" onclick="select(${pi},${ii})">${money(value(x.price))}</div></div>`).join('')}<button class="add" onclick="addRow(${pi})">＋ 行追加</button></div></div>`).join('');let it=ps[active.p].items[active.i];$('target').textContent=`【プラン${ps[active.p].code}】${it.name||'項目'+(active.i+1)}`;$('display').textContent=expr||'0'}
+function total(p){return ps[p].items.reduce((a,x)=>a+value(x.price),0)}function select(p,i){active={p,i};expr=String(ps[p].items[i].price||'');render()}function key(k){let it=ps[active.p].items[active.i];if(k==='clear')expr='';else if(k==='back')expr=expr.slice(0,-1);else if(k==='=')expr=String(value(expr));else if(k==='-'&&!expr)expr='-';else if('+-*/'.includes(k)){if(expr&&!'+-*/'.includes(expr.slice(-1)))expr+=k}else expr+=k;it.price=expr;render()}
+function addRow(p){ps[p].items.push({name:'',price:''});select(p,ps[p].items.length-1)}function removeRow(p,i){if(ps[p].items.length>1)ps[p].items.splice(i,1);else ps[p].items[0]={name:'',price:''};active={p,i:0};expr=String(ps[p].items[0].price||'');render()}function addPlan(){if(ps.length===3)return msg('プランは最大3つです');let c='ABC'[ps.length];ps.push({code:c,title:'プラン'+c,items:JSON.parse(JSON.stringify(ps[0].items))});render()}function removePlan(i){ps.splice(i,1);ps.forEach((p,n)=>p.code='ABC'[n]);active={p:0,i:0};expr=String(ps[0].items[0].price||'');render()}function resetAll(){ps=[{code:'A',title:'標準単品プラン',items:[{name:'商品本体',price:''},{name:'',price:''},{name:'',price:''}]}];active={p:0,i:0};expr='';render()}function msg(s){$('toast').textContent=s;$('toast').style.display='block';setTimeout(()=>$('toast').style.display='none',1600)}
+function present(){let e=$('present');e.style.gridTemplateColumns=`repeat(${ps.length},1fr)`;e.innerHTML=ps.map((p,i)=>`<div class="pc"><h3>${p.code}　${esc(p.title)}</h3>${p.items.filter(x=>x.name||x.price).map(x=>`<div class="line"><span>${esc(x.name||'項目')}</span><b>${money(value(x.price))}</b></div>`).join('')}<div class="big">${money(total(i))}</div></div>`).join('');$('modal').classList.add('on')}
+renderPreset();render();if('serviceWorker'in navigator)navigator.serviceWorker.register('./sw.js').catch(()=>{});
+</script></body></html>
