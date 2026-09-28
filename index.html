@@ -1,6 +1,78 @@
 <!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"><link rel="manifest" href="./manifest.json"><title>接客用3連比較電卓</title><style>
-*{box-sizing:border-box}body{margin:0;background:#f1f5f9;font-family:-apple-system,BlinkMacSystemFont,"Noto Sans JP",sans-serif;color:#0f172a;height:100vh;overflow:hidden}button,input{font:inherit}.top{height:54px;background:white;border-bottom:1px solid #ddd;display:flex;align-items:center;justify-content:space-between;padding:0 12px}.brand{font-weight:900;font-size:17px}.tools{display:flex;gap:6px}.tools button{padding:8px 10px;border:1px solid #cbd5e1;border-radius:10px;background:white;font-weight:800;font-size:12px}.tools .show{background:#059669;color:white}.tools .iconOnly{width:34px;height:34px;padding:0;display:grid;place-items:center;font-size:16px}.main{height:calc(100vh - 54px);padding:10px;display:grid;grid-template-columns:350px 1fr;gap:10px}.left{display:flex;flex-direction:column;gap:9px;min-height:0;height:100%}.box{background:white;border:1px solid #cbd5e1;border-radius:15px;padding:9px}.left>.box:first-child{flex:1;min-height:0;overflow:auto}.label{font-size:12px;font-weight:900;color:#475569;margin-bottom:6px}.presets{display:flex;flex-wrap:wrap;align-content:flex-start;gap:6px;overflow:auto;padding:2px 0 6px;min-height:74px}.chip{flex:0 1 calc(50% - 3px);border:1px solid #cbd5e1;border-radius:9px;background:#f8fafc;padding:8px 6px;font-size:10px;font-weight:800;touch-action:none;user-select:none;-webkit-user-select:none}.chip.drag{opacity:.4}.chip.selected{border:2px solid #f59e0b;background:#fffbeb;padding:7px 5px}.cats{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}.cat{border:1.5px solid #cbd5e1;border-radius:12px;background:#fff;padding:6px 2px;font-size:10px;font-weight:900}.cat.on{border-color:#2563eb;background:#eff6ff}.cat.over{border-color:#f59e0b;background:#fffbeb;transform:scale(1.04)}svg{width:35px;height:31px;display:block;margin:auto;fill:none;stroke:#334155;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}.calc{display:flex;flex-direction:column;min-height:0;padding:8px;flex:none;margin-top:auto}.target{font-size:11px;color:#2563eb;font-weight:900}.display{background:#0f172a;color:#fff;text-align:right;padding:6px 9px;border-radius:9px;font-size:18px;font-weight:900;margin:4px 0 6px}.keys{display:grid;grid-template-columns:repeat(4,1fr);gap:5px}.key{border:0;border-radius:9px;background:#f1f5f9;font-size:16px;font-weight:900;height:39px}.op{background:#dbeafe;color:#1d4ed8}.eq{background:#2563eb;color:white}.del{background:#f59e0b;color:white}.clear{background:#e11d48;color:white;font-size:11px}.right{background:#e2e8f0;border-radius:16px;padding:8px;overflow:auto}.plans{display:grid;gap:8px;height:100%}.plan{background:#fff;border:2px solid #cbd5e1;border-radius:14px;overflow:hidden}.plan.B{border-color:#60a5fa}.plan.C{border-color:#34d399}.ph{display:flex;align-items:center;gap:6px;padding:7px;background:#f8fafc}.badge{width:25px;height:25px;border-radius:7px;background:#334155;color:#fff;display:grid;place-items:center;font-weight:900}.B .badge{background:#2563eb}.C .badge{background:#059669}.title{border:0;background:transparent;width:100%;font-weight:900}.trash{border:0;background:transparent}.total{background:#0f172a;color:#fff;padding:8px}.total small{color:#94a3b8}.total b{display:block;font-size:25px}.rows{padding:7px;display:flex;flex-direction:column;gap:6px}.row{background:#f8fafc;border:1px solid #e2e8f0;border-radius:9px;padding:6px}.rowhead{display:flex;gap:4px}.name{width:100%;padding:5px;border:1px solid #cbd5e1;border-radius:7px;font-size:11px;font-weight:800}.x{border:0;background:transparent;color:#e11d48}.price{margin-top:5px;padding:6px;border:1px solid #cbd5e1;border-radius:7px;background:#fff;text-align:right;font-weight:900}.price.active{border:2px solid #2563eb;background:#eff6ff;padding:5px}.add{border:1px dashed #94a3b8;background:#fff;border-radius:8px;padding:6px;color:#2563eb;font-size:11px;font-weight:900}.toast{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);background:#0f172a;color:#fff;padding:10px 14px;border-radius:10px;font-size:12px;font-weight:800;display:none;z-index:99}.modal{position:fixed;inset:0;background:#020617ed;display:none;z-index:90;padding:55px 18px 18px}.modal.on{display:block}.present{height:100%;display:grid;gap:12px}.pc{background:#0f172a;color:white;border:1px solid #334155;border-radius:16px;padding:15px}.line{display:flex;justify-content:space-between;border-bottom:1px solid #334155;padding:7px}.big{font-size:30px;font-weight:900;margin-top:15px}.close{position:absolute;right:15px;top:13px;background:#334155;color:white;border:0;border-radius:9px;padding:8px 12px;font-weight:900}
-</style></head><body><header class="top"><div class="brand">▣ 接客用 3連比較電卓</div><div class="tools"><button onclick="openHistory()">🕘 案内履歴</button><button onclick="openPresetManager()">🔖 プリセット管理</button><button class="show iconOnly" onclick="present()" title="お客様提示" aria-label="お客様提示">▣</button><button onclick="resetAll()">↻ リセット</button><button onclick="addPlan()">＋ プラン</button></div></header><main class="main"><section class="left"><div class="box"><div class="label">商品カテゴリ　<span style="font-size:9px;font-weight:600">タップで絞り込み／移動先</span></div><div class="cats">
+*{box-sizing:border-box}body{margin:0;background:#f1f5f9;font-family:-apple-system,BlinkMacSystemFont,"Noto Sans JP",sans-serif;color:#0f172a;height:100vh;overflow:hidden}button,input{font:inherit}.top{height:54px;background:white;border-bottom:1px solid #ddd;display:flex;align-items:center;justify-content:space-between;padding:0 12px}.brand{font-weight:900;font-size:17px}.tools{display:flex;gap:6px}.tools button{padding:8px 10px;border:1px solid #cbd5e1;border-radius:10px;background:white;font-weight:800;font-size:12px}.tools .show{background:#059669;color:white}.tools .iconOnly{width:34px;height:34px;padding:0;display:grid;place-items:center;font-size:16px}.main{height:calc(100vh - 54px);padding:10px;display:grid;grid-template-columns:350px 1fr;gap:10px}.left{display:flex;flex-direction:column;gap:9px;min-height:0;height:100%}.box{background:white;border:1px solid #cbd5e1;border-radius:15px;padding:9px}.left>.box:first-child{flex:1;min-height:0;overflow:auto}.label{font-size:12px;font-weight:900;color:#475569;margin-bottom:6px}.presets{display:flex;flex-wrap:wrap;align-content:flex-start;gap:6px;overflow:auto;padding:2px 0 6px;min-height:74px}.chip{flex:0 1 calc(50% - 3px);border:1px solid #cbd5e1;border-radius:9px;background:#f8fafc;padding:8px 6px;font-size:10px;font-weight:800;touch-action:none;user-select:none;-webkit-user-select:none}.chip.drag{opacity:.4}.chip.selected{border:2px solid #f59e0b;background:#fffbeb;padding:7px 5px}.cats{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}.cat{border:1.5px solid #cbd5e1;border-radius:12px;background:#fff;padding:6px 2px;font-size:10px;font-weight:900}.cat.on{border-color:#2563eb;background:#eff6ff}.cat.over{border-color:#f59e0b;background:#fffbeb;transform:scale(1.04)}svg{width:35px;height:31px;display:block;margin:auto;fill:none;stroke:#334155;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}.calc{display:flex;flex-direction:column;min-height:0;padding:8px;flex:none;margin-top:auto}.target{display:none!important}.display{background:#0f172a;color:#fff;text-align:right;padding:6px 9px;border-radius:9px;font-size:18px;font-weight:900;margin:4px 0 6px}.keys{display:grid;grid-template-columns:repeat(4,1fr);gap:5px}.key{border:0;border-radius:9px;background:#f1f5f9;font-size:16px;font-weight:900;height:39px}.op{background:#dbeafe;color:#1d4ed8}.eq{background:#2563eb;color:white}.del{background:#f59e0b;color:white}.clear{background:#e11d48;color:white;font-size:11px}.right{background:#e2e8f0;border-radius:16px;padding:8px;overflow:auto}.plans{display:grid;gap:8px;height:100%}.plan{background:#fff;border:2px solid #cbd5e1;border-radius:14px;overflow:hidden}.plan.B{border-color:#60a5fa}.plan.C{border-color:#34d399}.ph{display:flex;align-items:center;gap:6px;padding:7px;background:#f8fafc}.badge{width:25px;height:25px;border-radius:7px;background:#334155;color:#fff;display:grid;place-items:center;font-weight:900}.B .badge{background:#2563eb}.C .badge{background:#059669}.title{border:0;background:transparent;width:100%;font-weight:900}.trash{border:0;background:transparent}.total{background:#0f172a;color:#fff;padding:8px}.total small{color:#94a3b8}.total b{display:block;font-size:25px}.rows{padding:7px;display:flex;flex-direction:column;gap:6px}.row{background:#f8fafc;border:1px solid #e2e8f0;border-radius:9px;padding:6px}.rowhead{display:flex;gap:4px}.name{width:100%;padding:5px;border:1px solid #cbd5e1;border-radius:7px;font-size:11px;font-weight:800}.x{border:0;background:transparent;color:#e11d48}.price{margin-top:5px;padding:6px;border:1px solid #cbd5e1;border-radius:7px;background:#fff;text-align:right;font-weight:900}.price.active{border:2px solid #2563eb;background:#eff6ff;padding:5px}.add{border:1px dashed #94a3b8;background:#fff;border-radius:8px;padding:6px;color:#2563eb;font-size:11px;font-weight:900}.toast{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);background:#0f172a;color:#fff;padding:10px 14px;border-radius:10px;font-size:12px;font-weight:800;display:none;z-index:99}.modal{position:fixed;inset:0;background:#020617ed;display:none;z-index:90;padding:55px 18px 18px}.modal.on{display:block}.present{height:100%;display:grid;gap:12px}.pc{background:#0f172a;color:white;border:1px solid #334155;border-radius:16px;padding:15px}.line{display:flex;justify-content:space-between;border-bottom:1px solid #334155;padding:7px}.big{font-size:30px;font-weight:900;margin-top:15px}.close{position:absolute;right:15px;top:13px;background:#334155;color:white;border:0;border-radius:9px;padding:8px 12px;font-weight:900}
+
+/* v7.1 practical customization */
+
+
+
+
+
+</style><style>
+/* v7 refinements */
+.settingsBtn{border:1px solid #cbd5e1;background:#fff;border-radius:10px;width:40px;height:40px;font-size:21px;font-weight:900;display:grid;place-items:center;box-shadow:0 1px 4px #0002;cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent;position:relative;z-index:3}
+.calc .label,.calc .calc-label,.calc .expr-label,.calc .formula-label{display:none!important}
+.calc{padding-top:6px!important}
+.key{height:49px!important;font-size:19px!important;border-radius:10px!important}
+.keys{gap:6px!important}
+</style>
+<style>
+.calc{min-height:245px!important}
+</style>
+<style>
+/* v7.2 themes */
+body{transition:background-color .2s,color .2s}
+body.theme-dark{color:#e5e7eb}
+body.theme-dark .top{background:#111827!important;color:#f8fafc;border-color:#334155!important}
+body.theme-dark .box,body.theme-dark .plan{background:#172033!important;color:#f8fafc;border-color:#334155!important}
+body.theme-dark .right{background:#0b1220!important}
+body.theme-dark .row,body.theme-dark .ph{background:#111827!important;border-color:#334155!important;color:#f8fafc}
+body.theme-dark input,body.theme-dark select{background:#0f172a!important;color:#f8fafc!important;border-color:#475569!important}
+body.theme-dark .chip{background:#1e293b!important;color:#f8fafc;border-color:#475569!important}
+body.theme-dark .cat{background:#172033;color:#f8fafc;border-color:#475569}
+body.theme-dark .key{background:#273449;color:#fff}
+body.theme-dark .settingsBtn,body.theme-dark .tools button:not(.show){background:#1e293b;color:#fff;border-color:#475569}
+body.theme-soft{color:#1e293b}
+body.theme-soft .top{background:#e9eef4!important}
+body.theme-soft .box,body.theme-soft .plan{background:#eef2f6!important;border-color:#cbd5e1!important}
+body.theme-soft .right{background:#dfe6ed!important}
+body.theme-soft .row,body.theme-soft .ph{background:#f5f7fa!important}
+body.theme-soft .chip{background:#e7edf3!important}
+
+
+
+
+
+
+
+
+</style><style>
+/* v7.3 practical settings */
+body.keys-small .key{height:42px!important;font-size:17px!important}
+body.keys-normal .key{height:49px!important;font-size:19px!important}
+body.keys-large .key{height:57px!important;font-size:22px!important}
+body.text-large .plan,body.text-large .box{font-size:1.08em}
+body.text-large .row input{font-size:15px!important}
+body.text-large .total{font-size:1.1em}
+body.text-xlarge .plan,body.text-xlarge .box{font-size:1.16em}
+body.text-xlarge .row input{font-size:17px!important}
+body.text-xlarge .total{font-size:1.18em}
+</style><style>
+.menuBtn{font-size:22px!important}
+.toolDrawer{position:fixed;left:10px;top:58px;width:260px;background:#fff;border:1px solid #cbd5e1;border-radius:14px;padding:9px;box-shadow:0 12px 35px #0003;z-index:150;display:none;color:#0f172a}
+.toolDrawer.on{display:block}
+.toolDrawerHead{display:flex;align-items:center;justify-content:space-between;padding:5px 5px 9px}
+.toolDrawerHead button,.miniClose{border:0;background:#e2e8f0;border-radius:8px;padding:5px 8px;font-weight:900}
+.toolItem{width:100%;display:flex;align-items:center;gap:10px;text-align:left;border:0;background:#f8fafc;border-radius:10px;padding:11px;margin:4px 0;font-size:18px}
+.toolItem span{display:flex;flex-direction:column;font-size:12px}.toolItem small{font-size:9px;color:#64748b;margin-top:2px}
+.miniTool{margin:auto;max-width:620px;background:#fff;color:#0f172a;border-radius:18px;padding:18px;position:relative}
+.miniTool h3{margin:0 0 14px}.miniClose{position:absolute;right:12px;top:10px}
+.toolGrid{display:grid;grid-template-columns:1fr 1fr 110px;gap:8px}.toolGrid label{font-size:10px;font-weight:900}.toolGrid input,.toolGrid select{display:block;width:100%;box-sizing:border-box;margin-top:5px;padding:10px;border:1px solid #cbd5e1;border-radius:9px;font-size:14px}
+.toolResult{margin-top:13px;padding:15px;border-radius:11px;background:#eff6ff;color:#1d4ed8;font-size:18px;font-weight:900;text-align:center}
+.guideTabs{display:flex;gap:6px;flex-wrap:wrap}.guideTabs button{border:1px solid #cbd5e1;background:#f8fafc;border-radius:9px;padding:8px 10px;font-weight:900}
+.guideBody{margin-top:12px;background:#f8fafc;border-radius:12px;padding:14px;font-size:13px;line-height:1.8}.guideBody b{color:#2563eb}
+body.theme-dark .toolDrawer,body.theme-dark .miniTool{background:#172033;color:#f8fafc;border-color:#334155}
+body.theme-dark .toolItem,body.theme-dark .guideBody{background:#111827;color:#f8fafc}
+</style></head><body><header class="top"><div style="display:flex;gap:6px;align-items:center"><button onclick="toggleToolMenu()" class="settingsBtn menuBtn" title="ツール" aria-label="ツール">☰</button><button onclick="openSettings()" class="settingsBtn" title="設定" aria-label="設定">⚙</button></div><div class="tools"><button onclick="openHistory()">🕘 案内履歴</button><button onclick="openPresetManager()">🔖 プリセット管理</button><button class="show iconOnly" onclick="present()" title="お客様提示" aria-label="お客様提示">▣</button><button onclick="resetAll()">↻ リセット</button><button onclick="addPlan()">＋ プラン</button></div></header><main class="main"><section class="left"><div class="box"><div class="label">商品カテゴリ　<span style="font-size:9px;font-weight:600">タップで絞り込み／移動先</span></div><div class="cats">
 <button class="cat" data-c="air" onclick="categoryTap('air')"><svg viewBox="0 0 48 40"><rect x="5" y="4" width="38" height="17" rx="4"/><path d="M10 15h28"/><path d="M13 25c-3 3 3 5 0 8M24 25c-3 3 3 5 0 8M35 25c-3 3 3 5 0 8"/></svg>エアコン</button>
 <button class="cat" data-c="tv" onclick="categoryTap('tv')"><svg viewBox="0 0 48 40"><rect x="6" y="5" width="36" height="25" rx="2"/><path d="M18 35h12M24 30v5"/></svg>テレビ</button>
 <button class="cat" data-c="fridge" onclick="categoryTap('fridge')"><svg viewBox="0 0 48 40"><rect x="13" y="2" width="22" height="35" rx="3"/><path d="M13 17h22M30 9v4M30 22v6"/></svg>冷蔵庫</button>
@@ -12,6 +84,86 @@
 <button class="key" onclick="key('0')">0</button><button class="key" onclick="key('00')">00</button><button class="key clear" onclick="key('clear')">全削除</button><button class="key eq" onclick="key('=')">＝</button>
 </div></div></section><section class="right"><div id="plans" class="plans"></div></section></main><div id="toast" class="toast"></div>
 
+
+<div id="settingsModal" class="modal" style="background:#0f172acc;padding:18px">
+  <div style="margin:auto;max-width:520px;background:white;border-radius:18px;padding:18px;color:#0f172a;position:relative">
+    <button onclick="closeSettings()" style="position:absolute;right:12px;top:10px;border:0;background:#e2e8f0;border-radius:8px;padding:6px 9px;font-weight:900">✕</button>
+    <h3 style="margin:0 0 4px">⚙ 設定</h3>
+    <div style="font-size:10px;color:#64748b;margin-bottom:16px">画面の背景をカスタマイズできます。</div>
+
+    <div style="font-size:11px;font-weight:900;margin-bottom:6px">画面テーマ</div>
+    <div style="display:flex;gap:7px;margin-bottom:16px">
+      <button onclick="setTheme('light')" class="themeChoice" style="border:1px solid #cbd5e1;background:#fff;color:#0f172a;border-radius:9px;padding:9px 12px;font-size:10px;font-weight:900">☀️ ライト</button>
+      <button onclick="setTheme('dark')" class="themeChoice" style="border:1px solid #334155;background:#0f172a;color:#fff;border-radius:9px;padding:9px 12px;font-size:10px;font-weight:900">🌙 ダーク</button>
+      <button onclick="setTheme('soft')" class="themeChoice" style="border:1px solid #cbd5e1;background:#e8edf3;color:#1e293b;border-radius:9px;padding:9px 12px;font-size:10px;font-weight:900">◐ ソフト</button>
+    </div>
+    <div style="font-size:11px;font-weight:900;margin-bottom:6px">テンキーサイズ</div>
+    <div style="display:flex;gap:7px;margin-bottom:16px">
+      <button onclick="setKeySize('small')" style="border:1px solid #cbd5e1;background:#fff;border-radius:8px;padding:8px 11px;font-size:10px;font-weight:900">小</button>
+      <button onclick="setKeySize('normal')" style="border:1px solid #cbd5e1;background:#fff;border-radius:8px;padding:8px 11px;font-size:10px;font-weight:900">標準</button>
+      <button onclick="setKeySize('large')" style="border:1px solid #cbd5e1;background:#fff;border-radius:8px;padding:8px 11px;font-size:10px;font-weight:900">大</button>
+    </div>
+
+    <div style="font-size:11px;font-weight:900;margin-bottom:6px">文字サイズ</div>
+    <div style="display:flex;gap:7px;margin-bottom:16px">
+      <button onclick="setTextSize('normal')" style="border:1px solid #cbd5e1;background:#fff;border-radius:8px;padding:8px 11px;font-size:10px;font-weight:900">標準</button>
+      <button onclick="setTextSize('large')" style="border:1px solid #cbd5e1;background:#fff;border-radius:8px;padding:8px 11px;font-size:10px;font-weight:900">大きめ</button>
+      <button onclick="setTextSize('xlarge')" style="border:1px solid #cbd5e1;background:#fff;border-radius:8px;padding:8px 11px;font-size:10px;font-weight:900">特大</button>
+    </div>
+
+    <div style="font-size:11px;font-weight:900;margin-bottom:6px">初期プラン数</div>
+    <div style="display:flex;gap:7px;margin-bottom:16px">
+      <button onclick="setInitialPlans(1)" style="border:1px solid #cbd5e1;background:#fff;border-radius:8px;padding:8px 11px;font-size:10px;font-weight:900">Aのみ</button>
+      <button onclick="setInitialPlans(2)" style="border:1px solid #cbd5e1;background:#fff;border-radius:8px;padding:8px 11px;font-size:10px;font-weight:900">A・B</button>
+      <button onclick="setInitialPlans(3)" style="border:1px solid #cbd5e1;background:#fff;border-radius:8px;padding:8px 11px;font-size:10px;font-weight:900">A・B・C</button>
+    </div>
+
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;border:1px solid #e2e8f0;border-radius:10px;padding:10px;margin-bottom:16px">
+      <div><div style="font-size:11px;font-weight:900">リセット確認</div><div style="font-size:9px;color:#64748b;margin-top:2px">誤タップ防止のため、リセット前に確認します。</div></div>
+      <label style="display:flex;align-items:center;gap:5px;font-size:10px;font-weight:900"><input id="resetConfirmToggle" type="checkbox" onchange="setResetConfirm(this.checked)"> ON</label>
+    </div>
+
+    <div style="font-size:11px;font-weight:900;margin-bottom:6px">背景色</div>
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:16px">
+      <input id="bgColorPicker" type="color" value="#f1f5f9" oninput="setBgColor(this.value)" style="width:52px;height:38px;border:1px solid #cbd5e1;border-radius:8px;padding:2px">
+      <button onclick="setBgColor('#f1f5f9')" style="border:1px solid #cbd5e1;background:#f8fafc;border-radius:8px;padding:9px;font-size:10px;font-weight:900">標準色</button>
+      <button onclick="setBgColor('#eef6ff')" style="border:1px solid #cbd5e1;background:#eef6ff;border-radius:8px;padding:9px;font-size:10px;font-weight:900">淡い青</button>
+      <button onclick="setBgColor('#f4f8f0')" style="border:1px solid #cbd5e1;background:#f4f8f0;border-radius:8px;padding:9px;font-size:10px;font-weight:900">淡い緑</button>
+    </div>
+
+      </div>
+</div>
+
+<div id="toolMenu" class="toolDrawer">
+  <div class="toolDrawerHead"><b>接客ツール</b><button onclick="toggleToolMenu()">✕</button></div>
+  <button class="toolItem" onclick="openEnergyTool()">⚡ <span><b>電気代比較</b><small>年間・複数年の差額を計算</small></span></button>
+  <button class="toolItem" onclick="openNewbieTool()">📖 <span><b>新人向けツール</b><small>接客の確認ポイント</small></span></button>
+</div>
+
+<div id="energyModal" class="modal" style="background:#0f172acc;padding:18px">
+ <div class="miniTool">
+  <button class="miniClose" onclick="$('energyModal').classList.remove('on')">✕</button>
+  <h3>⚡ 電気代比較</h3>
+  <div class="toolGrid">
+   <label>現在の年間電気代<input id="oldPower" inputmode="numeric" placeholder="例 32000" oninput="calcEnergy()"></label>
+   <label>新商品の年間電気代<input id="newPower" inputmode="numeric" placeholder="例 21000" oninput="calcEnergy()"></label>
+   <label>比較年数<select id="powerYears" onchange="calcEnergy()"><option>1</option><option>3</option><option selected>5</option><option>10</option></select></label>
+  </div>
+  <div id="energyResult" class="toolResult">金額を入力すると差額を表示します</div>
+ </div>
+</div>
+
+<div id="newbieModal" class="modal" style="background:#0f172acc;padding:18px">
+ <div class="miniTool">
+  <button class="miniClose" onclick="$('newbieModal').classList.remove('on')">✕</button>
+  <h3>📖 新人向けツール</h3>
+  <div class="guideTabs">
+   <button onclick="showGuide('air')">エアコン</button><button onclick="showGuide('tv')">テレビ</button>
+   <button onclick="showGuide('fridge')">冷蔵庫</button><button onclick="showGuide('washer')">洗濯機</button>
+  </div>
+  <div id="guideBody" class="guideBody"></div>
+ </div>
+</div>
 <div id="historyModal" class="modal" style="background:#0f172acc;padding:18px">
   <div style="margin:auto;max-width:720px;background:white;border-radius:18px;padding:18px;color:#0f172a;position:relative">
     <button onclick="closeHistory()" style="position:absolute;right:12px;top:10px;border:0;background:#e2e8f0;border-radius:8px;padding:6px 9px;font-weight:900">✕</button>
@@ -41,7 +193,8 @@
 <div id="modal" class="modal"><div style="position:absolute;right:105px;top:13px;display:flex;gap:6px"><button onclick="saveHistory()" style="background:#2563eb;color:white;border:0;border-radius:9px;padding:8px 10px;font-size:11px;font-weight:900">🕘 名前を付けて保存</button></div><button class="close" onclick="modal.classList.remove('on')">✕ 閉じる</button><div id="present" class="present"></div></div>
 <script>
 let presets=JSON.parse(localStorage.getItem('presets_drag_v2')||'null')||[{id:'1',name:'標準設置工事費',price:''},{id:'2',name:'5年延長保証料',price:''},{id:'3',name:'リサイクル収集運搬料',price:''},{id:'4',name:'エアコン標準工事',price:'',cat:'air'},{id:'5',name:'室外機化粧カバー',price:'',cat:'air'},{id:'6',name:'HDMIケーブル',price:'',cat:'tv'}];
-let ps=[{code:'A',title:'標準単品プラン',items:[{name:'商品本体',price:''},{name:'',price:''},{name:'',price:''}]}],active={p:0,i:0},expr='',filter=null,drag=null,timer=null,moveMode=false,movePresetId=null;
+let _startPrefs=(()=>{try{return JSON.parse(localStorage.getItem('calc_appearance_v2')||'{}')}catch(e){return {}}})(),_startN=Math.max(1,Math.min(3,Number(_startPrefs.initialPlans||1)));
+let ps=Array.from({length:_startN},(_,i)=>({code:'ABC'[i],title:'プラン'+'ABC'[i],items:[{name:'商品本体',price:''},{name:'',price:''},{name:'',price:''}]})),active={p:0,i:0},expr='',filter=null,drag=null,timer=null,moveMode=false,movePresetId=null;
 const $=id=>document.getElementById(id),money=n=>'¥'+(Number(n)||0).toLocaleString(),esc=s=>String(s||'').replace(/[&<>"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]));
 function value(s){if(!s)return 0;if(!/^[0-9+\-*/(). ]+$/.test(s))return Number(s)||0;try{let n=Function('"use strict";return ('+s+')')();return Number.isFinite(n)?Math.trunc(n):0}catch{return 0}}
 function renderPreset(){let a=filter?presets.filter(x=>x.cat===filter):presets;$('preset').innerHTML=a.map(x=>`<button class="chip ${movePresetId===x.id?'selected':''}" type="button" data-id="${x.id}">${x.name}<br><b>${money(x.price)}</b></button>`).join('');document.querySelectorAll('.cat').forEach(x=>x.classList.toggle('on',x.dataset.c===filter));document.querySelectorAll('.chip').forEach(x=>x.onpointerdown=startDrag)}
@@ -145,7 +298,66 @@ function deletePreset(i){if(!confirm('このプリセットを完全に削除し
 function apply(id){let x=presets.find(p=>p.id===id);if(!x)return;let p=active.p,i=active.i;if(!ps[p]||!ps[p].items[i])return;ps[p].items[i].name=x.name;ps[p].items[i].price=String(x.price);expr=String(x.price);render();msg(x.name+' '+money(x.price)+' → プラン'+ps[p].code+'に反映しました')}
 function render(){let el=$('plans');el.style.gridTemplateColumns=`repeat(${ps.length},minmax(0,1fr))`;el.innerHTML=ps.map((p,pi)=>`<div class="plan ${p.code}"><div class="ph"><span class="badge">${p.code}</span><input class="title" value="${esc(p.title)}" oninput="ps[${pi}].title=this.value">${pi?`<button class="trash" onclick="removePlan(${pi})">🗑</button>`:''}</div><div class="total"><small>お支払総額（税込）</small><b>${money(total(pi))}</b></div><div class="rows">${p.items.map((x,ii)=>`<div class="row"><div class="rowhead"><input class="name" value="${esc(x.name)}" placeholder="品名・項目名" oninput="ps[${pi}].items[${ii}].name=this.value"><button class="x" onclick="removeRow(${pi},${ii})">×</button></div><div class="price ${active.p===pi&&active.i===ii?'active':''}" onclick="select(${pi},${ii})">${money(value(x.price))}</div></div>`).join('')}<button class="add" onclick="addRow(${pi})">＋ 行追加</button></div></div>`).join('');let it=ps[active.p].items[active.i];$('target').textContent=`【プラン${ps[active.p].code}】${it.name||'項目'+(active.i+1)}`;$('display').textContent=expr||'0'}
 function total(p){return ps[p].items.reduce((a,x)=>a+value(x.price),0)}function select(p,i){active={p,i};expr=String(ps[p].items[i].price||'');render()}function key(k){let it=ps[active.p].items[active.i];if(k==='clear')expr='';else if(k==='back')expr=expr.slice(0,-1);else if(k==='=')expr=String(value(expr));else if(k==='-'&&!expr)expr='-';else if('+-*/'.includes(k)){if(expr&&!'+-*/'.includes(expr.slice(-1)))expr+=k}else expr+=k;it.price=expr;render()}
-function addRow(p){ps[p].items.push({name:'',price:''});select(p,ps[p].items.length-1)}function removeRow(p,i){if(ps[p].items.length>1)ps[p].items.splice(i,1);else ps[p].items[0]={name:'',price:''};active={p,i:0};expr=String(ps[p].items[0].price||'');render()}function addPlan(){if(ps.length===3)return msg('プランは最大3つです');let c='ABC'[ps.length];ps.push({code:c,title:'プラン'+c,items:JSON.parse(JSON.stringify(ps[0].items))});render()}function removePlan(i){ps.splice(i,1);ps.forEach((p,n)=>p.code='ABC'[n]);active={p:0,i:0};expr=String(ps[0].items[0].price||'');render()}function resetAll(){ps=[{code:'A',title:'標準単品プラン',items:[{name:'商品本体',price:''},{name:'',price:''},{name:'',price:''}]}];active={p:0,i:0};expr='';render()}function msg(s){$('toast').textContent=s;$('toast').style.display='block';setTimeout(()=>$('toast').style.display='none',1600)}
+function addRow(p){ps[p].items.push({name:'',price:''});select(p,ps[p].items.length-1)}function removeRow(p,i){if(ps[p].items.length>1)ps[p].items.splice(i,1);else ps[p].items[0]={name:'',price:''};active={p,i:0};expr=String(ps[p].items[0].price||'');render()}function addPlan(){if(ps.length===3)return msg('プランは最大3つです');let c='ABC'[ps.length];ps.push({code:c,title:'プラン'+c,items:JSON.parse(JSON.stringify(ps[0].items))});render()}function removePlan(i){ps.splice(i,1);ps.forEach((p,n)=>p.code='ABC'[n]);active={p:0,i:0};expr=String(ps[0].items[0].price||'');render()}function resetAll(){
+ let a=getAppearance();
+ if(a.resetConfirm!==false&&!confirm('現在の計算内容をリセットしますか？\n保存していない内容は消えます。'))return;let n=Math.max(1,Math.min(3,Number(a.initialPlans||1)));
+ ps=Array.from({length:n},(_,i)=>({code:'ABC'[i],title:'プラン'+'ABC'[i],items:[{name:'商品本体',price:''},{name:'',price:''},{name:'',price:''}]}));
+ active={p:0,i:0};expr='';render()}function msg(s){$('toast').textContent=s;$('toast').style.display='block';setTimeout(()=>$('toast').style.display='none',1600)}
 function present(){let e=$('present');e.style.gridTemplateColumns=`repeat(${ps.length},1fr)`;e.innerHTML=ps.map((p,i)=>`<div class="pc"><h3>${p.code}　${esc(p.title)}</h3>${p.items.filter(x=>x.name||x.price).map(x=>`<div class="line"><span>${esc(x.name||'項目')}</span><b>${money(value(x.price))}</b></div>`).join('')}<div class="big">${money(total(i))}</div></div>`).join('');$('modal').classList.add('on')}
 renderPreset();render();if('serviceWorker'in navigator)navigator.serviceWorker.register('./sw.js').catch(()=>{});
-</script></body></html>
+
+function openSettings(){
+ let a=getAppearance();
+ $('bgColorPicker').value=a.color||'#f1f5f9';
+ applyUiPrefs();$('settingsModal').classList.add('on');
+}
+function closeSettings(){$('settingsModal').classList.remove('on')}
+function getAppearance(){try{return JSON.parse(localStorage.getItem('calc_appearance_v2')||'{}')}catch(e){return {}}}
+function saveAppearance(a){
+ try{localStorage.setItem('calc_appearance_v2',JSON.stringify(a));return true}
+ catch(e){alert('背景画像を保存できませんでした。別の写真を選んでください。');return false}
+}
+function applyAppearance(){
+ let a=getAppearance(),root=document.body,theme=a.theme||'light';
+ root.classList.remove('theme-light','theme-dark','theme-soft');
+ root.classList.add('theme-'+theme);
+ root.style.backgroundColor=a.color||(theme==='dark'?'#0b1220':theme==='soft'?'#dfe6ed':'#f1f5f9');
+}
+function applyUiPrefs(){
+ let a=getAppearance(),b=document.body;
+ b.classList.remove('keys-small','keys-normal','keys-large','text-normal','text-large','text-xlarge');
+ b.classList.add('keys-'+(a.keySize||'normal'));
+ b.classList.add('text-'+(a.textSize||'normal'));
+ let t=$('resetConfirmToggle');if(t)t.checked=a.resetConfirm!==false;
+}
+function setKeySize(v){let a=getAppearance();a.keySize=v;if(saveAppearance(a)){applyUiPrefs();msg('テンキーサイズを変更しました')}}
+function setTextSize(v){let a=getAppearance();a.textSize=v;if(saveAppearance(a)){applyUiPrefs();msg('文字サイズを変更しました')}}
+function setInitialPlans(n){let a=getAppearance();a.initialPlans=n;if(saveAppearance(a))msg('次回の新規開始は '+(n===1?'Aのみ':n===2?'A・B':'A・B・C')+' になります')}
+function setResetConfirm(v){let a=getAppearance();a.resetConfirm=!!v;if(saveAppearance(a))msg(v?'リセット確認をONにしました':'リセット確認をOFFにしました')}
+function setTheme(t){let a=getAppearance();a.theme=t;if(saveAppearance(a)){applyAppearance();msg(t==='dark'?'ダークモードに変更しました':t==='soft'?'ソフトモードに変更しました':'ライトモードに変更しました')}}
+function setBgColor(c){let a=getAppearance();a.color=c;if(saveAppearance(a))applyAppearance()}
+
+function removeBgImage(){let a=getAppearance();delete a.image;if(saveAppearance(a)){applyAppearance();$('bgImageInput').value='';msg('背景写真を削除しました')}}
+function resetAppearance(){localStorage.removeItem('calc_appearance_v2');applyAppearance();$('bgColorPicker').value='#f1f5f9';$('bgImageInput').value='';msg('背景を初期状態に戻しました')}
+applyAppearance();
+
+function toggleToolMenu(){$('toolMenu').classList.toggle('on')}
+function openEnergyTool(){$('toolMenu').classList.remove('on');$('energyModal').classList.add('on');calcEnergy()}
+function calcEnergy(){
+ let a=Number(($('oldPower').value||'').replace(/,/g,'')),b=Number(($('newPower').value||'').replace(/,/g,'')),y=Number($('powerYears').value||5);
+ if(!$('oldPower').value||!$('newPower').value){$('energyResult').textContent='金額を入力すると差額を表示します';return}
+ let d=a-b,total=d*y;
+ $('energyResult').innerHTML=d>=0?`年間 <b>${money(d)}</b> お得　／　${y}年間で <b>${money(total)}</b> お得`:`年間 <b>${money(Math.abs(d))}</b> 増　／　${y}年間で <b>${money(Math.abs(total))}</b> 増`;
+}
+const newbieGuides={
+ air:['畳数・部屋の広さ','設置階・室外機位置','コンセント・電圧','配管穴・配管経路','お掃除機能・省エネ希望'],
+ tv:['希望サイズ・視聴距離','地デジ中心か動画中心か','録画の必要性','ゲーム利用','設置方法・既存機器'],
+ fridge:['設置幅・搬入経路','容量・人数','扉の開き方','よく使う部屋','省エネ・機能の希望'],
+ washer:['設置寸法・防水パン','縦型かドラム式','容量・人数','乾燥の必要性','蛇口・排水・搬入経路']
+};
+function openNewbieTool(){$('toolMenu').classList.remove('on');$('newbieModal').classList.add('on');showGuide('air')}
+function showGuide(c){
+ let names={air:'エアコン',tv:'テレビ',fridge:'冷蔵庫',washer:'洗濯機'},a=newbieGuides[c];
+ $('guideBody').innerHTML=`<b>${names[c]}｜まず確認</b><br>`+a.map((x,i)=>`${i+1}. ${x}`).join('<br>');
+}
+</script></body></body></html>
