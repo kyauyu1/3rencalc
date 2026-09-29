@@ -72,16 +72,67 @@ body.text-xlarge .total{font-size:1.18em}
 .guideBody{margin-top:12px;background:#f8fafc;border-radius:12px;padding:14px;font-size:13px;line-height:1.8}.guideBody b{color:#2563eb}
 body.theme-dark .toolDrawer,body.theme-dark .miniTool{background:#172033;color:#f8fafc;border-color:#334155}
 body.theme-dark .toolItem,body.theme-dark .guideBody{background:#111827;color:#f8fafc}
-</style></head><body><header class="top"><div style="display:flex;gap:6px;align-items:center"><button onclick="toggleToolMenu()" class="settingsBtn menuBtn" title="ツール" aria-label="ツール">☰</button><button onclick="openSettings()" class="settingsBtn" title="設定" aria-label="設定">⚙</button></div><div class="tools"><button onclick="openHistory()">🕘 案内履歴</button><button onclick="openPresetManager()">🔖 プリセット管理</button><button class="show iconOnly" onclick="present()" title="お客様提示" aria-label="お客様提示">▣</button><button onclick="resetAll()">↻ リセット</button><button onclick="addPlan()">＋ プラン</button></div></header><main class="main"><section class="left"><div class="box"><div class="label">商品カテゴリ　<span style="font-size:9px;font-weight:600">タップで絞り込み／移動先</span></div><div class="cats">
+</style><style>
+/* v9 fast-entry prototype */
+.calc{position:sticky!important;bottom:8px!important}
+.fastKeys{grid-template-columns:repeat(4,1fr)!important;gap:8px!important}
+.fastKeys .key{height:68px!important;min-height:68px!important;font-size:25px!important;border-radius:12px!important}
+.fastKeys .wide2{grid-column:span 2}
+.fastRows{gap:8px!important}
+.fastRow{min-height:92px!important;padding:10px 12px!important;border:2px solid #e2e8f0!important;border-radius:12px!important;cursor:pointer;background:#fff}
+.fastRow.selectedRow{border-color:#2563eb!important;box-shadow:0 0 0 2px #bfdbfe inset}
+.fastLabel{font-size:12px;font-weight:800;color:#64748b;min-height:18px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.fastAmount{display:flex;align-items:center;justify-content:center;gap:7px;position:relative;min-height:52px}
+.fastAmount b{font-size:27px;line-height:1;font-weight:950;letter-spacing:-.5px}
+.rowOp{font-size:24px;font-weight:950;min-width:22px;text-align:center}
+.fastX{position:absolute!important;right:0!important;top:50%!important;transform:translateY(-50%);opacity:.45}
+body.theme-dark .fastRow{background:#111827!important;border-color:#334155!important}
+body.theme-dark .fastLabel{color:#94a3b8}
+body.theme-dark .fastRow.selectedRow{border-color:#60a5fa!important;box-shadow:0 0 0 2px #1e3a8a inset}
+</style><style>
+.hearingGuide{background:transparent!important;padding:8px 0!important}.hearingHead{display:flex;align-items:baseline;gap:10px;margin:5px 2px 12px}.hearingHead b{font-size:20px}.hearingHead span{font-size:11px;color:#64748b}.hearingCards{display:grid;grid-template-columns:1fr 1fr;gap:10px}.hearingCard{min-height:105px;border:1px solid #cbd5e1;background:#fff;border-radius:14px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;font-weight:900}.hearingCard span{font-size:29px}.hearingCard b{font-size:14px;color:#0f172a}.hearingQuestion{font-size:18px;font-weight:950;margin:13px 2px}.answerCards{display:grid;grid-template-columns:1fr 1fr;gap:9px}.answerCards button{min-height:70px;border:1px solid #cbd5e1;background:#fff;border-radius:12px;font-size:13px;font-weight:900;padding:10px}.guideBack{border:0;background:#e2e8f0;border-radius:8px;padding:7px 10px;font-weight:900}.hearingResult{background:#eff6ff;border:1px solid #bfdbfe;border-radius:14px;padding:18px;text-align:center}.hearingResult small{display:block;color:#64748b;font-weight:900}.hearingResult b{display:block;font-size:23px;margin:7px 0;color:#1d4ed8}.hearingResult p{font-size:14px;font-weight:800;margin:8px 0 0}.restartGuide{width:100%;margin-top:10px;border:0;background:#2563eb;color:#fff;border-radius:10px;padding:11px;font-weight:900}body.theme-dark .hearingCard,body.theme-dark .answerCards button{background:#111827;color:#f8fafc;border-color:#334155}body.theme-dark .hearingCard b{color:#f8fafc}body.theme-dark .hearingResult{background:#172554;border-color:#1e40af}body.theme-dark .hearingResult b{color:#93c5fd}
+</style><style>
+/* v9.2 fast keypad size settings */
+body.keys-small .fastKeys .key{height:52px!important;min-height:52px!important;font-size:20px!important}
+body.keys-normal .fastKeys .key{height:68px!important;min-height:68px!important;font-size:25px!important}
+body.keys-large .fastKeys .key{height:82px!important;min-height:82px!important;font-size:29px!important}
+</style><style>
+/* v9.3 dashboard additions */
+.dealTimer{margin:0 0 8px;background:#fff;border:1px solid #cbd5e1;border-radius:12px;padding:7px 10px;display:flex;align-items:center;gap:10px;min-height:38px}
+.timerTitle{font-size:11px;font-weight:900;white-space:nowrap}.timerSetup,.timerRunning{display:flex;align-items:center;gap:5px;flex-wrap:wrap}.timerSetup button,.timerRunning button{border:1px solid #cbd5e1;background:#f8fafc;border-radius:7px;padding:5px 8px;font-size:10px;font-weight:900}.timerSetup input{width:44px;border:1px solid #cbd5e1;border-radius:7px;padding:5px}.timerRunning b{font-size:18px;min-width:100px}.timerWarn{background:#fff7ed;border-color:#fb923c}.timerOver{background:#fef2f2;border-color:#ef4444}
+.energyModes{display:flex;gap:6px;margin-bottom:10px}.energyModes button{flex:1;border:1px solid #cbd5e1;background:#f8fafc;border-radius:8px;padding:8px 4px;font-size:10px;font-weight:900}.energyNote,.todoNote{display:block;margin-top:9px;color:#64748b;font-size:9px;line-height:1.5}.todoTool{max-width:680px}.todoTop{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;font-size:12px;font-weight:900}.todoTop button{border:1px solid #cbd5e1;background:#f8fafc;border-radius:8px;padding:6px 9px;font-weight:900}.todoList{max-height:68vh;overflow:auto}.todoRow{display:grid;grid-template-columns:58px 1fr 60px;align-items:center;gap:7px;padding:6px 8px;border-bottom:1px solid #e2e8f0;border-radius:7px}.todoRow.currentHour{background:#fee2e2}.todoRow>b{font-size:12px}.todoRow>input{width:100%;box-sizing:border-box;border:1px solid #cbd5e1;border-radius:7px;padding:8px;font-size:12px}.todoRow label{font-size:9px;display:flex;align-items:center;gap:2px}
+body.theme-dark .dealTimer{background:#172033;color:#f8fafc;border-color:#334155}body.theme-dark .todoRow.currentHour{background:#4c1d1d}body.theme-dark .todoRow>input{background:#111827;color:#fff;border-color:#334155}
+</style><style>
+/* v9.4 timer in top command bar */
+header .dealTimer{margin:0 8px!important;padding:4px 7px!important;min-height:30px!important;flex:1;max-width:520px;background:#f8fafc}
+header .dealTimer .timerTitle{font-size:10px}
+header .dealTimer .timerSetup button,header .dealTimer .timerRunning button{padding:4px 6px;font-size:9px}
+header .dealTimer .timerRunning b{font-size:15px;min-width:88px}
+header .dealTimer .timerSetup input{padding:4px;width:38px}
+</style></head><body><header class="top"><div style="display:flex;gap:6px;align-items:center"><button onclick="toggleToolMenu()" class="settingsBtn menuBtn" title="ツール" aria-label="ツール">☰</button><button onclick="openSettings()" class="settingsBtn" title="設定" aria-label="設定">⚙</button></div><div class="dealTimer" id="dealTimer">
+ <div class="timerTitle">⏱ 商談タイマー</div>
+ <div id="timerSetup" class="timerSetup">
+  <button onclick="startDealTimer(10)">10分</button><button onclick="startDealTimer(15)">15分</button>
+  <button onclick="startDealTimer(20)">20分</button><button onclick="startDealTimer(30)">30分</button>
+  <input id="customTimerMin" inputmode="numeric" placeholder="分"><button onclick="startDealTimer(Number($('customTimerMin').value))">開始</button>
+ </div>
+ <div id="timerRunning" class="timerRunning" style="display:none">
+  <b id="timerText">残り 20:00</b>
+  <button onclick="pauseDealTimer()" id="timerPause">一時停止</button>
+  <button onclick="addDealTime(5)">＋5分</button><button onclick="resetDealTimer()">終了</button>
+ </div>
+</div>
+<div class="tools"><button onclick="openHistory()">🕘 案内履歴</button><button onclick="openPresetManager()">🔖 プリセット管理</button><button class="show iconOnly" onclick="present()" title="お客様提示" aria-label="お客様提示">▣</button><button onclick="resetAll()">↻ リセット</button><button onclick="addPlan()">＋ プラン</button></div></header><main class="main"><section class="left"><div class="box"><div class="label">商品カテゴリ　<span style="font-size:9px;font-weight:600">タップで絞り込み／移動先</span></div><div class="cats">
 <button class="cat" data-c="air" onclick="categoryTap('air')"><svg viewBox="0 0 48 40"><rect x="5" y="4" width="38" height="17" rx="4"/><path d="M10 15h28"/><path d="M13 25c-3 3 3 5 0 8M24 25c-3 3 3 5 0 8M35 25c-3 3 3 5 0 8"/></svg>エアコン</button>
 <button class="cat" data-c="tv" onclick="categoryTap('tv')"><svg viewBox="0 0 48 40"><rect x="6" y="5" width="36" height="25" rx="2"/><path d="M18 35h12M24 30v5"/></svg>テレビ</button>
 <button class="cat" data-c="fridge" onclick="categoryTap('fridge')"><svg viewBox="0 0 48 40"><rect x="13" y="2" width="22" height="35" rx="3"/><path d="M13 17h22M30 9v4M30 22v6"/></svg>冷蔵庫</button>
 <button class="cat" data-c="washer" onclick="categoryTap('washer')"><svg viewBox="0 0 48 40"><rect x="9" y="3" width="30" height="34" rx="3"/><circle cx="24" cy="23" r="9"/><path d="M14 9h3M21 9h3M29 9h5"/></svg>洗濯機</button>
-</div><div class="label" style="margin-top:8px;display:flex;align-items:center;justify-content:space-between;gap:5px"><span>プリセット一覧　<span style="font-size:9px;font-weight:600">タップで計算欄へ反映</span></span><button id="moveModeBtn" onclick="toggleMoveMode()" style="border:1px solid #cbd5e1;background:#fff;border-radius:8px;padding:5px 7px;font-size:9px;font-weight:900">分類モード</button></div><div id="moveHint" style="display:none;font-size:10px;color:#b45309;background:#fffbeb;border:1px solid #fde68a;border-radius:8px;padding:6px;margin-bottom:5px">移動したいプリセットをタップ → 上のカテゴリをタップ</div><div id="preset" class="presets"></div></div><div class="box calc"><div id="target" class="target"></div><div id="display" class="display">0</div><div class="keys">
-<button class="key" onclick="key('7')">7</button><button class="key" onclick="key('8')">8</button><button class="key" onclick="key('9')">9</button><button class="key op" onclick="key('+')">＋</button>
-<button class="key" onclick="key('4')">4</button><button class="key" onclick="key('5')">5</button><button class="key" onclick="key('6')">6</button><button class="key op" onclick="key('-')">−</button>
-<button class="key" onclick="key('1')">1</button><button class="key" onclick="key('2')">2</button><button class="key" onclick="key('3')">3</button><button class="key del" onclick="key('back')">⌫</button>
-<button class="key" onclick="key('0')">0</button><button class="key" onclick="key('00')">00</button><button class="key clear" onclick="key('clear')">全削除</button><button class="key eq" onclick="key('=')">＝</button>
+</div><div class="label" style="margin-top:8px;display:flex;align-items:center;justify-content:space-between;gap:5px"><span>プリセット一覧　<span style="font-size:9px;font-weight:600">タップで計算欄へ反映</span></span><button id="moveModeBtn" onclick="toggleMoveMode()" style="border:1px solid #cbd5e1;background:#fff;border-radius:8px;padding:5px 7px;font-size:9px;font-weight:900">分類モード</button></div><div id="moveHint" style="display:none;font-size:10px;color:#b45309;background:#fffbeb;border:1px solid #fde68a;border-radius:8px;padding:6px;margin-bottom:5px">移動したいプリセットをタップ → 上のカテゴリをタップ</div><div id="preset" class="presets"></div></div><div class="box calc"><div id="target" class="target"></div><div id="display" class="display">0</div><div class="keys fastKeys">
+<button class="key" onclick="key('7')">7</button><button class="key" onclick="key('8')">8</button><button class="key" onclick="key('9')">9</button><button class="key op" onclick="key('/')">÷</button>
+<button class="key" onclick="key('4')">4</button><button class="key" onclick="key('5')">5</button><button class="key" onclick="key('6')">6</button><button class="key op" onclick="key('*')">×</button>
+<button class="key" onclick="key('1')">1</button><button class="key" onclick="key('2')">2</button><button class="key" onclick="key('3')">3</button><button class="key op" onclick="key('-')">−</button>
+<button class="key" onclick="key('0')">0</button><button class="key" onclick="key('00')">00</button><button class="key eq" onclick="key('=')">＝</button><button class="key op" onclick="key('+')">＋</button>
+<button class="key clear wide2" onclick="key('clear')">C</button><button class="key del wide2" onclick="key('back')">⌫</button>
 </div></div></section><section class="right"><div id="plans" class="plans"></div></section></main><div id="toast" class="toast"></div>
 
 
@@ -138,18 +189,25 @@ body.theme-dark .toolItem,body.theme-dark .guideBody{background:#111827;color:#f
   <div class="toolDrawerHead"><b>接客ツール</b><button onclick="toggleToolMenu()">✕</button></div>
   <button class="toolItem" onclick="openEnergyTool()">⚡ <span><b>電気代比較</b><small>年間・複数年の差額を計算</small></span></button>
   <button class="toolItem" onclick="openNewbieTool()">📖 <span><b>新人向けツール</b><small>接客の確認ポイント</small></span></button>
+  <button class="toolItem" onclick="openTodoTool()">☑️ <span><b>TODO</b><small>8:00〜22:00の予定・リマインド</small></span></button>
 </div>
 
 <div id="energyModal" class="modal" style="background:#0f172acc;padding:18px">
- <div class="miniTool">
+ <div class="miniTool energyTool">
   <button class="miniClose" onclick="$('energyModal').classList.remove('on')">✕</button>
   <h3>⚡ 電気代比較</h3>
-  <div class="toolGrid">
-   <label>現在の年間電気代<input id="oldPower" inputmode="numeric" placeholder="例 32000" oninput="calcEnergy()"></label>
-   <label>新商品の年間電気代<input id="newPower" inputmode="numeric" placeholder="例 21000" oninput="calcEnergy()"></label>
+  <div class="energyModes">
+   <button onclick="setEnergyMode('yen')">年間電気代</button>
+   <button onclick="setEnergyMode('kwh')">年間kWh</button>
+   <button onclick="setEnergyMode('watt')">消費電力W</button>
+  </div>
+  <div id="energyInputs"></div>
+  <div class="toolGrid" style="margin-top:8px">
+   <label>電気料金単価<input id="energyRate" inputmode="decimal" value="31" oninput="calcEnergy()">円/kWh</label>
    <label>比較年数<select id="powerYears" onchange="calcEnergy()"><option>1</option><option>3</option><option selected>5</option><option>10</option></select></label>
   </div>
-  <div id="energyResult" class="toolResult">金額を入力すると差額を表示します</div>
+  <div id="energyResult" class="toolResult">入力すると比較結果を表示します</div>
+  <small class="energyNote">※ 消費電力Wからの計算は、運転中の消費電力が一定と仮定した目安です。年間消費電力量が分かる場合は「年間kWh」が適しています。</small>
  </div>
 </div>
 
@@ -161,9 +219,19 @@ body.theme-dark .toolItem,body.theme-dark .guideBody{background:#111827;color:#f
    <button onclick="showGuide('air')">エアコン</button><button onclick="showGuide('tv')">テレビ</button>
    <button onclick="showGuide('fridge')">冷蔵庫</button><button onclick="showGuide('washer')">洗濯機</button>
   </div>
-  <div id="guideBody" class="guideBody"></div>
+  <div id="guideBody" class="guideBody hearingGuide"></div>
  </div>
 </div>
+<div id="todoModal" class="modal" style="background:#0f172acc;padding:18px">
+ <div class="miniTool todoTool">
+  <button class="miniClose" onclick="$('todoModal').classList.remove('on')">✕</button>
+  <h3>☑️ TODO</h3>
+  <div class="todoTop"><span id="todoDate"></span><button onclick="requestTodoNotify()">🔔 通知</button></div>
+  <div id="todoList" class="todoList"></div>
+  <small class="todoNote">予定の1時間前に、このアプリを開いている場合はポップアップします。通知許可済みの環境ではブラウザ通知も試みます。</small>
+ </div>
+</div>
+
 <div id="historyModal" class="modal" style="background:#0f172acc;padding:18px">
   <div style="margin:auto;max-width:720px;background:white;border-radius:18px;padding:18px;color:#0f172a;position:relative">
     <button onclick="closeHistory()" style="position:absolute;right:12px;top:10px;border:0;background:#e2e8f0;border-radius:8px;padding:6px 9px;font-weight:900">✕</button>
@@ -192,9 +260,9 @@ body.theme-dark .toolItem,body.theme-dark .guideBody{background:#111827;color:#f
 </div>
 <div id="modal" class="modal"><div style="position:absolute;right:105px;top:13px;display:flex;gap:6px"><button onclick="saveHistory()" style="background:#2563eb;color:white;border:0;border-radius:9px;padding:8px 10px;font-size:11px;font-weight:900">🕘 名前を付けて保存</button></div><button class="close" onclick="modal.classList.remove('on')">✕ 閉じる</button><div id="present" class="present"></div></div>
 <script>
-let presets=JSON.parse(localStorage.getItem('presets_drag_v2')||'null')||[{id:'1',name:'標準設置工事費',price:''},{id:'2',name:'5年延長保証料',price:''},{id:'3',name:'リサイクル収集運搬料',price:''},{id:'4',name:'エアコン標準工事',price:'',cat:'air'},{id:'5',name:'室外機化粧カバー',price:'',cat:'air'},{id:'6',name:'HDMIケーブル',price:'',cat:'tv'}];
+let presets=JSON.parse(localStorage.getItem('presets_drag_v3_empty')||'null')||[];
 let _startPrefs=(()=>{try{return JSON.parse(localStorage.getItem('calc_appearance_v2')||'{}')}catch(e){return {}}})(),_startN=Math.max(1,Math.min(3,Number(_startPrefs.initialPlans||1)));
-let ps=Array.from({length:_startN},(_,i)=>({code:'ABC'[i],title:'プラン'+'ABC'[i],items:[{name:'商品本体',price:''},{name:'',price:''},{name:'',price:''}]})),active={p:0,i:0},expr='',filter=null,drag=null,timer=null,moveMode=false,movePresetId=null;
+let ps=Array.from({length:_startN},(_,i)=>({code:'ABC'[i],title:'プラン'+'ABC'[i],items:[{name:'商品本体',price:'',op:'+'},{name:'',price:'',op:'+'},{name:'',price:'',op:'+'},{name:'',price:'',op:'+'},{name:'',price:'',op:'+'},{name:'',price:'',op:'+'}]})),active={p:0,i:0},expr='',filter=null,drag=null,timer=null,moveMode=false,movePresetId=null;
 const $=id=>document.getElementById(id),money=n=>'¥'+(Number(n)||0).toLocaleString(),esc=s=>String(s||'').replace(/[&<>"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]));
 function value(s){if(!s)return 0;if(!/^[0-9+\-*/(). ]+$/.test(s))return Number(s)||0;try{let n=Function('"use strict";return ('+s+')')();return Number.isFinite(n)?Math.trunc(n):0}catch{return 0}}
 function renderPreset(){let a=filter?presets.filter(x=>x.cat===filter):presets;$('preset').innerHTML=a.map(x=>`<button class="chip ${movePresetId===x.id?'selected':''}" type="button" data-id="${x.id}">${x.name}<br><b>${money(x.price)}</b></button>`).join('');document.querySelectorAll('.cat').forEach(x=>x.classList.toggle('on',x.dataset.c===filter));document.querySelectorAll('.chip').forEach(x=>x.onpointerdown=startDrag)}
@@ -212,7 +280,7 @@ function startDrag(e){
    let hit=document.elementFromPoint(v.clientX,v.clientY)?.closest('.cat');
    if(longPressed&&hit){
      let p=presets.find(x=>x.id===id);
-     if(p){p.cat=hit.dataset.c;localStorage.setItem('presets_drag_v2',JSON.stringify(presets));msg(p.name+' を '+hit.textContent.trim()+' に保存しました')}
+     if(p){p.cat=hit.dataset.c;localStorage.setItem('presets_drag_v3_empty',JSON.stringify(presets));msg(p.name+' を '+hit.textContent.trim()+' に保存しました')}
    }else if(!longPressed&&!moved){
      if(moveMode){movePresetId=id;renderPreset();let p=presets.find(x=>x.id===id);msg((p?.name||'プリセット')+' を選択しました。移動先カテゴリをタップ')}
      else apply(id);
@@ -232,7 +300,7 @@ function toggleMoveMode(){
 function categoryTap(c){
  if(moveMode&&movePresetId){
    let p=presets.find(x=>x.id===movePresetId);
-   if(p){p.cat=c;localStorage.setItem('presets_drag_v2',JSON.stringify(presets));msg(p.name+' を '+catName(c)+' に移動しました')}
+   if(p){p.cat=c;localStorage.setItem('presets_drag_v3_empty',JSON.stringify(presets));msg(p.name+' を '+catName(c)+' に移動しました')}
    movePresetId=null;moveMode=false;$('moveHint').style.display='none';$('moveModeBtn').style.background='#fff';$('moveModeBtn').style.color='#0f172a';filter=c;renderPreset();return;
  }
  filterCat(c);
@@ -290,18 +358,82 @@ function addPreset(){
  let n=$('newPresetName').value.trim(), v=parseInt($('newPresetPrice').value);
  if(!n||!Number.isFinite(v))return msg('項目名と金額を入力してください');
  presets.push({id:'custom_'+Date.now(),name:n,price:v});
- localStorage.setItem('presets_drag_v2',JSON.stringify(presets));
+ localStorage.setItem('presets_drag_v3_empty',JSON.stringify(presets));
  $('newPresetName').value='';$('newPresetPrice').value='';renderPresetManager();renderPreset();msg('プリセットを追加しました');
 }
-function unassignPreset(i){presets[i].cat=null;localStorage.setItem('presets_drag_v2',JSON.stringify(presets));renderPresetManager();renderPreset()}
-function deletePreset(i){if(!confirm('このプリセットを完全に削除しますか？'))return;presets.splice(i,1);localStorage.setItem('presets_drag_v2',JSON.stringify(presets));renderPresetManager();renderPreset()}
+function unassignPreset(i){presets[i].cat=null;localStorage.setItem('presets_drag_v3_empty',JSON.stringify(presets));renderPresetManager();renderPreset()}
+function deletePreset(i){if(!confirm('このプリセットを完全に削除しますか？'))return;presets.splice(i,1);localStorage.setItem('presets_drag_v3_empty',JSON.stringify(presets));renderPresetManager();renderPreset()}
 function apply(id){let x=presets.find(p=>p.id===id);if(!x)return;let p=active.p,i=active.i;if(!ps[p]||!ps[p].items[i])return;ps[p].items[i].name=x.name;ps[p].items[i].price=String(x.price);expr=String(x.price);render();msg(x.name+' '+money(x.price)+' → プラン'+ps[p].code+'に反映しました')}
-function render(){let el=$('plans');el.style.gridTemplateColumns=`repeat(${ps.length},minmax(0,1fr))`;el.innerHTML=ps.map((p,pi)=>`<div class="plan ${p.code}"><div class="ph"><span class="badge">${p.code}</span><input class="title" value="${esc(p.title)}" oninput="ps[${pi}].title=this.value">${pi?`<button class="trash" onclick="removePlan(${pi})">🗑</button>`:''}</div><div class="total"><small>お支払総額（税込）</small><b>${money(total(pi))}</b></div><div class="rows">${p.items.map((x,ii)=>`<div class="row"><div class="rowhead"><input class="name" value="${esc(x.name)}" placeholder="品名・項目名" oninput="ps[${pi}].items[${ii}].name=this.value"><button class="x" onclick="removeRow(${pi},${ii})">×</button></div><div class="price ${active.p===pi&&active.i===ii?'active':''}" onclick="select(${pi},${ii})">${money(value(x.price))}</div></div>`).join('')}<button class="add" onclick="addRow(${pi})">＋ 行追加</button></div></div>`).join('');let it=ps[active.p].items[active.i];$('target').textContent=`【プラン${ps[active.p].code}】${it.name||'項目'+(active.i+1)}`;$('display').textContent=expr||'0'}
-function total(p){return ps[p].items.reduce((a,x)=>a+value(x.price),0)}function select(p,i){active={p,i};expr=String(ps[p].items[i].price||'');render()}function key(k){let it=ps[active.p].items[active.i];if(k==='clear')expr='';else if(k==='back')expr=expr.slice(0,-1);else if(k==='=')expr=String(value(expr));else if(k==='-'&&!expr)expr='-';else if('+-*/'.includes(k)){if(expr&&!'+-*/'.includes(expr.slice(-1)))expr+=k}else expr+=k;it.price=expr;render()}
-function addRow(p){ps[p].items.push({name:'',price:''});select(p,ps[p].items.length-1)}function removeRow(p,i){if(ps[p].items.length>1)ps[p].items.splice(i,1);else ps[p].items[0]={name:'',price:''};active={p,i:0};expr=String(ps[p].items[0].price||'');render()}function addPlan(){if(ps.length===3)return msg('プランは最大3つです');let c='ABC'[ps.length];ps.push({code:c,title:'プラン'+c,items:JSON.parse(JSON.stringify(ps[0].items))});render()}function removePlan(i){ps.splice(i,1);ps.forEach((p,n)=>p.code='ABC'[n]);active={p:0,i:0};expr=String(ps[0].items[0].price||'');render()}function resetAll(){
+function render(){
+ ps.forEach((_,p)=>ensureTrailingRows(p));
+ let el=$('plans');el.style.gridTemplateColumns=`repeat(${ps.length},minmax(0,1fr))`;
+ el.innerHTML=ps.map((p,pi)=>`<div class="plan ${p.code}">
+  <div class="ph"><span class="badge">${p.code}</span><input class="title" value="${esc(p.title)}" oninput="ps[${pi}].title=this.value">${pi?`<button class="trash" onclick="removePlan(${pi})">🗑</button>`:''}</div>
+  <div class="total"><small>お支払総額（税込）</small><b>${money(total(pi))}</b></div>
+  <div class="rows fastRows">${p.items.map((x,ii)=>`<div class="row fastRow ${active.p===pi&&active.i===ii?'selectedRow':''}" onclick="select(${pi},${ii})" ondblclick="editRowName(${pi},${ii});event.stopPropagation()" ontouchend="rowTouch(event,${pi},${ii})">
+    <div class="fastLabel">${esc(x.name||'ダブルタップで項目名')}</div>
+    <div class="fastAmount"><span class="rowOp">${ii===0?'':displayOp(x.op||'+')}</span><b>${money(Math.abs(value(x.price)))}</b><button class="x fastX" onclick="event.stopPropagation();removeRow(${pi},${ii})">×</button></div>
+  </div>`).join('')}</div>
+ </div>`).join('');
+ let it=ps[active.p].items[active.i];
+ $('target').textContent='';
+ $('display').textContent=expr||'0'
+}
+function displayOp(op){return op==='*'?'×':op==='/'?'÷':op==='-'?'−':'＋'}
+function total(p){
+ let a=ps[p].items;if(!a.length)return 0;
+ let result=value(a[0].price);
+ for(let i=1;i<a.length;i++){
+   let n=Math.abs(value(a[i].price)),op=a[i].op||'+';
+   if(op==='+')result+=n; else if(op==='-')result-=n; else if(op==='*')result*=n; else if(op==='/'&&n!==0)result/=n;
+ }
+ return Math.round(result)
+}
+function select(p,i){active={p,i};expr=String(ps[p].items[i].price||'');ensureTrailingRows(p);render()}
+function ensureTrailingRows(p){
+ let items=ps[p].items;
+ while(items.length<6)items.push({name:'',price:'',op:'+'});
+ let lastUsed=-1;
+ items.forEach((x,i)=>{if(String(x.price||'')!==''||String(x.name||'').trim())lastUsed=i});
+ while(items.length-lastUsed-1<2)items.push({name:'',price:'',op:'+'});
+}
+function advanceWithOp(op){
+ let p=active.p,i=active.i,items=ps[p].items;
+ // Empty selected row: operator-first mode. Set this row's sign/operator and stay here.
+ if(!expr && String(items[i].price||'')===''){
+   items[i].op=op;
+   render(); return;
+ }
+ items[i].price=expr || items[i].price;
+ let ni=i+1;
+ if(ni>=items.length)items.push({name:'',price:'',op:op});
+ else items[ni].op=op;
+ active={p:p,i:ni};expr='';
+ ensureTrailingRows(p);render()
+}
+function key(k){
+ let it=ps[active.p].items[active.i];
+ if(k==='clear'){expr='';it.price='';render();return}
+ if(k==='back'){expr=expr.slice(0,-1);it.price=expr;render();return}
+ if(k==='='){it.price=expr;ensureTrailingRows(active.p);render();return}
+ if('+-*/'.includes(k)){advanceWithOp(k);return}
+ expr+=k;it.price=expr;ensureTrailingRows(active.p);render()
+}
+let lastRowTap={key:'',time:0};
+function rowTouch(e,p,i){
+ let now=Date.now(),k=p+'-'+i;
+ if(lastRowTap.key===k&&now-lastRowTap.time<330){e.preventDefault();editRowName(p,i);lastRowTap={key:'',time:0}}
+ else lastRowTap={key:k,time:now}
+}
+function editRowName(p,i){
+ let cur=ps[p].items[i].name||'',v=prompt('項目名を入力',cur);
+ if(v!==null){ps[p].items[i].name=v.trim();render()}
+}
+function addRow(p){ps[p].items.push({name:'',price:'',op:'+'});select(p,ps[p].items.length-1)}
+function removeRow(p,i){if(ps[p].items.length>1)ps[p].items.splice(i,1);else ps[p].items[0]={name:'',price:''};active={p,i:0};expr=String(ps[p].items[0].price||'');render()}function addPlan(){if(ps.length===3)return msg('プランは最大3つです');let c='ABC'[ps.length];ps.push({code:c,title:'プラン'+c,items:JSON.parse(JSON.stringify(ps[0].items))});render()}function removePlan(i){ps.splice(i,1);ps.forEach((p,n)=>p.code='ABC'[n]);active={p:0,i:0};expr=String(ps[0].items[0].price||'');render()}function resetAll(){
  let a=getAppearance();
  if(a.resetConfirm!==false&&!confirm('現在の計算内容をリセットしますか？\n保存していない内容は消えます。'))return;let n=Math.max(1,Math.min(3,Number(a.initialPlans||1)));
- ps=Array.from({length:n},(_,i)=>({code:'ABC'[i],title:'プラン'+'ABC'[i],items:[{name:'商品本体',price:''},{name:'',price:''},{name:'',price:''}]}));
+ ps=Array.from({length:n},(_,i)=>({code:'ABC'[i],title:'プラン'+'ABC'[i],items:[{name:'商品本体',price:'',op:'+'},{name:'',price:'',op:'+'},{name:'',price:'',op:'+'},{name:'',price:'',op:'+'},{name:'',price:'',op:'+'},{name:'',price:'',op:'+'}]}));
  active={p:0,i:0};expr='';render()}function msg(s){$('toast').textContent=s;$('toast').style.display='block';setTimeout(()=>$('toast').style.display='none',1600)}
 function present(){let e=$('present');e.style.gridTemplateColumns=`repeat(${ps.length},1fr)`;e.innerHTML=ps.map((p,i)=>`<div class="pc"><h3>${p.code}　${esc(p.title)}</h3>${p.items.filter(x=>x.name||x.price).map(x=>`<div class="line"><span>${esc(x.name||'項目')}</span><b>${money(value(x.price))}</b></div>`).join('')}<div class="big">${money(total(i))}</div></div>`).join('');$('modal').classList.add('on')}
 renderPreset();render();if('serviceWorker'in navigator)navigator.serviceWorker.register('./sw.js').catch(()=>{});
@@ -342,22 +474,91 @@ function resetAppearance(){localStorage.removeItem('calc_appearance_v2');applyAp
 applyAppearance();
 
 function toggleToolMenu(){$('toolMenu').classList.toggle('on')}
-function openEnergyTool(){$('toolMenu').classList.remove('on');$('energyModal').classList.add('on');calcEnergy()}
+
+/* Energy comparison */
+let energyMode='yen';
+function openEnergyTool(){$('toolMenu').classList.remove('on');$('energyModal').classList.add('on');setEnergyMode(energyMode)}
+function setEnergyMode(m){energyMode=m;let e=$('energyInputs');
+ if(m==='yen')e.innerHTML=`<div class="toolGrid"><label>現在の年間電気代<input id="energyOld" inputmode="numeric" placeholder="例 32000" oninput="calcEnergy()"></label><label>新商品の年間電気代<input id="energyNew" inputmode="numeric" placeholder="例 21000" oninput="calcEnergy()"></label></div>`;
+ if(m==='kwh')e.innerHTML=`<div class="toolGrid"><label>現在 年間kWh<input id="energyOld" inputmode="decimal" placeholder="例 900" oninput="calcEnergy()"></label><label>新商品 年間kWh<input id="energyNew" inputmode="decimal" placeholder="例 650" oninput="calcEnergy()"></label></div>`;
+ if(m==='watt')e.innerHTML=`<div class="toolGrid wattGrid"><label>現在 消費電力W<input id="energyOld" inputmode="decimal" placeholder="例 800" oninput="calcEnergy()"></label><label>新商品 消費電力W<input id="energyNew" inputmode="decimal" placeholder="例 500" oninput="calcEnergy()"></label><label>1日使用時間<input id="energyHours" inputmode="decimal" value="8" oninput="calcEnergy()"></label><label>年間使用日数<input id="energyDays" inputmode="numeric" value="120" oninput="calcEnergy()"></label></div>`;
+ calcEnergy();
+}
+function num(id){let e=$(id);return e?Number(String(e.value||'').replace(/,/g,'')):0}
 function calcEnergy(){
- let a=Number(($('oldPower').value||'').replace(/,/g,'')),b=Number(($('newPower').value||'').replace(/,/g,'')),y=Number($('powerYears').value||5);
- if(!$('oldPower').value||!$('newPower').value){$('energyResult').textContent='金額を入力すると差額を表示します';return}
- let d=a-b,total=d*y;
- $('energyResult').innerHTML=d>=0?`年間 <b>${money(d)}</b> お得　／　${y}年間で <b>${money(total)}</b> お得`:`年間 <b>${money(Math.abs(d))}</b> 増　／　${y}年間で <b>${money(Math.abs(total))}</b> 増`;
+ let o=num('energyOld'),n=num('energyNew'),rate=num('energyRate')||31,yrs=num('powerYears')||5;
+ if(!o&&!n){$('energyResult').textContent='入力すると比較結果を表示します';return}
+ let oy,ny;
+ if(energyMode==='yen'){oy=o;ny=n}
+ else if(energyMode==='kwh'){oy=o*rate;ny=n*rate}
+ else {let h=num('energyHours'),d=num('energyDays');oy=o/1000*h*d*rate;ny=n/1000*h*d*rate}
+ let diff=Math.round(oy-ny),total=diff*yrs;
+ $('energyResult').innerHTML=`現在 約<b>${money(Math.round(oy))}/年</b>　→　新商品 約<b>${money(Math.round(ny))}/年</b><br>${diff>=0?`年間 <b>${money(diff)}</b> お得 ／ ${yrs}年間 <b>${money(total)}</b> お得`:`年間 <b>${money(Math.abs(diff))}</b> 増 ／ ${yrs}年間 <b>${money(Math.abs(total))}</b> 増`}`;
 }
-const newbieGuides={
- air:['畳数・部屋の広さ','設置階・室外機位置','コンセント・電圧','配管穴・配管経路','お掃除機能・省エネ希望'],
- tv:['希望サイズ・視聴距離','地デジ中心か動画中心か','録画の必要性','ゲーム利用','設置方法・既存機器'],
- fridge:['設置幅・搬入経路','容量・人数','扉の開き方','よく使う部屋','省エネ・機能の希望'],
- washer:['設置寸法・防水パン','縦型かドラム式','容量・人数','乾燥の必要性','蛇口・排水・搬入経路']
+
+/* TODO timeline */
+const TODO_KEY='calc_todo_v1';
+let todoAlerted={};
+function todayKey(){let d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`}
+function loadTodos(){try{return JSON.parse(localStorage.getItem(TODO_KEY)||'{}')}catch(e){return {}}}
+function saveTodos(x){localStorage.setItem(TODO_KEY,JSON.stringify(x))}
+function openTodoTool(){$('toolMenu').classList.remove('on');$('todoModal').classList.add('on');renderTodos()}
+function renderTodos(){
+ let all=loadTodos(),day=todayKey(),data=all[day]||{},now=new Date(),hour=now.getHours();
+ $('todoDate').textContent=`${now.getMonth()+1}/${now.getDate()} 今日`;
+ $('todoList').innerHTML=Array.from({length:15},(_,i)=>i+8).map(h=>{
+  let x=data[h]||{},current=h===hour;
+  return `<div class="todoRow ${current?'currentHour':''}"><b>${String(h).padStart(2,'0')}:00</b><input value="${esc(x.text||'')}" placeholder="予定を入力" onchange="setTodo(${h},this.value)"><label><input type="checkbox" ${x.done?'checked':''} onchange="setTodoDone(${h},this.checked)">完了</label></div>`;
+ }).join('');
+}
+function setTodo(h,v){let a=loadTodos(),d=todayKey();a[d]=a[d]||{};a[d][h]=a[d][h]||{};a[d][h].text=v;saveTodos(a)}
+function setTodoDone(h,v){let a=loadTodos(),d=todayKey();a[d]=a[d]||{};a[d][h]=a[d][h]||{};a[d][h].done=v;saveTodos(a)}
+function requestTodoNotify(){if('Notification'in window)Notification.requestPermission().then(()=>alert('通知設定を確認しました'));else alert('この環境ではブラウザ通知に対応していません')}
+function checkTodoReminder(){
+ let now=new Date(),target=now.getHours()+1;if(target<8||target>22)return;
+ let d=todayKey(),x=(loadTodos()[d]||{})[target],key=d+'-'+target;
+ if(x&&x.text&&!x.done&&!todoAlerted[key]&&now.getMinutes()<2){
+  todoAlerted[key]=1;let msg=`1時間後 ${String(target).padStart(2,'0')}:00\n${x.text}`;
+  if('Notification'in window&&Notification.permission==='granted'){try{new Notification('TODOリマインド',{body:msg})}catch(e){}}
+  alert(msg);
+ }
+}
+setInterval(checkTodoReminder,30000);
+
+/* Deal timer */
+let dealEnd=0,dealRemain=0,dealPaused=false,dealTick=null;
+function startDealTimer(min){if(!min||min<=0)return;dealRemain=min*60;dealEnd=Date.now()+dealRemain*1000;dealPaused=false;$('timerSetup').style.display='none';$('timerRunning').style.display='flex';$('timerPause').textContent='一時停止';runDealTimer()}
+function runDealTimer(){clearInterval(dealTick);updateDealTimer();dealTick=setInterval(updateDealTimer,1000)}
+function updateDealTimer(){if(!dealPaused)dealRemain=Math.round((dealEnd-Date.now())/1000);let over=dealRemain<0,sec=Math.abs(dealRemain),m=Math.floor(sec/60),ss=String(sec%60).padStart(2,'0');$('timerText').textContent=over?`超過 ＋${m}:${ss}`:`残り ${m}:${ss}`;$('dealTimer').classList.toggle('timerWarn',!over&&dealRemain<=300);$('dealTimer').classList.toggle('timerOver',over)}
+function pauseDealTimer(){if(dealPaused){dealEnd=Date.now()+dealRemain*1000;dealPaused=false;$('timerPause').textContent='一時停止'}else{dealRemain=Math.round((dealEnd-Date.now())/1000);dealPaused=true;$('timerPause').textContent='再開'}}
+function addDealTime(m){dealRemain+=m*60;if(!dealPaused)dealEnd=Date.now()+dealRemain*1000;updateDealTimer()}
+function resetDealTimer(){clearInterval(dealTick);dealRemain=0;dealPaused=false;$('timerRunning').style.display='none';$('timerSetup').style.display='flex';$('dealTimer').classList.remove('timerWarn','timerOver')}
+
+const hearingGuides={
+air:{title:'エアコン',roots:[['🧼','清潔性','a1'],['⚡','電気代・省エネ','a2'],['🛡️','耐久性・お手入れ','a3'],['🏆','人気・売れ筋','a4']],nodes:{
+a1:{q:'どこを特に清潔にしたい？',a:[['熱交換器','熱交換器の洗浄・乾燥機能を比較'],['ファン','ファン清掃機能を比較'],['フィルター','自動フィルター掃除を比較'],['カビ・ニオイ','内部乾燥・除菌系機能を比較']]},
+a2:{q:'省エネで一番気になることは？',a:[['年間電気代','年間消費電力量・省エネ性能を比較'],['長時間使う','APFや低負荷運転を確認'],['暖房も使う','暖房能力・低温時能力も確認'],['今の機種との差','電気代比較ツールで差額を確認']]},
+a3:{q:'安心感で重視するのは？',a:[['掃除の手間','自動掃除と手入れ箇所を確認'],['内部の汚れ','内部清掃・乾燥機能を確認'],['長く使いたい','保証・手入れ性を確認'],['シンプルが良い','必要機能を絞って比較']]},
+a4:{q:'「人気」で知りたいのは？',a:[['定番モデル','価格と機能のバランスを比較'],['上位モデル','快適・省エネ機能を比較'],['価格重視','必要最低限の機能を確認'],['迷っている','清潔・省エネ・価格の優先順位を確認']]}}},
+tv:{title:'テレビ',roots:[['✨','画質','t1'],['🔊','音質','t2'],['🎮','ゲーム・動画','t3'],['🏆','人気・使いやすさ','t4']],nodes:{
+t1:{q:'画質で一番重視するのは？',a:[['明るさ','Mini LEDなど明るさ・コントラストを比較'],['黒の表現','有機ELなど黒表現を比較'],['動き','倍速・動画性能を確認'],['視野角','斜めからの見え方を確認']]},
+t2:{q:'音で重視するのは？',a:[['声の聞きやすさ','セリフ強調・スピーカー構成を確認'],['迫力','ウーファー・出力を比較'],['映画','立体音響対応を確認'],['普通でOK','画質・価格を優先']]},
+t3:{q:'主な使い方は？',a:[['PS5などゲーム','4K/120Hz・VRR・低遅延を確認'],['YouTube・配信','OS・アプリ操作性を確認'],['スポーツ','倍速・動きの見やすさを確認'],['地デジ中心','画質補正・録画機能を確認']]},
+t4:{q:'選び方で近いものは？',a:[['定番が安心','サイズ・価格・主要機能で比較'],['操作が簡単','リモコン・OSを確認'],['録画したい','チューナー数・HDD対応を確認'],['迷っている','サイズ→画質→用途の順で確認']]}}},
+fridge:{title:'冷蔵庫',roots:[['📦','容量・サイズ','f1'],['❄️','冷凍・鮮度','f2'],['⚡','電気代','f3'],['🚪','使いやすさ','f4']],nodes:{
+f1:{q:'まずどこを確認する？',a:[['人数・容量','人数と買い置き量から容量を確認'],['設置幅','本体幅＋放熱スペースを確認'],['搬入経路','玄関・廊下・階段を確認'],['高さ・奥行','設置場所の寸法を確認']]},
+f2:{q:'食品でよく使うのは？',a:[['冷凍食品','冷凍室容量・引き出しを比較'],['肉・魚','鮮度保持・チルド機能を比較'],['野菜','野菜室の位置・鮮度機能を比較'],['作り置き','冷凍・急冷機能を確認']]},
+f3:{q:'省エネで気になることは？',a:[['年間電気代','年間消費電力量を比較'],['今の機種との差','電気代比較ツールで確認'],['大型でも節電','容量と省エネ性能を両方確認'],['開閉が多い','センサー・節電機能を確認']]},
+f4:{q:'使いやすさで重視するのは？',a:[['よく使う部屋','冷蔵・冷凍・野菜室の位置を確認'],['扉の開き方','右・左・フレンチドアを確認'],['掃除しやすさ','棚・ケースの外しやすさを確認'],['取り出しやすさ','棚配置・引き出しを確認']]}}},
+washer:{title:'洗濯機',roots:[['👕','洗浄力','w1'],['💨','乾燥','w2'],['⚡','節水・電気代','w3'],['🧼','お手入れ','w4']],nodes:{
+w1:{q:'洗濯で一番気になることは？',a:[['汚れ落ち','洗浄方式・温水機能を比較'],['衣類の傷み','洗い方・コースを確認'],['大物を洗う','容量・投入口を確認'],['時短したい','洗濯時間・自動投入を確認']]},
+w2:{q:'乾燥はどのくらい使う？',a:[['毎日使う','乾燥方式・電気代を重視'],['雨の日だけ','乾燥容量・時間を確認'],['タオル中心','仕上がり・乾燥方式を比較'],['使わない','洗浄力・価格を優先']]},
+w3:{q:'ランニングコストで重視するのは？',a:[['水道代','使用水量を比較'],['電気代','洗濯・乾燥の消費電力量を確認'],['両方','年間コストで比較'],['分からない','使用頻度から優先度を整理']]},
+w4:{q:'お手入れで気になることは？',a:[['槽の汚れ','槽洗浄・自動お手入れを確認'],['乾燥フィルター','フィルター掃除の手間を比較'],['洗剤投入','自動投入・タンク清掃を確認'],['掃除を減らしたい','自動お手入れ機能を優先']]}}}
 };
+let currentGuide='air';
 function openNewbieTool(){$('toolMenu').classList.remove('on');$('newbieModal').classList.add('on');showGuide('air')}
-function showGuide(c){
- let names={air:'エアコン',tv:'テレビ',fridge:'冷蔵庫',washer:'洗濯機'},a=newbieGuides[c];
- $('guideBody').innerHTML=`<b>${names[c]}｜まず確認</b><br>`+a.map((x,i)=>`${i+1}. ${x}`).join('<br>');
-}
+function showGuide(c){currentGuide=c;let g=hearingGuides[c];$('guideBody').innerHTML=`<div class="hearingHead"><b>${g.title}</b><span>何を重視しますか？</span></div><div class="hearingCards">${g.roots.map(r=>`<button class="hearingCard" onclick="showHearingNode('${r[2]}')"><span>${r[0]}</span><b>${r[1]}</b></button>`).join('')}</div>`}
+function showHearingNode(id){let g=hearingGuides[currentGuide],n=g.nodes[id];$('guideBody').innerHTML=`<button class="guideBack" onclick="showGuide('${currentGuide}')">← 戻る</button><div class="hearingQuestion">${n.q}</div><div class="answerCards">${n.a.map((a,i)=>`<button onclick="showHearingResult('${id}',${i})">${a[0]}</button>`).join('')}</div>`}
+function showHearingResult(id,i){let g=hearingGuides[currentGuide],n=g.nodes[id],a=n.a[i];$('guideBody').innerHTML=`<button class="guideBack" onclick="showHearingNode('${id}')">← 戻る</button><div class="hearingResult"><small>ヒアリング結果</small><b>${a[0]}</b><p>${a[1]}</p></div><button class="restartGuide" onclick="showGuide('${currentGuide}')">最初から確認</button>`}
 </script></body></body></html>
