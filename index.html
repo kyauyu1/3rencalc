@@ -133,7 +133,734 @@ body.theme-dark .todoRow{background:#172033;border-color:#334155!important}body.
 </style><style>
 .learnTip{margin-top:12px;padding:9px 10px;border-radius:10px;background:#fff7ed;border:1px solid #fed7aa;font-size:10px}
 .learnTip b,.learnTip span{display:block}.learnTip span{margin-top:3px;color:#7c2d12}
-</style></head><body><header class="top"><div style="display:flex;gap:6px;align-items:center"><button onclick="toggleToolMenu()" class="settingsBtn menuBtn" title="ツール" aria-label="ツール">☰</button><button onclick="openSettings()" class="settingsBtn" title="設定" aria-label="設定">⚙</button></div><div class="dealTimer" id="dealTimer">
+</style><style>
+.cleanStack{display:flex;flex-wrap:wrap;gap:4px}.cleanStack>div{border:1px solid #dbe3ee;border-radius:7px;padding:5px;background:#f8fafc}.cleanStack b,.cleanStack span{display:block}.cleanStack b{font-size:9px}.cleanStack span{font-size:8px;color:#64748b}.energySummary{margin-top:9px;border:1px solid #bfdbfe;border-radius:11px;background:#eff6ff;padding:8px}.energyHead{display:flex;justify-content:space-between}.energyCols{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:6px}.energyCols>div{background:#fff;border-radius:8px;padding:6px}.energyCols strong,.energyCols span,.energyCols b{display:block}.energyCols strong{font-size:9px}.energyCols span{font-size:10px;margin-top:2px}.energyCols b{font-size:12px}.energyDiff{margin-top:6px;padding-top:6px;border-top:1px solid #bfdbfe;font-size:10px}.energyDiff strong{font-size:14px}.energyDiff small{display:block;color:#475569}.specTitle{margin-top:8px!important}.beginSpec{padding:7px!important}.beginSpec>div:not(.specModel){padding:4px 0!important}
+</style><style>
+/* v10.5 full-screen newcomer feature pages */
+#newbieModal.featureFullscreen{padding:0!important;align-items:stretch!important;justify-content:stretch!important;background:var(--bg,#f8fafc)!important}
+#newbieModal.featureFullscreen .miniTool{width:100vw!important;height:100dvh!important;max-width:none!important;max-height:none!important;border-radius:0!important;margin:0!important;display:flex!important;flex-direction:column!important}
+#newbieModal.featureFullscreen .miniTool>h2,#newbieModal.featureFullscreen .toolTabs{display:none!important}
+#newbieModal.featureFullscreen #guideBody{flex:1;overflow:auto;padding:12px 18px 30px;max-width:1180px;width:100%;margin:0 auto;box-sizing:border-box}
+.fullToolBar{position:sticky;top:-12px;z-index:8;display:grid;grid-template-columns:100px 1fr 120px;align-items:center;gap:10px;background:rgba(255,255,255,.96);backdrop-filter:blur(10px);padding:10px 0;border-bottom:1px solid #e2e8f0;margin-bottom:8px}
+.fullToolBar b{text-align:center;font-size:16px}.fullToolBar span{text-align:right;color:#64748b;font-size:10px}
+#newbieModal.featureFullscreen .comparePick{grid-template-columns:1fr 1fr;max-width:850px;margin:10px auto}
+#newbieModal.featureFullscreen .compareGo{max-width:850px;display:block;margin:8px auto}
+#newbieModal.featureFullscreen #acCompareResult{max-width:1100px;margin:0 auto}
+#newbieModal.featureFullscreen .featureCompare section{grid-template-columns:145px 1fr 1fr}
+#newbieModal.featureFullscreen .featureCompare h4{font-size:12px}
+#newbieModal.featureFullscreen .featureCompare b{font-size:12px}
+#newbieModal.featureFullscreen .featureCompare small{font-size:10px}
+#newbieModal.featureFullscreen .specPair{grid-template-columns:1fr 1fr}
+@media(orientation:portrait),(max-width:700px){
+ #newbieModal.featureFullscreen #guideBody{padding:8px 10px 24px}
+ .fullToolBar{grid-template-columns:75px 1fr 70px;top:-8px}.fullToolBar b{font-size:13px}
+ #newbieModal.featureFullscreen .featureCompare section{grid-template-columns:82px 1fr 1fr}
+ #newbieModal.featureFullscreen .specPair{grid-template-columns:1fr}
+}
+</style><style>
+.valueBox{margin:8px 0 10px;border:2px solid #f59e0b;border-radius:12px;background:#fffbeb;padding:9px 11px}
+.valueTitle{display:flex;justify-content:space-between;gap:12px;align-items:center}.valueTitle b{font-size:13px}.valueTitle span{font-size:9px;color:#92400e;text-align:right}
+.valueBullets{display:grid;grid-template-columns:repeat(5,1fr);gap:5px;margin-top:7px}.valueBullets span{background:#fff;border:1px solid #fde68a;border-radius:7px;padding:6px;font-size:9px;font-weight:700}
+#newbieModal.featureFullscreen .featureCompare section>div{line-height:1.35}
+@media(max-width:800px),(orientation:portrait){.valueTitle{display:block}.valueTitle span{display:block;text-align:left;margin-top:3px}.valueBullets{grid-template-columns:1fr 1fr}.valueBullets span:last-child{grid-column:1/-1}}
+</style><style>
+/* v10.7 readability + glossary */
+.valueBox{padding:10px 12px!important;background:#fffdf5!important}
+.valueBullets{grid-template-columns:repeat(3,1fr)!important;gap:7px!important}
+.valueBullets span{padding:7px 8px!important;font-size:9px!important}
+.featureCompare section{margin-bottom:5px!important}
+.featureCompare section>div{padding:8px 10px!important}
+.featureText{font-weight:600!important}
+.termChip{display:inline-flex;align-items:center;gap:3px;border:0;border-bottom:1px dashed #64748b;background:transparent;padding:1px 2px;margin:1px;color:inherit;font:inherit;font-weight:700;cursor:pointer}
+.termChip span{font-size:8px;color:#2563eb}
+.termPop{display:none;position:fixed;inset:0;z-index:99999;background:rgba(15,23,42,.28);align-items:center;justify-content:center;padding:20px}
+.termPop.show{display:flex}.termPopCard{position:relative;width:min(430px,90vw);background:#fff;color:#0f172a;border-radius:16px;padding:18px;box-shadow:0 20px 60px rgba(0,0,0,.25)}
+.termPopCard>button{position:absolute;right:10px;top:8px;border:0;background:#f1f5f9;border-radius:50%;width:30px;height:30px;font-size:20px}.termPopCard small{color:#64748b}.termPopCard h3{margin:5px 0 8px;font-size:18px}.termPopCard p{margin:0;line-height:1.65;font-size:13px}
+.specPair{margin-top:6px!important}.specTitle{margin:10px 0 5px!important}
+@media(max-width:800px),(orientation:portrait){.valueBullets{grid-template-columns:1fr!important}.featureCompare section>div{padding:7px!important}}
+</style><style>
+/* v10.8 compact catalog-first comparison */
+.energySummary,.specTitle,.specPair{display:none!important}
+.energyJump{width:100%;margin:9px 0 2px;border:1px solid #93c5fd;background:#eff6ff;border-radius:10px;padding:9px 12px;display:flex;align-items:center;justify-content:space-between;gap:12px;cursor:pointer;color:#1e3a8a}
+.energyJump>span{font-size:13px;font-weight:800}.energyJump>small{font-size:9px;color:#475569}
+.energyPrefillNote{margin:6px 0 10px;padding:8px 10px;background:#eff6ff;border:1px solid #bfdbfe;border-radius:9px}.energyPrefillNote b,.energyPrefillNote span{display:block}.energyPrefillNote span{font-size:10px;margin-top:2px}
+#newbieModal.featureFullscreen .featureCompare section>div{padding:7px 9px!important}
+#newbieModal.featureFullscreen .featureCompare b{font-size:11px!important;line-height:1.45!important}
+.valueBox{margin-bottom:7px!important}.valueBullets span{min-height:0!important}
+@media(max-width:800px),(orientation:portrait){.energyJump{align-items:flex-start;flex-direction:column;gap:2px}}
+</style><style>
+.termChip{color:#1d4ed8!important;border-bottom:1px dashed #60a5fa!important}
+.termChip:active{background:#dbeafe!important;border-radius:4px}
+.plainFeature{display:inline}.featureNone{display:inline;color:#64748b;font-weight:700}
+.featureSep{color:#94a3b8;margin:0 2px}.termQualifier{font-size:8px;color:#64748b;margin-left:1px}
+.energyPrefillNote{margin:7px 0 9px!important}
+</style><style>
+.compareActions{display:grid;grid-template-columns:1fr auto;gap:6px;max-width:850px;margin:8px auto}.compareActions .compareGo{margin:0!important;max-width:none!important}
+.miniEnergyGo{border:1px solid #93c5fd;background:#eff6ff;color:#1d4ed8;border-radius:9px;padding:0 12px;font-size:10px;font-weight:800;white-space:nowrap}
+.compareMain{display:grid;grid-template-columns:minmax(0,7fr) minmax(260px,3fr);gap:12px;align-items:start;margin-top:9px}
+.benefitPanel{background:#fff;border:2px solid #f59e0b;border-radius:14px;padding:13px}
+.benefitHead{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;border-bottom:1px solid #fde68a;padding-bottom:8px}.benefitHead small{font-size:10px;color:#92400e;font-weight:800}.benefitHead h3{margin:2px 0 0;font-size:18px}.benefitHead>span{max-width:42%;font-size:10px;color:#78350f;text-align:right}
+.benefitList{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}.benefitItem{display:grid;grid-template-columns:34px 1fr;gap:7px;background:#fffbeb;border:1px solid #fde68a;border-radius:10px;padding:9px}.benefitItem i{font-style:normal;font-size:22px}.benefitItem b{font-size:13px}.benefitItem p{font-size:10px;line-height:1.45;color:#57534e;margin:3px 0 0}
+.sameSeries{font-size:11px;color:#57534e}
+.featureSide{background:#f8fafc;border:1px solid #e2e8f0;border-radius:12px;padding:8px}.sideHeads{display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-bottom:5px}.sideHeads b{text-align:center;font-size:10px;background:#fff;padding:5px;border-radius:6px}
+.compactFeatures section{display:grid;grid-template-columns:58px 1fr 1fr;border-top:1px solid #e2e8f0}.compactFeatures h4{font-size:9px;margin:0;padding:7px 4px}.compactFeatures section>div{font-size:8.5px;line-height:1.35;padding:7px 4px;border-left:1px solid #e2e8f0}.compactFeatures b{font-size:8.5px!important}.compactFeatures .termChip{font-size:8.5px!important;padding:0!important}.compactFeatures .termChip span{font-size:7px!important}
+#newbieModal.featureFullscreen #acCompareResult{max-width:1180px!important}
+@media(max-width:850px),(orientation:portrait){.compareMain{grid-template-columns:1fr}.benefitList{grid-template-columns:1fr}.featureSide{order:2}.benefitHead{display:block}.benefitHead>span{display:block;max-width:none;text-align:left;margin-top:4px}}
+</style><style>
+/* v11.1: dedicated full-screen comparison canvas */
+#newbieModal.featureFullscreen .miniTool{
+  width:100vw!important;height:100dvh!important;max-width:none!important;max-height:none!important;
+  border:0!important;border-radius:0!important;box-shadow:none!important;background:var(--bg,#f8fafc)!important;
+}
+#newbieModal.featureFullscreen .miniTool>h2,
+#newbieModal.featureFullscreen .toolTabs,
+#newbieModal.featureFullscreen .guideCats,
+#newbieModal.featureFullscreen .categoryTabs,
+#newbieModal.featureFullscreen .newbieCats{display:none!important}
+#newbieModal.featureFullscreen #guideBody{
+  max-width:none!important;width:100%!important;margin:0!important;padding:0 18px 22px!important;box-sizing:border-box!important;
+}
+#newbieModal.featureFullscreen .fullToolBar{
+  top:0!important;margin:0 -18px 10px!important;padding:10px 18px!important;
+  grid-template-columns:90px 1fr 100px!important;
+}
+#newbieModal.featureFullscreen .comparePick,
+#newbieModal.featureFullscreen .compareActions{max-width:none!important;width:100%!important}
+#newbieModal.featureFullscreen #acCompareResult{max-width:none!important;width:100%!important}
+.compareMain{grid-template-columns:minmax(330px,4fr) minmax(0,6fr)!important;gap:14px!important}
+.featureSide{padding:10px!important}
+.sideHeads b{font-size:11px!important;padding:7px!important}
+.compactFeatures section{grid-template-columns:76px 1fr 1fr!important}
+.compactFeatures h4{font-size:10px!important;padding:9px 6px!important}
+.compactFeatures section>div{font-size:10px!important;line-height:1.45!important;padding:9px 7px!important}
+.compactFeatures b,.compactFeatures .termChip{font-size:10px!important}
+.benefitPanel{height:100%;box-sizing:border-box}
+.benefitList{grid-template-columns:1fr!important}
+.benefitItem{padding:9px!important}
+.benefitHead{display:block!important}.benefitHead>span{display:block!important;max-width:none!important;text-align:left!important;margin-top:5px!important}
+@media(max-width:850px),(orientation:portrait){
+ #newbieModal.featureFullscreen #guideBody{padding:0 10px 20px!important}
+ #newbieModal.featureFullscreen .fullToolBar{margin:0 -10px 8px!important;padding:9px 10px!important}
+ .compareMain{grid-template-columns:1fr!important}
+ .featureSide{order:2}.benefitPanel{order:1}
+}
+</style><style>
+/* v11.2 lower comparison: balanced 5:5 */
+.compareMain{grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;gap:14px!important}
+.benefitList{display:grid!important;grid-template-columns:1fr!important;gap:5px!important}
+.benefitItem{min-height:48px!important;padding:7px 9px!important;grid-template-columns:31px 1fr!important;align-items:center!important}
+.benefitItem i{font-size:19px!important;text-align:center}.benefitItem b{font-size:11px!important}.benefitItem p{font-size:9px!important;margin-top:2px!important}
+.benefitFoot{margin-top:7px;padding:6px 8px;border-radius:7px;background:#f8fafc;color:#64748b;font-size:9px;text-align:center}
+.featureSide{height:100%;box-sizing:border-box}
+.compactFeatures section{min-height:48px!important;align-items:stretch!important}
+.compactFeatures section>div{display:flex;align-items:center;flex-wrap:wrap;align-content:center}
+.compactFeatures h4{display:flex;align-items:center}
+.compactFeatures .zeroRow{min-height:34px!important;background:#f8fafc}
+.compactFeatures .zeroRow h4{font-size:8px!important}.compactFeatures .zeroRow>div{font-size:7.5px!important;line-height:1.25!important;padding:5px!important}
+@media(max-width:850px),(orientation:portrait){.compareMain{grid-template-columns:1fr!important}}
+</style><style>
+/* v11.4: align the right comparison rows directly with the left benefit cards */
+.compareMain{grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;gap:14px!important;align-items:stretch!important}
+.benefitPanel,.featureSide{display:flex!important;flex-direction:column!important;height:100%!important;box-sizing:border-box!important}
+
+/* Header areas use matching vertical space */
+.benefitHead{min-height:68px!important;box-sizing:border-box!important}
+.sideHeads{min-height:68px!important;box-sizing:border-box!important;align-items:center!important;margin-bottom:0!important}
+
+/* Five main rows on each side occupy the same five equal tracks */
+.benefitList{display:grid!important;grid-template-rows:repeat(5,minmax(58px,1fr))!important;gap:5px!important;flex:1!important;margin-top:10px!important}
+.benefitItem{min-height:0!important;height:100%!important;box-sizing:border-box!important;align-items:center!important}
+
+.compactFeatures{display:grid!important;grid-template-rows:repeat(5,minmax(58px,1fr)) auto!important;flex:1!important}
+.compactFeatures section:not(.zeroRow){min-height:0!important;height:100%!important;box-sizing:border-box!important;align-items:stretch!important}
+.compactFeatures section:not(.zeroRow)>h4,
+.compactFeatures section:not(.zeroRow)>div{height:100%!important;box-sizing:border-box!important;display:flex!important;align-items:center!important;align-content:center!important}
+
+/* Right labels visually mirror left icon/title placement */
+.compactFeatures h4{justify-content:flex-start!important;text-align:left!important;font-size:10px!important;padding:8px 5px!important;white-space:normal!important}
+.compactFeatures section{grid-template-columns:72px 1fr 1fr!important}
+.compactFeatures section>div{padding:8px 7px!important}
+
+/* Zero Emi is an extra footer, not one of the five aligned rows */
+.compactFeatures .zeroRow{min-height:32px!important;height:auto!important;margin-top:5px!important;border:1px solid #e2e8f0!important;border-radius:7px!important;overflow:hidden!important}
+.benefitFoot{min-height:32px!important;box-sizing:border-box!important;margin-top:5px!important;display:flex!important;align-items:center!important;justify-content:center!important}
+
+@media(max-width:850px),(orientation:portrait){
+ .benefitHead,.sideHeads{min-height:auto!important}
+ .benefitList,.compactFeatures{display:block!important}
+ .benefitItem,.compactFeatures section{height:auto!important;min-height:52px!important;margin-bottom:5px!important}
+}
+</style><style>
+/* v11.5: back-only top bar + use freed space */
+.compareBackOnly{height:42px;display:flex;align-items:center;padding:5px 0}
+.compareBackOnly .guideBack{margin:0!important}
+#newbieModal.featureFullscreen #guideBody{padding-top:0!important}
+#newbieModal.featureFullscreen .comparePick{margin-top:0!important}
+.comparePick{padding:8px 10px!important}
+.compareActions{margin:5px auto 7px!important}
+.compareMain{margin-top:5px!important}
+.benefitHead,.sideHeads{min-height:58px!important}
+.benefitList,.compactFeatures{min-height:0}
+.benefitItem{min-height:54px!important}
+.compactFeatures section:not(.zeroRow){min-height:54px!important}
+</style><style>
+/* v11.7 comparison readability: five aligned rows, no Zero Emi row */
+.compactFeatures{
+  display:grid!important;
+  grid-template-rows:repeat(5,minmax(58px,1fr))!important;
+  gap:5px!important;
+  flex:1!important;
+}
+.compactFeatures section{
+  min-height:0!important;
+  height:100%!important;
+  box-sizing:border-box!important;
+  display:grid!important;
+  grid-template-columns:72px minmax(0,1fr) minmax(0,1fr)!important;
+  border:2px solid #f3b36a!important;
+  border-radius:10px!important;
+  overflow:hidden!important;
+  background:#fffaf3!important;
+  box-shadow:0 1px 3px rgba(120,70,10,.06)!important;
+}
+.compactFeatures section h4{
+  height:100%!important;
+  box-sizing:border-box!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:flex-start!important;
+  margin:0!important;
+  padding:8px 7px!important;
+  background:#fff0dc!important;
+  border-right:1px solid #f3c894!important;
+  color:#9a4e00!important;
+  font-weight:800!important;
+  line-height:1.25!important;
+}
+.compactFeatures section>div{
+  height:100%!important;
+  box-sizing:border-box!important;
+  display:flex!important;
+  align-items:center!important;
+  padding:8px 9px!important;
+  background:#fffdf9!important;
+  border-right:1px solid #f4dfc5!important;
+  line-height:1.45!important;
+}
+.compactFeatures section>div:last-child{border-right:0!important}
+.featureSide{display:flex!important;flex-direction:column!important;height:100%!important}
+.benefitList{
+  display:grid!important;
+  grid-template-rows:repeat(5,minmax(58px,1fr))!important;
+  gap:5px!important;
+  flex:1!important;
+}
+.benefitItem{height:100%!important;min-height:0!important;box-sizing:border-box!important}
+.benefitHead,.sideHeads{min-height:58px!important;height:58px!important;box-sizing:border-box!important}
+.benefitFoot{height:32px!important;min-height:32px!important}
+.featureSide:after{
+  content:"";
+  height:32px;min-height:32px;box-sizing:border-box;margin-top:5px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:10px;color:#7c5a31;background:#fffaf3;border:1px solid #f3d1a8;border-radius:7px;
+}
+@media(max-width:850px),(orientation:portrait){
+ .benefitHead,.sideHeads{height:auto!important;min-height:auto!important}
+ .benefitList,.compactFeatures{display:block!important}
+ .benefitItem,.compactFeatures section{height:auto!important;min-height:54px!important;margin-bottom:5px!important}
+ .featureSide:after{display:none!important}
+}
+</style>
+<style>
+/* v11.8: full-height five-row comparison, no bottom electricity guidance */
+.benefitPanel,.featureSide{height:100%!important;display:flex!important;flex-direction:column!important}
+.benefitHead,.sideHeads{height:58px!important;min-height:58px!important;box-sizing:border-box!important}
+.benefitList,.compactFeatures{
+  display:grid!important;
+  grid-template-rows:repeat(5,minmax(0,1fr))!important;
+  gap:6px!important;
+  flex:1 1 auto!important;
+  height:auto!important;
+  min-height:0!important;
+  margin-top:6px!important;
+}
+.benefitItem,.compactFeatures section{
+  height:100%!important;
+  min-height:0!important;
+  box-sizing:border-box!important;
+}
+.featureSide:after{content:none!important;display:none!important}
+.benefitFoot{display:none!important}
+.compareMain{align-items:stretch!important}
+.compactFeatures section{
+  border:2px solid #f2aa55!important;
+  border-radius:10px!important;
+  background:#fffaf3!important;
+}
+.compactFeatures section h4{
+  background:#ffedd5!important;color:#8d4700!important;
+  border-right:1px solid #efc38d!important;
+}
+.compactFeatures section>div{background:#fffdf9!important}
+@media(min-width:851px) and (orientation:landscape){
+ #acCompareResult,.compareMain{height:calc(100dvh - 190px)!important;min-height:420px!important}
+ .benefitPanel,.featureSide{min-height:100%!important}
+}
+@media(max-width:850px),(orientation:portrait){
+ #acCompareResult,.compareMain{height:auto!important}
+ .benefitHead,.sideHeads{height:auto!important;min-height:auto!important}
+ .benefitList,.compactFeatures{display:block!important;height:auto!important}
+ .benefitItem,.compactFeatures section{height:auto!important;min-height:56px!important;margin-bottom:6px!important}
+}
+</style><style>
+.termInfoPopup{position:fixed;inset:0;z-index:99999;background:rgba(15,23,42,.34);display:flex;align-items:center;justify-content:center;padding:20px}
+.termInfoCard{position:relative;width:min(430px,88vw);background:#fff;border:2px solid #f2aa55;border-radius:16px;padding:20px 22px;box-shadow:0 18px 50px rgba(0,0,0,.22)}
+.termInfoCard h3{margin:0 32px 8px 0;font-size:18px;color:#9a4e00}
+.termInfoCard p{margin:0;font-size:14px;line-height:1.7;color:#334155}
+.termInfoClose{position:absolute;right:10px;top:8px;border:0;background:transparent;font-size:27px;line-height:1;cursor:pointer;color:#64748b}
+.termChip{cursor:pointer!important}
+</style><style>
+.acEnergyCompareModal{position:fixed;inset:0;z-index:100000;background:#f6f7f9;display:flex;align-items:stretch;justify-content:center;padding:18px;box-sizing:border-box}
+.acEnergyCompareCard{width:min(900px,100%);height:100%;background:white;border-radius:18px;padding:18px 22px;box-sizing:border-box;box-shadow:0 10px 35px rgba(0,0,0,.14);overflow:auto}
+.acEnergyTop{display:flex;align-items:center;gap:16px;border-bottom:1px solid #e5e7eb;padding-bottom:12px}
+.acEnergyTop h2{margin:0;font-size:24px}
+.acEnergyBack{border:0;border-radius:10px;padding:10px 14px;background:#eef2f7;font-weight:800;font-size:14px}
+.acEnergyRate{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:15px 0;background:#fff7ed;border:2px solid #fdba74;border-radius:12px;padding:12px 14px}
+.acEnergyRate label{font-weight:800}.acEnergyRate input{width:80px;font-size:20px;font-weight:900;text-align:right;padding:6px;border:1px solid #fdba74;border-radius:7px}
+.acEnergyRate small{color:#6b7280}
+.acEnergyModels{display:grid;grid-template-columns:1fr 55px 1fr;align-items:stretch;gap:10px}
+.acEnergyModel{border:2px solid #f3b36a;background:#fffaf3;border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:6px;text-align:center}
+.acEnergyModel b{font-size:18px;color:#9a4e00}.acEnergyModel span{font-size:13px;color:#64748b}.acEnergyModel strong{font-size:32px;margin-top:4px}.acEnergyModel strong small{font-size:14px}
+.acEnergyVs{display:flex;align-items:center;justify-content:center;font-weight:900;color:#94a3b8}
+.acEnergyResult{margin-top:14px;border:1px solid #e5e7eb;border-radius:14px;overflow:hidden}
+.acEnergyRow{display:grid;grid-template-columns:1fr 1fr 1fr;align-items:center;text-align:center;padding:14px;border-bottom:1px solid #e5e7eb}
+.acEnergyRow.emphasis{background:#fff7ed}.acEnergyRow.emphasis strong{font-size:26px;color:#c45b00}.acEnergyRow.emphasis small{font-weight:700}
+.acEnergyYears{display:grid;grid-template-columns:1fr 1fr}.acEnergyYears div{padding:16px;text-align:center}.acEnergyYears div+div{border-left:1px solid #e5e7eb}.acEnergyYears span{display:block;font-size:13px;color:#64748b}.acEnergyYears b{font-size:24px}
+.acEnergyNote{font-size:11px;color:#6b7280;line-height:1.55;margin-top:12px}
+@media(max-width:650px){.acEnergyCompareModal{padding:0}.acEnergyCompareCard{border-radius:0;padding:14px}.acEnergyRate{align-items:flex-start;flex-direction:column}.acEnergyModels{grid-template-columns:1fr}.acEnergyVs{height:20px}.acEnergyRow{grid-template-columns:1fr;gap:7px}}
+</style><style>
+.benefitItem p{line-height:1.42!important}
+.benefitHead>span{font-weight:700!important}
+</style><style id="v124-readable-compare">
+/* v12.4: iPad sales-floor readability — larger, left aligned, keep 5-row alignment */
+.benefitHead,.sideHeads{text-align:left!important}
+.benefitHead h3{font-size:20px!important;line-height:1.25!important}
+.benefitHead small{font-size:12px!important}
+.benefitHead>span{font-size:12px!important;line-height:1.4!important;text-align:left!important}
+.benefitItem{padding:10px 12px!important;text-align:left!important}
+.benefitItem i{font-size:19px!important}
+.benefitItem b{font-size:14px!important;line-height:1.25!important}
+.benefitItem p{font-size:13.5px!important;line-height:1.55!important;letter-spacing:.01em!important;margin-top:4px!important;text-align:left!important}
+.sideHeads b{font-size:14px!important;line-height:1.3!important;padding:9px 10px!important;text-align:left!important}
+.compactFeatures section{grid-template-columns:82px minmax(0,1fr) minmax(0,1fr)!important}
+.compactFeatures section h4{font-size:12px!important;line-height:1.25!important;padding:9px 7px!important;text-align:left!important;justify-content:flex-start!important}
+.compactFeatures section>div{font-size:12.5px!important;line-height:1.5!important;padding:9px 9px!important;text-align:left!important;align-content:center!important}
+.compactFeatures b,.compactFeatures .featureText,.compactFeatures .termChip{font-size:12.5px!important;line-height:1.5!important;text-align:left!important}
+.compactFeatures .termChip span{font-size:10px!important}
+.comparePick b{font-size:14px!important}
+.comparePick select{font-size:15px!important}
+.compareGo,.miniEnergyGo{font-size:15px!important;font-weight:800!important}
+@media(min-width:851px) and (orientation:landscape){
+ .compareMain{grid-template-columns:minmax(390px,43fr) minmax(0,57fr)!important}
+}
+@media(max-width:850px),(orientation:portrait){
+ .benefitItem b{font-size:15px!important}
+ .benefitItem p{font-size:14px!important}
+ .sideHeads b{font-size:14px!important}
+ .compactFeatures section>div,.compactFeatures b,.compactFeatures .featureText,.compactFeatures .termChip{font-size:13px!important}
+}
+</style><style id="v125-four-rows">
+.benefitList,.compactFeatures{
+ grid-template-rows:repeat(4,minmax(0,1fr))!important;
+}
+@media(min-width:851px) and (orientation:landscape){
+ .benefitItem p{font-size:14px!important;line-height:1.58!important}
+ .compactFeatures section>div,
+ .compactFeatures b,.compactFeatures .featureText,.compactFeatures .termChip{
+   font-size:13.5px!important;line-height:1.55!important;
+ }
+}
+</style><style id="v126-independent-scroll">
+/* v12.6: both sides same outlined visual language */
+.benefitPanel,.featureSide{
+  border:2px solid #f2aa55!important;
+  border-radius:12px!important;
+  background:#fffaf3!important;
+  box-sizing:border-box!important;
+  overflow:hidden!important;
+}
+.benefitHead,.sideHeads{
+  border:0!important;
+  border-bottom:2px solid #f2aa55!important;
+  border-radius:0!important;
+  background:#fff3e2!important;
+  box-sizing:border-box!important;
+}
+.benefitHead>span{display:none!important}
+
+/* Individual scrolling columns: headers stay visible, bodies scroll independently */
+.benefitPanel,.featureSide{
+  min-height:0!important;
+}
+.benefitList,.compactFeatures{
+  overflow-y:auto!important;
+  overscroll-behavior:contain!important;
+  -webkit-overflow-scrolling:touch!important;
+  scrollbar-gutter:stable!important;
+  padding-right:3px!important;
+}
+.benefitList{
+  margin:0!important;
+  padding:6px!important;
+}
+.compactFeatures{
+  margin:0!important;
+  padding:6px!important;
+}
+.benefitItem{
+  border:2px solid #f2aa55!important;
+  border-radius:10px!important;
+  background:#fffdf9!important;
+}
+.compactFeatures section{
+  border:2px solid #f2aa55!important;
+  border-radius:10px!important;
+  background:#fffdf9!important;
+}
+
+/* Let long copy grow instead of being clipped; each side then scrolls */
+.benefitList,.compactFeatures{
+  grid-template-rows:none!important;
+  grid-auto-rows:minmax(92px,auto)!important;
+  align-content:start!important;
+}
+.benefitItem,.compactFeatures section{
+  min-height:92px!important;
+  height:auto!important;
+}
+
+/* Keep the two panels equal-height in iPad landscape, with their own scroll areas */
+@media(min-width:851px) and (orientation:landscape){
+ #acCompareResult,.compareMain{
+   height:calc(100dvh - 190px)!important;
+   min-height:420px!important;
+   overflow:hidden!important;
+ }
+ .benefitPanel,.featureSide{
+   height:100%!important;
+   max-height:100%!important;
+ }
+ .benefitList,.compactFeatures{
+   flex:1 1 0!important;
+   min-height:0!important;
+   max-height:none!important;
+ }
+}
+
+/* Portrait/smaller screens: retain natural document scrolling */
+@media(max-width:850px),(orientation:portrait){
+ #acCompareResult,.compareMain{height:auto!important;overflow:visible!important}
+ .benefitPanel,.featureSide{height:auto!important;max-height:none!important;overflow:visible!important}
+ .benefitList,.compactFeatures{overflow:visible!important;max-height:none!important}
+}
+</style><style id="v127-special-row">
+.benefitList,.compactFeatures{
+  grid-template-rows:none!important;
+  grid-auto-rows:minmax(88px,auto)!important;
+}
+</style><!-- v12.9: 2026 official-source consistency audit; sales copy normalized -->
+
+
+
+
+<style id="ipad-compare-v138">
+/* Compare view consumes the reclaimed area and is the only vertical scroller. */
+#acCompareView{
+  position:relative!important;
+  top:auto!important;
+  margin-top:0!important;
+  padding-top:0!important;
+  height:calc(100dvh - 54px)!important;
+  max-height:calc(100dvh - 54px)!important;
+  min-height:0!important;
+  overflow-y:auto!important;
+  overflow-x:hidden!important;
+  -webkit-overflow-scrolling:touch!important;
+  overscroll-behavior-y:contain!important;
+  box-sizing:border-box!important;
+  padding-bottom:max(28px,env(safe-area-inset-bottom))!important;
+}
+#acCompareView .featurePage,
+#acCompareView .featurePageBody,
+#acCompareView .compareResult,
+#acCompareView .compareBody{
+  margin-top:0!important;padding-top:0!important;
+  height:auto!important;min-height:0!important;max-height:none!important;
+  overflow:visible!important;
+}
+#acCompareView .compareGrid{
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;
+  gap:10px!important;align-items:start!important;
+  height:auto!important;min-height:0!important;max-height:none!important;
+  overflow:visible!important;margin-top:4px!important;
+}
+#acCompareView .benefitPanel,
+#acCompareView .featureSide{
+  display:block!important;
+  height:auto!important;min-height:0!important;max-height:none!important;
+  overflow:visible!important;contain:none!important;align-self:start!important;
+}
+#acCompareView .benefitList,
+#acCompareView .compactFeatures{
+  display:flex!important;flex-direction:column!important;
+  height:auto!important;min-height:0!important;max-height:none!important;
+  overflow:visible!important;padding:0!important;margin:0!important;
+}
+#acCompareView .benefitItem,
+#acCompareView .compactFeatures section{
+  display:block!important;flex:none!important;
+  height:auto!important;min-height:0!important;max-height:none!important;
+  overflow:visible!important;contain:none!important;
+  box-sizing:border-box!important;
+  padding-top:7px!important;padding-bottom:7px!important;
+}
+#acCompareView .benefitItem p,
+#acCompareView .compactFeatures p,
+#acCompareView .compactFeatures div{
+  height:auto!important;min-height:0!important;max-height:none!important;
+  overflow:visible!important;white-space:normal!important;
+  overflow-wrap:anywhere!important;
+}
+#acCompareView .summaryBullets span{
+  display:block!important;margin:2px 0!important;line-height:1.32!important;
+}
+#acCompareView .summaryBullets .fitLine{
+  margin-top:4px!important;font-weight:700!important;
+}
+#acCompareView .benefitHead,
+#acCompareView .featureSide>header{
+  position:relative!important;top:auto!important;
+  height:auto!important;min-height:0!important;max-height:none!important;
+  overflow:visible!important;padding-top:6px!important;padding-bottom:6px!important;
+}
+#acCompareView .termBtn{
+  display:inline-block!important;height:auto!important;min-height:36px!important;
+  max-height:none!important;padding:5px 7px!important;
+  white-space:normal!important;overflow:visible!important;text-overflow:clip!important;
+}
+@media (orientation:portrait),(max-width:760px){
+ #acCompareView{height:calc(100dvh - 50px)!important;max-height:calc(100dvh - 50px)!important}
+ #acCompareView .compareGrid{grid-template-columns:1fr!important}
+}
+</style>
+
+
+
+
+<style id="difference-only-v141">
+#acCompareView,
+#acCompareView button,
+#acCompareView input,
+#acCompareView select,
+#acCompareView textarea,
+#acCompareView .benefitPanel,
+#acCompareView .featureSide,
+#acCompareView .benefitItem,
+#acCompareView .compactFeatures,
+#acCompareView .termBtn,
+#acCompareView b,
+#acCompareView strong,
+#acCompareView em,
+#acCompareView span,
+#acCompareView p,
+#acCompareView div{
+  font-family:-apple-system,BlinkMacSystemFont,"Hiragino Kaku Gothic ProN","Hiragino Sans","Yu Gothic","YuGothic","Meiryo",sans-serif!important;
+  font-style:normal!important;
+}
+#acCompareView .diffSummary{margin-top:4px;line-height:1.3;font-size:.94em}
+#acCompareView .diffLine{display:block;margin:3px 0 6px}
+#acCompareView .benefitOne{display:block;margin-top:2px;font-weight:700}
+#acCompareView .noBigDiff{display:block;margin-top:4px;opacity:.72}
+#acCompareView .benefitItem{padding-top:6px!important;padding-bottom:6px!important}
+</style>
+
+
+<style id="comparison-grammar-v142">
+#acCompareView .presenceCompare{display:block;margin:3px 0 6px;line-height:1.32}
+#acCompareView .presenceCompare .benefitOne{display:block;margin-top:2px;font-weight:700}
+</style>
+
+
+<style id="three-line-compare-v144">
+#acCompareView .threeLineCompare{display:block;margin:3px 0;line-height:1.35}
+#acCompareView .threeLineCompare>div{display:block;margin:1px 0}
+#acCompareView .threeLineCompare .compareBenefit{margin-top:3px;font-weight:700}
+#acCompareView .diffLine,#acCompareView .presenceCompare{display:none!important}
+</style>
+
+
+<style id="feature-guidance-v147">
+#acCompareView .benefitItem:has(.specialGuide){padding-top:10px!important;padding-bottom:10px!important}
+#acCompareView .specialGuide{font-size:1.02em!important;line-height:1.42!important}
+#acCompareView .specialGuide>div{margin:3px 0!important}
+#acCompareView .specialGuide .specialExplain{font-size:.96em;font-weight:700;margin:2px 0 8px!important}
+</style>
+
+
+<style id="clean-compare-rebuild-v154">
+#acCompareView .compareGrid{
+ display:block!important;
+ height:auto!important;min-height:0!important;max-height:none!important;
+ overflow:visible!important;
+}
+#acCompareView .benefitPanel{
+ display:block!important;
+ width:100%!important;
+ height:auto!important;min-height:0!important;max-height:none!important;
+ margin:0!important;padding:0!important;
+ border:0!important;border-radius:0!important;background:transparent!important;
+ overflow:visible!important;
+}
+#acCompareView .benefitList{
+ display:block!important;
+ height:auto!important;min-height:0!important;max-height:none!important;
+ margin:0!important;padding:0!important;
+ overflow:visible!important;
+}
+#acCompareView .featureSide{display:none!important}
+
+/* Exactly 10 cards: 5 summary cards + 5 feature cards. */
+#acCompareView .compareTenCards{
+ display:grid!important;
+ grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;
+ grid-auto-flow:row!important;
+ column-gap:12px!important;
+ row-gap:10px!important;
+ align-items:stretch!important;
+ width:100%!important;
+ height:auto!important;
+}
+#acCompareView .compareCard{
+ box-sizing:border-box!important;
+ min-width:0!important;
+ min-height:76px!important;
+ height:auto!important;max-height:none!important;
+ margin:0!important;
+ padding:11px 13px!important;
+ border:2px solid #ff9f2d!important;
+ border-radius:11px!important;
+ background:#fffdf9!important;
+ overflow:visible!important;
+}
+#acCompareView .compareSummaryCard{grid-column:1}
+#acCompareView .compareFeatureCard{grid-column:2}
+#acCompareView .compareCardTitle{
+ display:flex!important;
+ align-items:center!important;
+ gap:7px!important;
+ margin:0 0 5px!important;
+ padding:0!important;
+}
+#acCompareView .compareCardTitle span,
+#acCompareView .compareCardTitle b{margin:0!important;padding:0!important}
+#acCompareView .twoModels{
+ display:grid!important;
+ grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;
+ gap:10px!important;
+}
+#acCompareView .twoModels>div{
+ display:flex!important;
+ flex-direction:column!important;
+ gap:4px!important;
+ min-width:0!important;
+}
+#acCompareView .twoModels>div+div{
+ border-left:1px solid #e5e7eb!important;
+ padding-left:10px!important;
+}
+#acCompareView .twoModels span{line-height:1.32!important;overflow-wrap:anywhere!important}
+#acCompareView .diffSummary{margin:0!important;line-height:1.35!important}
+#acCompareView .specialGuide{font-size:1em!important;line-height:1.38!important}
+
+/* Legacy row/card UI must never render alongside the rebuilt 10-card comparison. */
+#acCompareView .benefitList > .benefitItem,
+#acCompareView .benefitList > .fiveBenefit,
+#acCompareView .compactFeatures{display:none!important}
+
+@media(max-width:520px){
+ #acCompareView .compareTenCards{grid-template-columns:1fr!important}
+ #acCompareView .compareSummaryCard,#acCompareView .compareFeatureCard{grid-column:1!important}
+}
+</style>
+
+
+<style id="divider-layout-v155">
+/* v15.5: one category label only. Left summary ends with a divider; right is feature content only. */
+#acCompareView .compareTenCards{
+ display:grid!important;
+ grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;
+ column-gap:16px!important;
+ row-gap:0!important;
+ align-items:stretch!important;
+}
+#acCompareView .compareCard{
+ border:0!important;
+ border-radius:0!important;
+ background:transparent!important;
+ min-height:0!important;
+ padding:12px 10px 14px!important;
+ box-shadow:none!important;
+}
+/* The horizontal divider is the row boundary, replacing orange card outlines. */
+#acCompareView .compareSummaryCard,
+#acCompareView .compareFeatureCard{
+ border-bottom:2px solid #ff9f2d!important;
+}
+#acCompareView .compareSummaryCard{
+ padding-left:4px!important;
+}
+#acCompareView .compareFeatureCard{
+ padding-right:4px!important;
+ display:flex!important;
+ align-items:center!important;
+}
+/* Category name appears ONLY on the summary side. */
+#acCompareView .compareSummaryCard .compareCardTitle{
+ display:flex!important;
+ margin-bottom:6px!important;
+}
+#acCompareView .compareFeatureCard .compareCardTitle{
+ display:none!important;
+}
+#acCompareView .twoModels{
+ width:100%!important;
+ display:grid!important;
+ grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;
+ gap:10px!important;
+}
+#acCompareView .twoModels>div{
+ display:flex!important;
+ flex-direction:column!important;
+ gap:4px!important;
+ min-width:0!important;
+}
+#acCompareView .twoModels>div+div{
+ border-left:1px solid #d9dde3!important;
+ padding-left:10px!important;
+}
+#acCompareView .diffSummary{line-height:1.4!important}
+#acCompareView .specialGuide{line-height:1.4!important}
+
+/* iPad remains side-by-side. */
+@media(max-width:520px){
+ #acCompareView .compareTenCards{grid-template-columns:1fr!important}
+ #acCompareView .compareSummaryCard{border-bottom:0!important;padding-bottom:4px!important}
+ #acCompareView .compareFeatureCard{border-bottom:2px solid #ff9f2d!important;padding-top:4px!important}
+}
+</style>
+
+</head><body><header class="top"><div style="display:flex;gap:6px;align-items:center"><button onclick="toggleToolMenu()" class="settingsBtn menuBtn" title="ツール" aria-label="ツール">☰</button><button onclick="openSettings()" class="settingsBtn" title="設定" aria-label="設定">⚙</button></div><div class="dealTimer" id="dealTimer">
  <div class="timerTitle">⏱ 商談タイマー</div>
  <div id="timerSetup" class="timerSetup">
   <button onclick="startDealTimer(10)">10分</button><button onclick="startDealTimer(15)">15分</button>
@@ -238,11 +965,7 @@ body.theme-dark .todoRow{background:#172033;border-color:#334155!important}body.
 <div id="newbieModal" class="modal" style="background:#0f172acc;padding:18px">
  <div class="miniTool">
   <button class="miniClose" onclick="$('newbieModal').classList.remove('on')">✕</button>
-  <h3>📖 新人向けツール</h3>
-  <div class="guideTabs">
-   <button onclick="showGuide('air')">エアコン</button><button onclick="showGuide('tv')">テレビ</button>
-   <button onclick="showGuide('fridge')">冷蔵庫</button><button onclick="showGuide('washer')">洗濯機</button>
-  </div>
+  
   <div id="guideBody" class="guideBody hearingGuide"></div>
  </div>
 </div>
@@ -562,41 +1285,85 @@ function resetDealTimer(){clearInterval(dealTick);dealRemain=0;dealPaused=false;
 const acMaster={
  'ダイキン':['R','A','FN（ノジマ）','C','E'],
  '日立':['X','WN（ノジマ）','G','D','E'],
- '三菱':['FZ','ZW','XD','ZR','GE'],
+ '三菱':['FZ','ZW','XD','R','GE'],
  '東芝':['DR','DZ','DX','M'],
- 'パナソニック':['X','EX','J','LV','C'],
- 'ゼネラル':['X','Z','W','L','C（AS-C226T系）']
+ 'パナソニック':['X','EX','J','LV（6畳なし）','C'],
+ 'ゼネラル':['X（6畳なし）','Z','W','L','C（AS-C226T系）']
 };
 
 const acBeginnerSpecs={
- '東芝|DR':{model:'RAS-V221DR',indoor:'295×798×386mm / 17.5kg',outdoor:'寸法は公式図面で確認 / 32.0kg',rating:'省エネ基準達成率106%・APF 7.0',lowHeat:'4.1kW',annual:'594kWh',talk:'最上位。レーダー＋無風感空調＋プラズマ空清。省エネ性も高い'},
- '東芝|DZ':{model:'RAS-V221DZ',indoor:'250×798×352mm / 13.5kg',outdoor:'寸法は公式図面で確認 / 32.0kg',rating:'省エネ基準達成率100%・APF 6.6',lowHeat:'3.8kW',annual:'630kWh',talk:'高さ250mm。無風感空調＋プラズマ空清＋フィルター自動掃除を搭載'},
- '東芝|DX':{model:'RAS-V221DX',indoor:'高さ250mmクラス / 13.5kg',outdoor:'寸法は公式図面で確認 / 20.0kg',rating:'省エネ基準達成率87%・APF 5.8',lowHeat:'2.8kW',annual:'717kWh',talk:'清潔機能を備えた中位候補。上位DZ/DRとの差を確認しやすい'},
- '東芝|M':{model:'RAS-V221M',indoor:'250×795×230mm / 10.0kg',outdoor:'寸法は公式図面で確認 / 20.0kg',rating:'省エネ基準達成率87%・APF 5.8',lowHeat:'2.8kW',annual:'717kWh',talk:'奥行230mmのコンパクトなスタンダード。設置性を訴求しやすい'},
- 'パナソニック|X':{model:'CS-X226D',indoor:'295×799×385mm / 14kg',outdoor:'630×799×299mm / 34kg',rating:'省エネ基準達成率106%（2027年度）',lowHeat:'4.5kW',annual:'594kWh',talk:'省エネ・清潔・快適性を重視する上位モデル'},
- 'パナソニック|C':{model:'CS-C226D',indoor:'290×780×229mm / 9.5kg',outdoor:'630×799×299mm / 34kg',rating:'省エネ基準達成率100%（2027年度）',lowHeat:'3.9kW',annual:'630kWh',talk:'奥行229mm。設置性を確認しやすいスタンダード系'},
- 'ゼネラル|Z':{model:'AS-Z226T',indoor:'293×798×385mm / 16kg',outdoor:'542×799×290mm / 31kg',rating:'省エネ基準達成率104%（2027年度）',lowHeat:'4.4kW',annual:'603kWh',talk:'熱交換器加熱除菌＋おまかせ気流。清潔・快適性重視'},
- 'ゼネラル|W':{model:'AS-W226T',indoor:'298×799×348mm / 13kg',outdoor:'541×663×290mm / 21kg',rating:'省エネ基準達成率100%（2027年度）',lowHeat:'3.0kW',annual:'630kWh',talk:'省エネ基準100%をクリアした中位候補'},
- 'ゼネラル|L':{model:'AS-L226T',indoor:'298×799×305mm / 11kg',outdoor:'541×663×290mm / 21kg',rating:'省エネ基準達成率100%（2027年度）',lowHeat:'3.0kW',annual:'630kWh',talk:'奥行305mm。設置性と省エネのバランス'},
- 'ゼネラル|C（AS-C226T系）':{model:'AS-C226T',indoor:'250×728×285mm / 9kg',outdoor:'541×663×290mm / 20kg',rating:'省エネ基準達成率87%（2027年度）',lowHeat:'3.0kW',annual:'717kWh',talk:'高さ250mm・幅728mmのコンパクトさが強み'}
+ '三菱|FZ':{model:'6畳設定なし',indoor:'—',outdoor:'—',rating:'—',lowHeat:'—',annual:0,no6:true,talk:'2026 FZシリーズは6畳クラスの設定なし'},
+ 'ゼネラル|X（6畳なし）':{model:'6畳設定なし',indoor:'—',outdoor:'—',rating:'—',lowHeat:'—',annual:0,no6:true,talk:'2026 Xシリーズは14畳クラスから。6畳設定なし'},
+ 'パナソニック|LV（6畳なし）':{model:'6畳設定なし',indoor:'—',outdoor:'—',rating:'—',lowHeat:'—',annual:0,no6:true,talk:'2026 LVシリーズは14畳クラスから。6畳設定なし'},
+
+ 'パナソニック|X':{model:'CS-X226D',indoor:'295×799×385mm / 14kg',outdoor:'630×799×299mm / 34kg',rating:'APF7.0・2027年度省エネ基準106%',lowHeat:'4.5kW',annual:594,talk:'エネチャージ＋高省エネ。期間消費594kWh'},
+ 'パナソニック|EX':{model:'CS-EX226D',indoor:'295×798×249mm / 11kg',outdoor:'539×655×275mm / 20.5kg',rating:'APF6.1・2027年度省エネ基準92%',lowHeat:'3.5kW',annual:682,talk:'奥行249mm＋お掃除ロボット。期間消費682kWh'},
+ 'パナソニック|J':{model:'CS-226DJR',indoor:'290×780×229mm / 8kg',outdoor:'539×675×240mm / 17.5kg',rating:'APF5.8・2027年度省エネ基準87%',lowHeat:'2.8kW',annual:717,talk:'ナノイーX 9.6兆＋無線LAN内蔵。期間消費717kWh'},
+ 'パナソニック|C':{model:'CS-C226D',indoor:'290×780×229mm / 9.5kg',outdoor:'630×799×299mm / 34kg',rating:'APF6.6・2027年度省エネ基準100%',lowHeat:'3.9kW',annual:630,talk:'省エネ新基準対応。ナノイーX 9.6兆＋サーキュレーションモード。期間消費630kWh'},
+
+ '東芝|DR':{model:'RAS-V221DR',indoor:'295×798×386mm / 17.5kg',outdoor:'550×780×290mm / 32kg',rating:'省エネ基準106%・APF7.0',lowHeat:'4.1kW',annual:594,talk:'最上位。レーダー＋無風感空調＋プラズマ空清。期間消費594kWh'},
+ '東芝|DZ':{model:'RAS-V221DZ',indoor:'250×798×352mm / 13.5kg',outdoor:'2026年6畳モデル / 32kg',rating:'省エネ基準100%・APF6.6',lowHeat:'3.8kW',annual:630,talk:'高さ250mm。無風感空調＋プラズマ空清＋自動掃除。期間消費630kWh'},
+ '東芝|DX':{model:'RAS-V221DX',indoor:'250×798×352mm / 13.5kg',outdoor:'2026年6畳モデル / 20kg',rating:'省エネ基準87%・APF5.8',lowHeat:'2.8kW',annual:717,talk:'無風感空調＋プラズマ空清＋自動掃除。期間消費717kWh'},
+ '東芝|M':{model:'RAS-V221M',indoor:'250×795×230mm / 10kg',outdoor:'2026年6畳モデル / 20kg',rating:'省エネ基準87%・APF5.8',lowHeat:'2.8kW',annual:717,talk:'奥行230mm。セルフクリーン＋マジック洗浄熱交換器。期間消費717kWh'},
+
+ 'ゼネラル|Z':{model:'AS-Z226T',indoor:'293×798×385mm / 16kg',outdoor:'542×799×290mm / 31kg',rating:'省エネ基準104%・APF6.9',lowHeat:'4.4kW',annual:603,talk:'6畳上位。熱交換器加熱除菌＋高省エネ。期間消費603kWh'},
+ 'ゼネラル|W':{model:'AS-W226T',indoor:'298×799×348mm / 13kg',outdoor:'541×663×290mm / 21kg',rating:'省エネ基準100%・APF6.6',lowHeat:'3.0kW',annual:630,talk:'フィルター自動おそうじ＋外せる送風路。期間消費630kWh'},
+ 'ゼネラル|L':{model:'AS-L226T',indoor:'298×799×305mm / 11kg',outdoor:'541×663×290mm / 21kg',rating:'省エネ基準100%・APF6.6',lowHeat:'3.0kW',annual:630,talk:'外せる送風路＋熱交換器加熱除菌。期間消費630kWh'},
+ 'ゼネラル|C（AS-C226T系）':{model:'AS-C226T',indoor:'250×728×285mm / 9kg',outdoor:'541×663×290mm / 20kg',rating:'省エネ基準87%・APF5.8',lowHeat:'3.0kW',annual:717,talk:'横幅728mm×高さ250mm。熱交換器加熱除菌＋2WAY除湿。期間消費717kWh'},
+
+ 'ダイキン|R':{model:'AN226ARS',indoor:'295×798×370mm / 16kg',outdoor:'728×795×300mm / 43kg',rating:'★★★★☆ 3.6 / 5（多段階評価）',lowHeat:'4.5kW',annual:603,talk:'うるさらX。無給水加湿＋さらら除湿＋上位気流制御'},
+ 'ダイキン|A':{model:'AN226AAS',indoor:'295×798×370mm / 16kg',outdoor:'610×795×300mm / 35kg',rating:'★★★★☆ 3.6 / 5（多段階評価）',lowHeat:'4.5kW',annual:603,talk:'さらら除湿・快適気流・節電自動運転を備える上位モデル'},
+ 'ダイキン|FN（ノジマ）':{model:'AN226AFNS',indoor:'295×798×272mm / 11kg',outdoor:'555×675×284mm / 25kg',rating:'省エネ基準87%・APF5.8',lowHeat:'3.3kW',annual:671,talk:'F系ノジマオリジナル。清潔ドレンパン＋フィルター自動お掃除＋さらら除湿'},
+ 'ダイキン|C':{model:'AN226ACS',indoor:'250×798×265mm / 10kg',outdoor:'555×675×284mm / 21kg',rating:'★★☆☆☆ 2.0 / 5（多段階評価）',lowHeat:'2.8kW',annual:717,talk:'高さ250mm。フィルター自動お掃除＋ストリーマ'},
+ 'ダイキン|E':{model:'AN226AES',indoor:'250×798×255mm / 8.5kg',outdoor:'550×675×284mm / 20kg',rating:'★★☆☆☆ 2.0 / 5（多段階評価）',lowHeat:'2.8kW',annual:717,talk:'高さ250mmのスタンダード。期間消費電力量717kWh'},
+
+ '日立|X':{model:'RAS-XR2226S',indoor:'295×798×385mm / 15.5kg',outdoor:'629×799×299mm / 31kg',rating:'★★★★☆ 4.5 / 5（多段階評価）',lowHeat:'4.5kW',annual:570,talk:'清潔・再熱除湿・センサー・省エネを強化した上位モデル'},
+ '日立|WN（ノジマ）':{model:'RAS-WN2226S',indoor:'高さ248mm・ノジマオリジナル',outdoor:'6畳 100Vモデル',rating:'省エネ基準87%・APF5.8',lowHeat:'3.0kW',annual:717,talk:'凍結洗浄 除菌ヒートプラス＋ファンお掃除ロボ＋再熱除湿'},
+ '日立|G':{model:'RAS-GR2226S',indoor:'295×795×250mm / 9kg',outdoor:'530×658×275mm / 19.5kg',rating:'★★☆☆☆ 2.0 / 5（多段階評価）',lowHeat:'2.8kW',annual:717,talk:'奥行250mm。フィルター自動掃除＋凍結洗浄Light'},
+ '日立|D':{model:'RAS-DR2226S',indoor:'280×780×218mm',outdoor:'530×658×275mm',rating:'★★☆☆☆ 2.0 / 5（多段階評価）',lowHeat:'2.8kW',annual:717,talk:'奥行218mm。ソフト除湿・凍結洗浄Lightのベーシックモデル'},
+ '日立|E':{model:'RAS-ER2226S',indoor:'295×798×280mm / 9kg',outdoor:'530×658×275mm / 21.5kg',rating:'★★★☆☆ 3.0 / 5（多段階評価）',lowHeat:'3.1kW',annual:630,talk:'2027年度省エネ基準100%。期間消費630kWhのベーシックモデル'},
+
+ '三菱|ZW':{model:'MSZ-ZW2226',indoor:'295×799×389mm / 16kg',outdoor:'2026年6畳モデル',rating:'★★★★★ 5.0 / 5（評価点5.18）',lowHeat:'4.1kW',annual:603,talk:'ムーブアイmirA.I.+と再熱除湿を備えるプレミアムモデル'},
+ '三菱|XD':{model:'MSZ-XD2226',indoor:'255×799×338mm / 14kg',outdoor:'550×800×285mm',rating:'★★★★★ 4.9 / 5（評価点4.89）',lowHeat:'5.0kW',annual:630,talk:'暖房強化型。外気2℃時5.0kW、期間消費630kWh'},
+ '三菱|R':{model:'MSZ-R2226',indoor:'255×799×338mm / 13kg',outdoor:'2026年6畳モデル / 19kg',rating:'★★★☆☆ 3.4 / 5（評価点3.36）',lowHeat:'2.8kW',annual:717,talk:'高さ255mmコンパクト＋フィルターおそうじメカ。期間消費717kWh'},
+ '三菱|GE':{model:'MSZ-GE2226',indoor:'295×799×225mm / 8kg',outdoor:'2026年6畳モデル',rating:'★★★☆☆ 3.4 / 5（評価点3.36）',lowHeat:'2.8kW',annual:717,talk:'フロアアイ＋はずせるボディのスタンダード'},
 };
 const acFeatureSeed={
- 'ダイキン|FN（ノジマ）':{clean:'清潔機能を比較',heat:'ノジマオリジナル',dehumid:'除湿機能を比較',airflow:'気流制御を比較',power:'6畳 AN226AFNS を基準に型番別登録',zeroemi:'型番ごとに確認'},
- '日立|X':{clean:'凍結洗浄系・清潔機能',heat:'プレミアム系',dehumid:'除湿機能を型番別確認',airflow:'センサー・気流制御',power:'6畳 RAS-XR2226S系を型番別登録',zeroemi:'型番ごとに確認'},
- '日立|WN（ノジマ）':{clean:'凍結洗浄系を比較',heat:'ノジマオリジナル',dehumid:'カラッと除湿系を比較',airflow:'気流制御を比較',power:'型番別に期間消費電力量を登録',zeroemi:'型番ごとに確認'},
- '三菱|XD':{clean:'内部クリーン／清潔機能',heat:'暖房強化・コンパクト',dehumid:'スマート除湿',airflow:'ムーブアイ系＋気流制御',power:'型番別に期間消費電力量を登録',zeroemi:'65歳以上等8万円：対象型番を個別確認'},
- 'パナソニック|X':{clean:'ナノイーX＋内部クリーン＋フィルターお掃除',heat:'ハイグレード',dehumid:'シリーズ機能を型番別確認',airflow:'サーキュレーションモード',power:'6畳 CS-X226Dから型番別登録',zeroemi:'型番ごとに確認'},
- 'パナソニック|EX':{clean:'ナノイーX＋内部クリーン',heat:'高機能モデル',dehumid:'シリーズ機能を型番別確認',airflow:'サーキュレーションモード',power:'型番別に期間消費電力量を登録',zeroemi:'型番ごとに確認'},
- 'パナソニック|J':{clean:'ナノイーX＋内部清潔',heat:'スタンダード',dehumid:'シリーズ機能を型番別確認',airflow:'サーキュレーション制御',power:'型番別に期間消費電力量を登録',zeroemi:'型番ごとに確認'},
- 'ゼネラル|C（AS-C226T系）':{clean:'内部清潔機能を型番別確認',heat:'コンパクト系',dehumid:'除湿機能を型番別確認',airflow:'気流機能を型番別確認',power:'AS-C226T：冷房消費電力595W',zeroemi:'型番ごとに確認'},
- 'ゼネラル|L':{clean:'清潔機能を比較',heat:'2026年 Lシリーズ',dehumid:'除湿機能を比較',airflow:'気流制御を比較',power:'6畳 AS-L226Tから型番別登録',zeroemi:'型番ごとに確認'},
- 'ゼネラル|W':{clean:'清潔機能を比較',heat:'2026年 Wシリーズ',dehumid:'除湿機能を比較',airflow:'気流制御を比較',power:'6畳 AS-W226Tから型番別登録',zeroemi:'型番ごとに確認'},
- 'ゼネラル|Z':{clean:'加熱除菌系など清潔機能を比較',heat:'上位省エネ系',dehumid:'除湿機能を比較',airflow:'おまかせ気流系を比較',power:'6畳 AS-Z226Tから型番別登録',zeroemi:'型番ごとに確認'},
- 'ゼネラル|X':{clean:'清潔・上位機能を比較',heat:'プレミアム系',dehumid:'除湿機能を比較',airflow:'上位気流制御',power:'2026年Xは4.0kW以上のラインアップを確認',zeroemi:'型番ごとに確認'},
- '東芝|DR':{clean:'UVプレミアムクリーン除菌＋マジック洗浄熱交換器＋フィルター自動掃除',heat:'レーダー搭載のフラッグシップ',dehumid:'除湿中も無風感空調に対応',airflow:'レーダー風あて／風よけ＋無風感空調',power:'594kWh/年（6畳）',zeroemi:'型番ごとに確認'},
- '東芝|DZ':{clean:'UVプレミアムクリーン除菌＋マジック洗浄熱交換器＋フィルター自動掃除',heat:'高さ250mmのハイスペック',dehumid:'除湿中も無風感空調に対応',airflow:'無風感空調＋上下左右スイング',power:'630kWh/年（6畳）',zeroemi:'型番ごとに確認'},
- '東芝|DX':{clean:'マジック洗浄熱交換器など清潔機能',heat:'中位モデル',dehumid:'除湿機能あり',airflow:'気流機能を比較',power:'717kWh/年（6畳）',zeroemi:'型番ごとに確認'},
- '東芝|M':{clean:'セルフクリーン＋マジック洗浄熱交換器',heat:'奥行230mmのスタンダード',dehumid:'除湿機能あり',airflow:'基本の気流制御',power:'717kWh/年（6畳）',zeroemi:'型番ごとに確認'}
+ 'パナソニック|LV（6畳なし）':{clean:'ナノイーX 48兆／フィルターお掃除ロボット／内部クリーン',dehumid:'快適除湿モード',airflow:'ロングワイド気流／天井シャワー気流',sensor:'ひと・ものセンサー／エオリアAI',heat:'エネチャージ',no6:true},
+
+ 'パナソニック|X':{clean:'ナノイーX 48兆／フィルターお掃除ロボット／ホコリレス＋親水コート熱交換器／防汚防カビファン',dehumid:'快適除湿モード／冷房除湿／衣類乾燥',airflow:'ロングワイド気流／天井シャワー気流／上下左右自動',sensor:'ひと・ものセンサー／日射センサー／エオリアAI',heat:'エネチャージ／サーキュレーションモード／足元暖房'},
+ 'パナソニック|EX':{clean:'ナノイーX 48兆／フィルターお掃除ロボット／親水コート熱交換器／防汚防カビファン',dehumid:'快適除湿モード／冷房除湿／衣類乾燥',airflow:'ワイド気流／天井シャワー気流／左右自動',sensor:'ひとセンサー／日射センサー／AIモード',heat:'サーキュレーションモード／足元暖房'},
+ 'パナソニック|J':{clean:'ナノイーX 9.6兆／ナノイーX内部クリーン／親水コート熱交換器／抗菌エアフィルター',dehumid:'2モード除湿（除湿／除湿 弱）',airflow:'天井シャワー気流／左右風向自動／スイング',sensor:'新室温みはり／シーン推定自動運転機能',heat:'サーキュレーションモード／すぐでる暖房（おはようチャージ）'},
+ 'パナソニック|C':{clean:'ナノイーX 9.6兆／ナノイーX内部クリーン／親水コート熱交換器／抗菌エアフィルター／おでかけクリーン',dehumid:'2モード除湿（除湿／除湿 弱）',airflow:'天井シャワー気流／左右風向自動／スイング',sensor:'新室温みはり／シーン推定自動運転機能',heat:'サーキュレーションモード／すぐでる暖房（おはようチャージ）'},
+
+ '東芝|DR':{clean:'UVプレミアムクリーン除菌／セルフクリーン／マジック洗浄熱交換器／フィルター自動お掃除',dehumid:'やわらかドライ（除湿）',airflow:'セパレート無風感ルーバー／レーダー風あて／レーダー風よけ',sensor:'AI快適学習運転／日あたり節電／不在節電',heat:'無風感空調／節電暖房'},
+ '東芝|DZ':{clean:'UVプレミアムクリーン除菌／セルフクリーン／マジック洗浄熱交換器／フィルター自動お掃除',dehumid:'やわらかドライ（除湿）',airflow:'無風感空調／上下左右同時スイング',sensor:'AI快適学習運転／日あたり節電',heat:'無風感空調'},
+ '東芝|DX':{clean:'UVプレミアムクリーン除菌／セルフクリーン／マジック洗浄熱交換器／フィルター自動お掃除',dehumid:'やわらかドライ（除湿）',airflow:'無風感空調／上下左右同時スイング',sensor:'AI快適学習運転／日あたり節電',heat:'無風感空調'},
+ '東芝|M':{clean:'セルフクリーン／マジック洗浄熱交換器／抗菌仕様エアフィルター',dehumid:'やわらかドライ（除湿）',airflow:'上下スイングルーバー／しずかモード／パワフルモード',sensor:'オートリスタート',heat:'基本暖房'},
+
+ 'ゼネラル|X（6畳なし）':{clean:'熱交換器加熱除菌',dehumid:'さらさら冷房（再熱除湿）',airflow:'ハイブリッド気流',sensor:'AI自動運転',heat:'上位暖房',no6:true},
+ 'ゼネラル|Z':{clean:'熱交換器加熱除菌／フィルター自動おそうじ',dehumid:'さらさら冷房',airflow:'ダブルウイングフラップ',sensor:'AI自動運転',heat:'あったかアップ'},
+ 'ゼネラル|W':{clean:'熱交換器加熱除菌／フィルター自動おそうじ／外せる送風路',dehumid:'2WAY除湿（ソフトクール・ひかえめ）',airflow:'上下左右スイング',sensor:'毎日快適モード',heat:'あったかアップ'},
+ 'ゼネラル|L':{clean:'熱交換器加熱除菌／外せる送風路／まるごとクリーンタイマー',dehumid:'2WAY除湿（ソフトクール・ひかえめ）',airflow:'上下左右スイング',sensor:'毎日快適モード',heat:'あったかアップ'},
+ 'ゼネラル|C（AS-C226T系）':{clean:'熱交換器加熱除菌／ハイドロフィリック熱交換器',dehumid:'2WAY除湿（ソフトクール・ひかえめ）',airflow:'上下スイング',sensor:'毎日快適モード',heat:'基本暖房'},
+
+ 'ダイキン|R':{clean:'水内部クリーン／ストリーマ内部クリーン／フィルター自動お掃除',dehumid:'さらら除湿（リニアハイブリッド方式）',airflow:'サーキュレーション気流／垂直気流',sensor:'節電自動運転／センサー風向',heat:'無給水加湿（うるる加湿）／垂直気流'},
+ 'ダイキン|A':{clean:'水内部クリーン／ストリーマ内部クリーン／フィルター自動お掃除',dehumid:'さらら除湿（リニアハイブリッド方式）',airflow:'サーキュレーション気流／垂直気流',sensor:'節電自動運転／センサー風向',heat:'垂直気流'},
+ 'ダイキン|FN（ノジマ）':{clean:'清潔ドレンパン／水内部クリーン／ストリーマ内部クリーン／フィルター自動お掃除',dehumid:'さらら除湿（ハイブリッド方式）',airflow:'天井気流／オートスイング',sensor:'切り忘れ通知／おかえり運転',heat:'基本暖房'},
+ 'ダイキン|C':{clean:'水内部クリーン／ストリーマ内部クリーン／フィルター自動お掃除',dehumid:'9段階セレクトドライ',airflow:'天井気流／オートスイング',sensor:'基本自動運転',heat:'基本暖房'},
+ 'ダイキン|E':{clean:'水内部クリーン／ストリーマ内部クリーン／フィルター自動お掃除なし',dehumid:'9段階セレクトドライ',airflow:'オートスイング',sensor:'基本自動運転',heat:'基本暖房'},
+
+ '日立|X':{clean:'凍結洗浄 除菌ヒートプラス／ファンお掃除ロボ／フィルター自動お掃除／室外機凍結洗浄',dehumid:'カラッと除湿／ランドリー除湿',airflow:'風よけエリアセレクト／健康冷房［涼快］',sensor:'LAB制御／eco運転／オートオフ',heat:'つつみこみ暖房／スピード暖房'},
+ '日立|WN（ノジマ）':{clean:'凍結洗浄 除菌ヒートプラス／ファンお掃除ロボ／フィルター自動お掃除／カビバスター',dehumid:'カラッと除湿（再熱除湿）／ランドリー除湿',airflow:'上下左右スイング／風よけ',sensor:'人感センサー／ecoこれっきり運転',heat:'基本暖房'},
+ '日立|G':{clean:'凍結洗浄 Light／フィルター自動お掃除／カビバスター',dehumid:'カラッと除湿／ランドリー除湿',airflow:'上下左右風向コントロール',sensor:'日射センサー／ecoこれっきり運転',heat:'みはって霜取り'},
+ '日立|D':{clean:'凍結洗浄 Light／カビバスター／フィルター自動お掃除なし',dehumid:'ソフト除湿',airflow:'上下左右風向コントロール',sensor:'日射センサー／ecoこれっきり運転',heat:'みはって霜取り'},
+ '日立|E':{clean:'凍結洗浄 Light／カビバスター／フィルター自動お掃除なし',dehumid:'ソフト除湿',airflow:'上下左右風向コントロール',sensor:'日射センサー／ecoこれっきり運転',heat:'みはって霜取り'},
+
+ '三菱|FZ':{clean:'はずせるフィルターおそうじメカ／よごれんボディ／おまかせボディ',dehumid:'プレミアム除湿',airflow:'2温度2気流／自動風あて・風よけ',sensor:'ムーブアイmirA.I.+／エモコアイ／おまかせA.I.自動',heat:'快適ノンストップ暖房／最高約60℃温風'},
+ '三菱|ZW':{clean:'はずせるフィルターおそうじメカ／よごれんボディ／おまかせボディ',dehumid:'さらっと除湿冷房（再熱除湿）',airflow:'2か所同時空調／自動風あて・風よけ',sensor:'ムーブアイmirA.I.+／エモコアイ／おまかせA.I.自動',heat:'快適ノンストップ暖房／急速Wヒート'},
+ '三菱|XD':{clean:'はずせるボディ／よごれんボディ／清潔Vフィルター',dehumid:'スマート除湿',airflow:'ワイド気流／ロング気流／保湿風よけ',sensor:'ムーブアイ／ハイブリッド運転／消し忘れオートOFF',heat:'室温キープシステム／最高約60℃温風／長時間連続暖房'},
+ '三菱|R':{clean:'はずせるフィルターおそうじメカ／よごれんボディ／おまかせボディ',dehumid:'スマート除湿',airflow:'ワイド気流／ロング気流',sensor:'ムーブアイ／ハイブリッド運転／消し忘れオートOFF',heat:'室温キープシステム／10℃キープ暖房'},
+ '三菱|GE':{clean:'おまかせボディ／はずせるボディ／清潔コート熱交換器',dehumid:'選べる3モード除湿',airflow:'ロング気流',sensor:'フロアアイ／ハイブリッド運転',heat:'室温キープシステム'},
 };
 const hearingGuides={
 air:{title:'エアコン',roots:[['🎤','ヒアリング項目','a_hear'],['🏭','メーカーの特徴','a_maker'],['⚖️','機種比較','a_compare'],['🔥','人気商品','a_pop']]},
@@ -612,8 +1379,8 @@ w2:{q:'メーカー特徴',a:[['準備中','メーカーごとの特徴を順次
 };
 let currentGuide='air';
 function openNewbieTool(){$('toolMenu').classList.remove('on');$('newbieModal').classList.add('on');showGuide('air')}
-function showGuide(c){currentGuide=c;let g=hearingGuides[c];$('guideBody').innerHTML=`<div class="hearingHead"><b>${g.title}</b><span>確認したい項目を選択</span></div><div class="hearingCards">${g.roots.map(r=>`<button class="hearingCard" onclick="showHearingNode('${r[2]}')"><span>${r[0]}</span><b>${r[1]}</b></button>`).join('')}</div>`}
-function showHearingNode(id){
+function showGuide(c){$('newbieModal').classList.remove('featureFullscreen');currentGuide=c;let g=hearingGuides[c];$('guideBody').innerHTML=`<div class="hearingHead"><b>${g.title}</b><span>確認したい項目を選択</span></div><div class="hearingCards">${g.roots.map(r=>`<button class="hearingCard" onclick="showHearingNode('${r[2]}')"><span>${r[0]}</span><b>${r[1]}</b></button>`).join('')}</div>`}
+function showHearingNode(id){$('newbieModal').classList.add('featureFullscreen');
  if(currentGuide==='air'){
   if(id==='a_hear')return showAcHearing();
   if(id==='a_maker')return showAcMakers();
@@ -638,14 +1405,72 @@ function makerSelect(id,onchange){
  return `<select id="${id}" onchange="${onchange}">${Object.keys(acMaster).map(m=>`<option>${m}</option>`).join('')}</select>`;
 }
 function seriesSelect(id,m){return `<select id="${id}">${acMaster[m].map(x=>`<option>${x}</option>`).join('')}</select>`}
+let activeAcCompare=null;
 function showAcCompare(){
- $('guideBody').innerHTML=`<button class="guideBack" onclick="showGuide('air')">← 戻る</button><div class="hearingQuestion">⚖️ 2026年モデル 機種比較</div>
- <div class="zeroFilter"><label><input id="zeroOnly" type="checkbox"> 🏷️ 65歳以上等・ゼロエミ8万円対象だけで確認</label><small>※多段階評価点3.0以上など制度条件を満たす型番が対象</small></div>
+ activeAcCompare=null;
+ $('guideBody').innerHTML=`<div class="compareBackOnly"><button class="guideBack" onclick="showGuide('air')">← 戻る</button></div>
  <div class="comparePick"><div><b>機種A</b>${makerSelect('cmpM1',"refreshSeries(1)")}${seriesSelect('cmpS1','ダイキン')}</div><div><b>機種B</b>${makerSelect('cmpM2',"refreshSeries(2)")}${seriesSelect('cmpS2','ダイキン')}</div></div>
- <button class="compareGo" onclick="renderAcCompare()">比較する</button><div id="acCompareResult"></div>`;
+ <div class="compareActions"><button class="compareGo" onclick="renderAcCompare()">比較する</button><button class="miniEnergyGo" onclick="jumpEnergyCurrent()">⚡ 電気代</button></div><div id="acCompareResult"></div>`;
 }
 function refreshSeries(n){let m=$('cmpM'+n).value;$('cmpS'+n).innerHTML=acMaster[m].map(x=>`<option>${x}</option>`).join('')}
-function fval(m,s,k){let x=acFeatureSeed[m+'|'+s]||{};return x[k]||'型番データ登録後に表示'}
+const modelCharacter={
+ 'ダイキン|R':'うるる加湿／換気／高効率スイングコンプレッサー',
+ 'ダイキン|A':'さらら除湿／高効率スイングコンプレッサー',
+ 'ダイキン|FN（ノジマ）':'さらら除湿（ハイブリッド方式）／フィルター自動お掃除／高効率スイングコンプレッサー',
+ 'ダイキン|C':'高さ250mmコンパクト／高効率スイングコンプレッサー',
+ 'ダイキン|E':'奥行255mmコンパクト／高効率スイングコンプレッサー',
+
+ '日立|X':'ファンお掃除ロボ／凍結洗浄ヒートプラス',
+ '日立|WN（ノジマ）':'フィルター自動お掃除／凍結洗浄',
+ '日立|G':'フィルター自動お掃除／凍結洗浄',
+ '日立|D':'凍結洗浄Light／カビバスター／ステンレス・クリーン',
+ '日立|E':'省エネ性と清潔機能を両立した6畳モデル',
+
+ '三菱|FZ':'6畳設定なし',
+ '三菱|ZW':'ムーブアイmirA.I.+／2か所同時空調',
+ '三菱|XD':'暖房強化／室外機凍結防止ヒーター',
+ '三菱|R':'高さ255mmコンパクト／ムーブアイ',
+ '三菱|GE':'フロアアイ／はずせるボディ／抗菌・防カビフィルター',
+
+ '東芝|DR':'セパレート無風感ルーバー／AI快適',
+ '東芝|DZ':'高さ250mm／無風感空調',
+ '東芝|DX':'高さ250mm／無風感空調',
+ '東芝|M':'高さ250mm・奥行230mm／セルフクリーン／マジック洗浄熱交換器',
+
+ 'パナソニック|X':'エネチャージ／エコロータリー コンプレッサー',
+ 'パナソニック|EX':'奥行249mmコンパクト／フィルターお掃除ロボット',
+ 'パナソニック|J':'ナノイーX 9.6兆／奥行229mmコンパクト',
+ 'パナソニック|LV（6畳なし）':'6畳設定なし',
+ 'パナソニック|C':'省エネ基準100%／ナノイーX 9.6兆／奥行229mm',
+
+ 'ゼネラル|X（6畳なし）':'6畳設定なし',
+ 'ゼネラル|Z':'さらさら冷房（再熱除湿）／ダブルAI',
+ 'ゼネラル|W':'外せる送風路／フィルター自動おそうじ',
+ 'ゼネラル|L':'外せる送風路／熱交換器加熱除菌',
+ 'ゼネラル|C（AS-C226T系）':'横幅728mm・高さ250mmコンパクト／熱交換器加熱除菌'
+};
+function fval(m,s,k){
+ const x=acFeatureSeed[m+'|'+s];
+ if(!x)return '6畳設定なし';
+ if(k==='airflow'){
+   const air=x.airflow||'';
+   const heat=x.heat||'';
+   const airflowWords=['垂直気流','足元気流','つつみこみ暖房','あったかアップ','サーキュレーションモード','無風感空調'];
+   const moved=airflowWords.filter(w=>heat.includes(w)&&!air.includes(w));
+   return [air,...moved].filter(Boolean).join('／')||'この項目の追加機能なし';
+ }
+ if(k==='special'){
+   if(x.no6)return '6畳設定なし';
+   const heat=x.heat||'';
+   const airflowWords=['垂直気流','足元気流','つつみこみ暖房','あったかアップ','サーキュレーションモード','無風感空調'];
+   let parts=splitFeatureTerms(heat).filter(v=>v&&!airflowWords.some(w=>v.includes(w)));
+   parts=parts.filter(v=>!['基本暖房','上位暖房','節電暖房'].includes(v));
+   const character=modelCharacter[m+'|'+s]||'';
+   if(character) parts.push(...splitFeatureTerms(character));
+   return parts.length?[...new Set(parts)].join('／'):'この機種は基本機能を重視したモデル';
+ }
+ return x[k]||'この項目の追加機能なし';
+}
 function beginnerMeaning(k,v){
  if(k==='dehumid'){
    if(/再熱|快適除湿|パーシャル/.test(v)) return '💡 寒くなりにくい除湿';
@@ -658,25 +1483,948 @@ function beginnerMeaning(k,v){
 }
 function specCard(m,s){
  let x=acBeginnerSpecs[m+'|'+s];
- if(!x)return `<div class="specEmpty">📋 数値データは型番確認後に追加<br><small>未確認の数値は表示しません</small></div>`;
+ if(!x||x.no6)return `<div class="specEmpty">📋 ${m} ${s}<br><b>6畳設定なし</b><br><small>6畳の期間消費電力量比較は対象外</small></div>`;
  return `<div class="beginSpec"><div class="specModel">${x.model}<small>6畳モデル</small></div>
  <div><span>📐 室内機</span><b>${x.indoor}</b></div>
  <div><span>📦 室外機</span><b>${x.outdoor}</b></div>
- <div><span>🌿 多段階・省エネ</span><b>${x.rating}</b></div>
+ <div><span>🌿 省エネ指標</span><b>${x.rating}</b></div>
  <div><span>🔥 低温時暖房能力</span><b>${x.lowHeat}</b><small>外気温2℃時。大きいほど寒い日の暖房力を見る目安</small></div>
- <div><span>⚡ 期間消費電力量</span><b>${x.annual}</b><small>小さいほど年間の電気使用量を抑えやすい目安</small></div>
- <p>🗣️ ${x.talk}</p></div>`;
+ <div><span>⚡ 期間消費電力量</span><b>${x.annual}kWh</b><small>JIS条件による年間の目安。小さいほど省エネ</small></div>
+ <p>${x.talk||''}</p></div>`;
 }
+function cleanDetail(m,s){let v=fval(m,s,'clean'),p=[];if(/凍結洗浄/.test(v))p.push(['凍結洗浄','熱交換器']);if(/加熱除菌/.test(v))p.push(['熱交換器加熱除菌','熱交換器']);if(/ファン/.test(v))p.push(['ファン清掃','送風ファン']);if(/フィルター自動|フィルターお掃除/.test(v))p.push(['自動お掃除','フィルター']);if(/室外/.test(v))p.push(['室外機清潔','室外熱交換器']);if(!p.length&&!/型番データ登録後/.test(v))p.push([v,'内部清潔機能']);return p.length?`<div class="cleanStack">${p.map(x=>`<div><b>${x[0]}</b><span>${x[1]}</span></div>`).join('')}</div>`:v}
+function annualKwh(m,s){let x=acBeginnerSpecs[m+'|'+s];if(!x||!x.annual)return null;let n=parseFloat(String(x.annual).replace(/[^0-9.]/g,''));return Number.isFinite(n)?n:null}
+function yenCost(n){return Math.round(n).toLocaleString('ja-JP')+'円'}
+function energySummary(m1,s1,m2,s2){let k1=annualKwh(m1,s1),k2=annualKwh(m2,s2),r=31;if(k1==null||k2==null)return `<div class="energySummary"><b>⚡ 電気代比較</b><span>期間消費電力量の登録後、年間・10年間差額を表示</span></div>`;let y1=k1*r,y2=k2*r,t1=y1*10,t2=y2*10,d=Math.abs(t1-t2),c=t1===t2?'10年間の差額なし':(t1<t2?m1+' '+s1:m2+' '+s2)+'の方が10年間で安い目安';return `<div class="energySummary"><div class="energyHead"><b>⚡ 電気代比較</b><small>31円/kWh</small></div><div class="energyCols"><div><strong>${m1} ${s1}</strong><span>年間 約${yenCost(y1)}</span><b>10年 約${yenCost(t1)}</b></div><div><strong>${m2} ${s2}</strong><span>年間 約${yenCost(y2)}</span><b>10年 約${yenCost(t2)}</b></div></div><div class="energyDiff">10年間の差額 <strong>約${yenCost(d)}</strong><small>${c}</small></div></div>`}
+
+const catalogGlossary={
+ 'さらら除湿（ハイブリッド方式）':'ダイキンF系の除湿方式。温度を下げる除湿・寒くなりにくい除湿・寒くなった空気を温めて戻す除湿などを自動で切り替える。R/Aのリニアハイブリッド方式とは異なる。',
+ 'さらら除湿（リニアハイブリッド方式）':'ダイキンR/Aなどの上位除湿。熱交換器を細かくリニア制御し、季節やシーンに合わせて除湿能力をコントロールする。',
+ '9段階セレクトドライ':'ダイキンの弱冷房除湿。標準を基準に弱め・強めを選び、好みに合わせて除湿量を調整する。',
+ '高効率スイングコンプレッサー':'ダイキン独自の構造。冷媒圧縮時のロスが少なく、摩耗や振動を抑えて耐久性を高めている。2026年のルームエアコンは全シリーズ共通。',
+ 'スイングコンプレッサー':'ダイキン独自の構造。冷媒圧縮時のロスが少なく、摩耗や振動を抑えて耐久性を高めている。2026年のルームエアコンは全シリーズ共通。',
+ 'エコロータリー コンプレッサー':'Panasonic 2026年X（9.0kWを除く）・LVに搭載。アセンブルベーン機構で低能力運転時も高効率。設定温度到達後など、冷房を長時間続ける使い方で省エネ性を発揮しやすい。',
+ 'フロアアイ':'床の温度を赤外線センサーで見て、体感温度を考えながら運転する三菱の機能。GEシリーズにも搭載。',
+ 'はずせるボディ':'三菱の前面パネルやフラップなどを外して、通風路まで自分で掃除しやすくする構造。',
+ 'カビバスター':'日立の清潔機能。運転停止中も内部の温度・湿度を見張り、必要に応じて加熱・低湿化してカビを抑制する。',
+ 'ステンレス・クリーン':'日立独自の清潔構造。通風路・フラップ・フィルターにステンレスを採用し、汚れにくさと手入れのしやすさを高める。',
+ 'マジック洗浄熱交換器':'東芝の熱交換器コーティング。結露水で汚れを洗い流しやすくする。',
+
+
+ "上下左右同時スイング":"上下・左右のルーバーを自動で動かし、部屋の広い範囲へ風を送る東芝の気流機能。",
+ "上下スイングルーバー":"上下方向へルーバーを自動で動かして風を広げる東芝の気流機能。",
+ "しずかモード":"風量などを抑えて運転音を低減する東芝の運転モード。",
+ "パワフルモード":"設定温度へ早く近づけたいときに能力を高めて運転する東芝のモード。",
+ "オートリスタート":"停電などで運転が止まった後、復電すると停電前の運転状態を自動で再開する機能。",
+ "抗菌仕様エアフィルター":"エアフィルターに抗菌加工を施し、フィルター上の菌の増殖を抑制する東芝の仕様。",
+ "AI自動運転":"室内外の状況などをもとにAIが運転を自動調整するゼネラル上位シリーズの自動運転。",
+ "ダブルウイングフラップ":"上下のフラップを細かく制御して、冷暖房の風を目的の方向へ届けやすくするゼネラルの気流機構。",
+ "上下左右スイング":"上下・左右へ風向を自動で動かし、部屋の広い範囲へ風を届ける機能。",
+ "上下スイング":"上下方向へ風向を自動で動かす機能。",
+ "基本暖房":"定格暖房を中心とした標準的な暖房機能。上位シリーズの霜取り対策や高温風などの付加機能とは分けて表示。",
+ "上位暖房":"暖房能力に加えて、霜取り時の快適性や気流制御などを強化した上位シリーズの暖房機能。",
+ "ナノイーX 9.6兆":"水から生まれた微粒子イオン「ナノイーX」を毎秒9.6兆個発生。エアコン内部や室内の有害物質・ニオイなどの抑制に活用する。",
+ "ナノイーX 48兆":"ナノイーXを毎秒48兆個発生する上位仕様。9.6兆タイプよりOHラジカル生成量が多く、内部清潔や室内ケアに活用する。",
+ "ナノイーX内部クリーン":"冷房・除湿後などに内部を乾燥させながらナノイーXを充満させ、エアコン内部のカビ菌を抑制する。",
+ "親水コート熱交換器":"熱交換器表面を親水性コーティングし、結露水でホコリや油分を洗い流しやすくする。",
+ "抗菌エアフィルター":"フィルターに抗菌処理を施し、捕集した菌の増殖を抑制する。",
+ "おでかけクリーン":"不在時などにナノイーXを使って室内やエアコン内部の清潔運転を行う機能。",
+ "天井シャワー気流":"冷房時に冷風を天井方向へ送り、冷たい風が体へ直接当たりにくいよう部屋全体へ広げる。",
+ "サーキュレーションモード":"暖房時に部屋上部へたまった暖気をかき混ぜ、温度ムラを抑えて快適性と省エネを狙う機能。",
+ "新室温みはり":"室温などを見張り、条件に応じて冷暖房運転を開始することで暑さ・寒さ対策を補助する。",
+ "シーン推定自動運転機能":"室内環境などから使用シーンを推定し、エオリアアプリ連携などを使って運転を自動調整する機能。",
+ "すぐでる暖房（おはようチャージ）":"生活パターンなどに合わせて暖房開始前にエアコンを予熱し、運転開始直後から温風を出しやすくする。",
+ "2モード除湿（除湿／除湿 弱）":"弱冷房方式の除湿を通常と弱の2段階で選べる。再熱除湿ではないため、条件によって室温が下がる。",
+ "エネチャージ":"コンプレッサーの排熱を蓄熱し、霜取り運転などに活用して暖房停止や室温低下を抑えるパナソニックの技術。",
+ "快適除湿モード":"室温の低下を抑えながら湿度を下げるパナソニック上位シリーズの除湿制御。",
+ "フィルターお掃除ロボット":"エアフィルターのホコリを自動で掃除し、お手入れ負担を減らす。",
+ "UVプレミアムクリーン除菌":"運転停止後、熱交換器を乾燥させながらUVを照射し、熱交換器上の菌を抑制する東芝の内部清潔機能。",
+ "セルフクリーン":"運転停止後に送風などでエアコン内部を乾燥させ、内部の湿気を減らす東芝の清潔機能。",
+ "マジック洗浄熱交換器":"熱交換器表面を特殊コーティングし、結露水で汚れを洗い流しやすくする東芝の清潔機能。",
+ "無風感空調":"風を拡散して直接風を感じにくくし、冷房・除湿・暖房などで体への風当たりを抑える東芝の気流機能。",
+ "セパレート無風感ルーバー":"左右それぞれのルーバーを使い分け、無風感の気流と通常の気流を同時に使えるDRの気流機能。",
+ "レーダー風あて":"レーダーで人の位置を見つけ、いる場所へ風を届ける東芝DRの気流制御。",
+ "レーダー風よけ":"レーダーで人の位置を見つけ、直接風が当たりにくい方向へ調整する東芝DRの気流制御。",
+ "AI快適学習運転":"運転履歴や室内環境などを学習し、好みに合わせた運転を自動で行う東芝の機能。",
+ "日あたり節電":"日差しの変化を見て、必要以上の冷暖房を抑える東芝の節電機能。",
+ "不在節電":"人がいない状態を検知したときに運転を抑え、消費電力を減らす東芝の節電機能。",
+ "やわらかドライ（除湿）":"弱冷房方式で除湿する東芝の除湿機能。再熱除湿ではないため、条件によって室温が下がることがある。",
+ "楽ダストボックス":"フィルター自動掃除で集めたホコリを、掃除機などで処理しやすくした東芝のお手入れ機構。",
+ "熱交換器加熱除菌":"熱交換器を55℃以上に加熱して、付着したカビ菌や細菌を除菌するゼネラルの内部清潔機能。",
+ "外せる送風路":"吹出口周辺のパーツを取り外して、手が届きにくかった送風路を自分で掃除しやすくするゼネラルの構造。",
+ "まるごとクリーンタイマー":"設定した時刻に、エアコン内部の清潔運転を自動で行うゼネラルの機能。",
+ "2WAY除湿（ソフトクール・ひかえめ）":"用途に合わせて「ソフトクール除湿」と、冷えを抑える「ひかえめ除湿」を使い分けるゼネラルの除湿。",
+ "さらさら冷房（再熱除湿）":"設定温度に近づくと冷房から再熱除湿へ自動で切り替え、室温を保ちながら湿度を下げるゼネラルXの機能。",
+ "ハイブリッド気流":"温度と速さの異なる2種類の気流を組み合わせ、部屋の広い範囲へ快適な風を届けるゼネラルXの気流技術。",
+ "フィルター自動おそうじ":"エアフィルターのホコリを自動で除去し、フィルターの目詰まりとお手入れ負担を抑える。",
+ "ハイドロフィリック熱交換器":"親水性コーティングで熱交換器の汚れを結露水になじませ、洗い流しやすくする清潔機能。",
+ "毎日快適モード":"室温などの環境を見ながら、必要に応じて運転を自動で開始・調整するゼネラルの便利機能。",
+ "あったかアップ":"暖房時に温風を強め、足元などを暖めたいときに使うゼネラルの暖房機能。",
+ 'フロアアイ':'赤外線センサーで床（人の近く）の温度を測定。冬は足元の冷えを見て暖め、夏は床温度を見て冷やしすぎを抑える三菱GEのセンサー。',
+ 'ハイブリッド運転':'体感温度に合わせてエアコン運転と送風運転を自動で切り替え、快適性を保ちながら消費電力を抑える三菱の節電機能。',
+ 'おまかせボディ':'運転開始から停止後まで、エアコン内部の汚れを抑えるための清潔制御を自動で行う三菱の機能。',
+ '清潔コート熱交換器':'熱交換器に汚れが付きにくいコーティングを施し、付着した油などをドレン水で洗い流しやすくする。',
+ '清潔Vフィルター':'エアフィルターに特殊コーティングを施し、捕集した有害物質の抑制を図る三菱の清潔フィルター。',
+ 'プレミアム除湿':'2つのファンを細かく制御し、弱冷房方式ながら室温低下を抑えて除湿。弱・標準・強の3段階も選べる。',
+ 'スマート除湿':'ファン回転数を制御しながら除湿し、設定温度到達後は送風停止も使って湿度の戻りを抑える。弱・標準・強を選択可能。',
+ '選べる3モード除湿':'弱冷房方式の除湿を弱・標準・強の3段階から選択。設定温度到達後は送風停止も使って湿度の戻りを抑える。',
+ 'さらっと除湿冷房（再熱除湿）':'冷房と再熱除湿を自動で切り替え、設定温度を保ちながら冷たい風と暖かい風を混ぜて室温を下げにくく除湿する。',
+ 'ムーブアイ':'赤外線センサーで床や壁などの温度から体感温度を測り、冷やしすぎ・暖めすぎを抑える三菱のセンサー。',
+ 'ムーブアイmirA.I.+':'赤外線センサーで人・床・壁などを細かく見て体感温度を推定し、AIで室温変化も予測して気流や運転を調整する上位センサー。',
+ 'エモコアイ':'非接触で人の脈の情報を捉え、そこから推定した状態を温度・気流制御に活用する三菱のバイタルセンサー。効果には個人差がある。',
+ 'おまかせA.I.自動':'センサー情報とAI予測を使い、冷房・暖房・送風などを自動で切り替えて快適性と省エネを両立する上位自動運転。',
+ '保湿風よけ':'人に直接風を当てないよう気流を調整し、肌の乾燥を抑えやすくする三菱の気流機能。',
+ 'ワイド気流':'左右方向へ広く風を届ける三菱の気流機能。',
+ 'ロング気流':'部屋の遠くまで風を届けやすくする三菱の気流機能。',
+ '室温キープシステム':'霜取り前にあらかじめ室温を上げ、霜取り中の室温低下を抑える三菱の暖房機能。',
+ '長時間連続暖房':'霜付き状態を見ながら不要な霜取りを減らし、暖房を長く継続しやすくするXDの暖房機能。',
+ '最高約60℃温風':'ハイパワー運転時に吹出口付近で最高約60℃の温風を出し、足元を素早く暖める機能。使用条件で温度は変わる。',
+ '消し忘れオートOFF':'センサーが不在を検知した状態が続くと自動で運転を停止し、消し忘れを防ぐ。',
+ 'はずせるフィルターおそうじメカ':'運転停止後にフィルターのホコリなどを自動でかき取り、ダストボックスへ集める三菱の自動フィルター掃除。',
+ 'はずせるボディ':'前面パネルやフラップなどを取り外しやすくし、通風路などを自分で掃除しやすくした構造。',
+ 'よごれんボディ':'空気の通り道などに汚れが付きにくい特殊仕様を採用し、お手入れの負担を減らす三菱の清潔構造。',
+ '2温度2気流':'左右のファンを独立制御し、異なる温度の風を同時に届けて複数人の体感差に対応するFZの気流制御。',
+ '2か所同時空調':'人の位置などに合わせて2方向へ気流を送り、離れた場所にいる人にも風を届ける。',
+ '自動風あて・風よけ':'センサーで人の位置や体感を見ながら、風を当てる・避ける方向を自動調整する。',
+ '快適ノンストップ暖房':'霜取り中の室温低下を抑える制御などを組み合わせ、暖房の途切れによる寒さを感じにくくする上位暖房機能。',
+ '急速Wヒート':'暖房開始時などに強い温風を使い、足元を素早く暖める三菱の暖房機能。',
+ '10℃キープ暖房':'室温を約10℃に保つよう暖房し、留守中などの冷え込みを抑える機能。',
+ 'さらら除湿（リニアハイブリッド方式）':'温度と湿度に合わせて除湿方式を細かく制御し、室温低下を抑えながら除湿量を調整するダイキン上位のさらら除湿。',
+ '9段階セレクトドライ':'除湿の強さを9段階から選び、好みに合わせて湿度を下げるダイキンの除湿機能。',
+ '天井気流':'冷房時に風を天井に沿わせ、直接風が当たりにくいよう部屋へ広げるダイキンの気流。',
+ 'オートスイング':'フラップやルーバーを自動で動かし、風向を広げる機能。',
+ '節電自動運転':'センサーなどを使い、快適性を保ちながら無駄な運転を抑えるダイキンの自動運転。',
+ 'センサー風向':'人の位置などを検知し、風向を自動で調整する機能。',
+ '切り忘れ通知':'スマートフォン連携で外出などを検知し、エアコンの切り忘れを通知する機能。',
+ 'おかえり運転':'スマートフォンの位置情報などと連携し、帰宅に合わせて運転開始を補助する機能。',
+ '凍結洗浄':'熱交換器を凍らせて霜を付け、解凍時の水でホコリや汚れを洗い流す日立の内部清潔機能。',
+ 'カビバスター':'運転停止中も内部の温度・湿度を見張り、必要に応じて加熱・送風などを行ってカビを抑制する日立の機能。',
+ 'ランドリー除湿':'洗濯物の乾燥を目的に、除湿運転を活用する日立のモード。',
+ '日射センサー':'日差しの変化を検知し、室温変化に合わせて運転を調整するセンサー。',
+ '人感センサー':'人の在・不在や動きを検知し、自動運転や省エネ制御に利用するセンサー。',
+ '風よけ':'人に直接風が当たりにくい方向へ気流を調整する機能。',
+ '風よけエリアセレクト':'人がいる場所などを見ながら、選んだエリアへの直接風を避ける日立の気流制御。',
+ '健康冷房［涼快］':'室温と湿度を見ながら、冷やしすぎを抑えて快適な冷房を行う日立の運転。',
+ 'LAB制御':'室内環境などの情報を活用して運転を細かく制御し、快適性と省エネを両立する日立上位の制御。',
+ 'eco運転':'センサー情報などを使って運転を自動調整し、無駄な消費電力を抑える日立の省エネ運転。',
+ 'オートオフ':'不在状態が続いた場合に自動停止し、消し忘れを抑える機能。',
+ 'つつみこみ暖房':'足元を中心に部屋を包み込むように暖め、暖房時の快適性を高める日立の気流制御。',
+ 'スピード暖房':'運転開始時に高い暖房能力を使い、室温を素早く上げる機能。',
+ 'ソフト除湿':'日立Dの弱冷房方式の除湿。風量をコントロールして肌寒さを抑えるが、再熱方式ではなく室温が2〜3℃程度下がることがある。',
+ '上下左右風向コントロール':'上下フラップと左右ルーバーをスイングしたり、好みの角度に固定できる。',
+ 'ecoこれっきり運転':'センサーで部屋の状況を見ながら、運転モードや節電運転を自動で調整する日立の機能。',
+ 'みはって霜取り':'室外機の霜付き状態を見ながら霜取り運転を行う暖房機能。',
+
+ '水内部クリーン':'冷房・除湿で発生した結露水を使って熱交換器の汚れを洗い流し、その後乾燥させるダイキンの内部清潔機能。',
+ 'ストリーマ内部クリーン':'運転後などにストリーマを照射しながら内部を乾燥させ、内部の清潔維持を助ける。',
+ 'さらら除湿':'ダイキンの除湿機能。シリーズによって制御方式が異なり、上位ほど室温を下げにくい制御が充実する。',
+ 'サーキュレーション気流':'部屋の奥まで気流を回し、温度ムラを抑えやすくするダイキンの気流制御。',
+ '垂直気流':'暖房時などに壁に沿わせて足元方向へ気流を届け、風が直接当たりにくくする。',
+ '清潔ドレンパン':'結露水を受けるドレンパンを清潔に保ちやすくしたノジマオリジナル仕様。',
+ '凍結洗浄 除菌ヒートプラス':'熱交換器を加熱して汚れをはがれやすくした後、凍結・解凍した水で洗い流す日立の上位清潔機能。',
+ '凍結洗浄 Light':'熱交換器を凍らせ、解凍水でホコリや汚れを洗い流す日立の清潔機能。',
+ 'ファンお掃除ロボ':'送風ファンに付着したホコリを自動で掃除する日立の機能。',
+ 'カラッと除湿':'室温の低下を抑えながら除湿する日立の除湿機能。',
+ '健康冷房［涼快］':'冷やしすぎを抑えながら湿度もコントロールし、長時間の冷房を快適にしやすい運転。',
+ 'ムーブアイmirA.I.+':'床・壁・人などを赤外線で見て、体感温度や人の位置に合わせて運転する三菱の上位センサー。',
+ 'ムーブアイ':'床や人の位置・温度などを赤外線で見て、冷やしすぎ・暖めすぎを抑えやすくするセンサー。',
+ 'さらっと除湿冷房':'冷房と再熱除湿を自動で切り替え、室温低下を抑えながら湿度を下げる三菱の除湿。',
+ 'スマート除湿':'ファンの回転などを制御しながら除湿する三菱の弱冷房除湿。',
+ '選べる3モード除湿':'弱・標準・強の3段階から選べる三菱の弱冷房除湿。',
+ '自動風あて・風よけ':'人の温冷感などに合わせて、風を当てる・避けるを自動で切り替える。',
+ 'フィルターおそうじメカ':'エアフィルターのホコリを自動で掃除する三菱の機能。',
+ 'はずせるボディ':'前面パネルやフラップなどを外しやすくして、通風路やファン周辺を手入れしやすくする構造。',
+ 'よごれんボディ':'ホコリや油が付きにくい特殊コーティングで内部の汚れを抑える。',
+
+ 'ナノイーX 48兆':'ナノイーXのOHラジカル生成量が毎秒48兆個のタイプ。X・EXに搭載。',
+ 'ナノイーX 9.6兆':'ナノイーXのOHラジカル生成量が毎秒9.6兆個のタイプ。Jに搭載。',
+ 'フィルターお掃除ロボット':'エアフィルターのホコリを自動で掃除する機能。X・EXは自動排出方式とBOX方式の切替に対応。',
+ 'ホコリレスコーティング':'熱交換器にホコリや油分が付きにくい表面処理。X・EXに搭載。',
+ '親水コーティング':'熱交換器に付いた汚れを結露水となじませ、洗い流しやすくするコーティング。',
+ 'ナノイーX内部クリーン':'運転後に内部を乾燥し、ナノイーXを充満させてカビを抑制・除菌する内部清潔運転。シリーズで効果表記が異なる。',
+ '快適除湿':'室温の低下を抑えながら湿度を下げる上位の除湿。XとEXでは制御内容が異なる。',
+ 'パーシャル制御':'Xの快適除湿で使う制御。冷やしすぎを抑えながら除湿する。',
+ '湿度設定':'EXの快適除湿で、好みに合わせて湿度を設定できる機能。',
+ '衣類乾燥':'除湿運転を利用して部屋干し衣類の乾燥をサポートする。',
+ '2モード除湿':'Jの除湿。「除湿」と「除湿 弱」の2段階から選ぶ。',
+ 'ロングワイド気流':'Xの気流機能。暖房時などに温風をより遠く・広く届ける。',
+ 'ワイド気流':'EXの気流機能。横方向へ広く風を届ける。',
+ '天井シャワー気流':'冷房時に涼風を天井方向へ送り、上から降り注ぐように冷やして直接風を当てにくくする。',
+ '上下左右自動':'上下・左右の風向を自動で動かして送風する。',
+ '左右自動':'左右方向の風向を自動で動かして送風する。',
+ 'スイング':'風向ルーバーを動かしながら送風する。',
+ 'ひと・ものセンサー':'人の居場所・活動量などに加え、家具なども見ながら気流や運転を調整するXのセンサー。',
+ 'ひとセンサー':'人の在・不在を検知し、不在節電やオートオフに利用するEXのセンサー。',
+ '日射センサー':'日射の変化を検知し、お部屋の熱の入り方に合わせて運転を調整する。',
+ 'AI快適おまかせ':'Xの自動運転。センサーや学習情報を使って快適性を考えながら運転する。',
+ 'AIモード':'EXの自動運転。人の在・不在や日射、お部屋の状況などを検知して運転を最適化する。',
+ 'エネチャージ':'Xの暖房機能。運転中に発生する熱を蓄えて活用し、暖房の快適性を高める。',
+ '足元暖房43℃':'足元付近へ約43℃の温風を届ける暖房機能。X・EXに搭載。',
+ 'AIチャージ':'暖房をすぐ開始できるよう、運転履歴などから必要なタイミングを予測して準備する。',
+ '基本暖房':'Jの標準的な暖房運転。XのエネチャージやX・EXの足元暖房43℃は非搭載。',
+ 'フィルターお掃除ロボットなし':'フィルター自動掃除は非搭載。フィルターは手動でお手入れする。',
+ 'ひとセンサーなし':'人の在・不在を検知する専用センサーは非搭載。',
+ '日射センサーなし':'日射量を検知して運転を調整する専用センサーは非搭載。'
+}
+function term(t){
+ const d=catalogGlossary[t];
+ if(!d)return `<span class="plainFeature">${t}</span>`;
+ return `<button class="termChip" onclick="showCatalogTerm(${JSON.stringify(t).replace(/"/g,'&quot;')})">${t}<span>ⓘ</span></button>`;
+}
+function showCatalogTerm(t){let d=catalogGlossary[t];if(!d)return;let p=$('catalogTermPop');p.innerHTML=`<div class="termPopCard"><button onclick="closeCatalogTerm()">×</button><small>カタログ用語</small><h3>${t}</h3><p>${d}</p></div>`;p.classList.add('show')}
+function closeCatalogTerm(){$('catalogTermPop').classList.remove('show')}
+function termText(txt){
+ if(!txt)return '—';
+ const parts=splitFeatureTerms(String(txt));
+ return parts.map(t=>{
+   const clean=t.trim(); if(!clean)return '';
+   const isNone=/なし$|なし（|非搭載|—/.test(clean);
+   if(isNone) return `<span class="termNone">${escapeHtml(clean)}</span>`;
+   return `<button class="termChip" type="button" onclick='showTermInfo(${JSON.stringify(clean)})'>${escapeHtml(clean)}</button>`;
+ }).join('<span class="featureSep">／</span>');
+}
+function splitFeatureTerms(txt){
+ let out=[],buf='',depth=0;
+ for(const ch of txt){
+   if(ch==='（'||ch==='(')depth++;
+   if(ch==='）'||ch===')')depth=Math.max(0,depth-1);
+   if(ch==='／'&&depth===0){out.push(buf);buf='';}else buf+=ch;
+ }
+ if(buf)out.push(buf); return out;
+}
+function escapeHtml(v){return String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function showTermInfo(term){
+ const desc=catalogGlossary[term]||genericTermExplanation(term);
+ let pop=document.getElementById('termInfoPopup');
+ if(!pop){
+   pop=document.createElement('div');pop.id='termInfoPopup';pop.className='termInfoPopup';
+   pop.onclick=e=>{if(e.target===pop)pop.remove()};
+   document.body.appendChild(pop);
+ }
+ pop.innerHTML=`<div class="termInfoCard"><button class="termInfoClose" onclick="document.getElementById('termInfoPopup')?.remove()">×</button><h3>${escapeHtml(term)}</h3><p>${escapeHtml(desc)}</p></div>`;
+}
+function genericTermExplanation(term){
+ const t=String(term);
+ if(/除湿/.test(t))return '湿度を下げるための機能です。方式や制御はシリーズによって異なるため、比較画面では搭載有無と上位機の違いを確認できます。';
+ if(/気流|スイング|風向|風よけ|風あて/.test(t))return '風の向きや広がり、当て方を調整する気流機能です。シリーズによって自動制御の範囲が異なります。';
+ if(/掃除|洗浄|クリーン|清潔|コーティング|除菌/.test(t))return 'エアコン内部やフィルターなどを清潔に保ちやすくする機能です。掃除する場所や方法は機能ごとに異なります。';
+ if(/センサー|AI|自動|eco|節電/.test(t))return '室温・人・日射などの情報を使って運転を自動調整する機能です。検知対象はシリーズによって異なります。';
+ if(/暖房|ヒート|霜取り|加湿/.test(t))return '暖房時の快適性や立ち上がり、霜取りなどに関係する機能です。';
+ if(/スマホ|通知/.test(t))return 'スマートフォン連携や通知に関する機能です。利用条件はメーカーのアプリ・ネットワーク環境によります。';
+ return 'このシリーズに搭載されているカタログ記載の機能です。比較時は、同じ項目のもう一方の機種と見比べてください。';
+}
+const panasonicSales={
+ X:{level:3,clean:'ナノイーX 48兆／フィルターお掃除ロボット／ホコリレスコーティング／親水コーティング',dry:'快適除湿／パーシャル制御／衣類乾燥',air:'ロングワイド気流／天井シャワー気流／上下左右自動',warm:'エネチャージ／足元暖房43℃／AIチャージ',auto:'ひと・ものセンサー／日射センサー／AI快適おまかせ',why:'長時間使う・省エネも快適性も妥協したくない人向け'},
+ EX:{level:2,clean:'ナノイーX 48兆／フィルターお掃除ロボット／ホコリレスコーティング／親水コーティング',dry:'快適除湿／湿度設定／衣類乾燥',air:'ワイド気流／天井シャワー気流／左右自動',warm:'足元暖房43℃／AIチャージ',auto:'ひとセンサー／日射センサー／AIモード',why:'自動掃除・快適除湿・センサーが欲しいが、Xまでは不要な人向け'},
+ J:{level:1,clean:'ナノイーX 9.6兆／ナノイーX内部クリーン／親水コーティング／フィルターお掃除ロボットなし',dry:'2モード除湿（除湿／除湿 弱）',air:'天井シャワー気流／左右自動／スイング',warm:'基本暖房',auto:'上位の人・もの／日射センサーなし',why:'基本性能とコンパクトさを優先する人向け'}
+};
+function panasonicValueSummary(s1,s2){
+ let a=panasonicSales[s1],b=panasonicSales[s2];if(!a||!b)return '';
+ let hi=a.level>=b.level?{s:s1,d:a}:{s:s2,d:b},lo=a.level>=b.level?{s:s2,d:b}:{s:s1,d:a};
+ if(a.level===b.level)return `<div class="benefitPanel"><h3>💴 価格差で良くなること</h3><p class="sameSeries">同じシリーズです。畳数や電源・設置条件を確認。</p></div>`;
+ let data={};
+ data['J>EX']=[
+  ['🧼','清潔・お手入れ','フィルター掃除が自動。→ 高い所のフィルター掃除を減らしたい人向き。'],
+  ['💧','除湿の快適性','除湿制御が上位化。→ 梅雨や就寝時に「除湿すると寒い」が気になる人向き。'],
+  ['🌬️','気流','ワイド気流で横方向へ広げやすい。→ LDKなど横に広い部屋向き。'],
+  ['👀','自動運転','人の不在や日射を見て自動調整。→ 細かな設定をせずおまかせで使いたい人向き。'],
+  ['🔥','暖房','低温暖房能力2.8→3.5kW。→ 冬もエアコン暖房をよく使う人向き。']
+ ];
+ data['EX>X']=[
+  ['🧼','清潔・お手入れ','自動掃除はどちらも搭載。清潔機能の基本は近い'],
+  ['💧','除湿の快適性','Xは上位の除湿制御。→ 梅雨・夏に長時間除湿する人ほど価値が出る。'],
+  ['🌬️','気流','ロングワイドでより遠く・広く送風。→ 細長いLDKや離れた席まで届けたい人向き。'],
+  ['👀','自動運転','人や部屋の状況をより細かく見て気流調整。→ 家族が長時間過ごすLDK向き。'],
+  ['🔥','暖房','エネチャージ＋低温暖房3.5→4.5kW。→ 冬の暖房停止感や寒さを重視する人向き。']
+ ];
+ data['J>X']=[
+  ['🧼','清潔・お手入れ','フィルター掃除が自動。→ 高い所のフィルター掃除を減らしたい人向き。'],
+  ['💧','除湿の快適性','上位の除湿制御へ。→ 梅雨や夜に除湿をよく使う人向き。'],
+  ['🌬️','気流','ロングワイド気流。→ エアコンから離れた場所まで快適にしたい人向き。'],
+  ['👀','自動運転','人や日射などを見て細かく自動調整。→ 基本おまかせで使いたい人向き。'],
+  ['🔥','暖房','エネチャージ＋低温暖房2.8→4.5kW。→ 冬も主暖房として使うなら価格差が活きる。']
+ ];
+ let items=data[lo.s+'>'+hi.s]||[];
+ return `<div class="benefitPanel"><div class="benefitHead"><div><small>${lo.s} → ${hi.s}</small><h3>💴 価格差で良くなること</h3></div><span>${hi.d.why}</span></div><div class="benefitList">${items.map(x=>{let y=[...x];if(y[1]==='暖房'){y[0]='⭐';y[1]='独自・上位機能'}return `<div class="benefitItem"><i>${y[0]}</i><div><b>${y[1]}</b><p>${y[2]}</p></div></div>`}).join('')}</div></div>`;
+}
+function panasonicFeatureCell(series,key){
+ let d=panasonicSales[series];if(!d)return '';
+ let panAir=d.air||''; if(d.warm&&/サーキュレーションモード/.test(d.warm)&&!/サーキュレーションモード/.test(panAir))panAir+=(panAir?'／':'')+'サーキュレーションモード';
+ let panSpecial=(d.warm||'').split('／').filter(v=>v&&!/サーキュレーションモード|足元暖房/.test(v)).join('／')||'—';
+ let map={clean:d.clean,dehumid:d.dry,airflow:panAir,sensor:d.auto,special:panSpecial};
+ return `<b class="featureText">${termText(map[key]||'')}</b>`;
+}
+
+const seriesRanks={
+ '東芝':{'M':1,'DX':2,'DZ':3,'DR':4},
+ 'ゼネラル':{'C（AS-C226T系）':1,'L':2,'W':3,'Z':4,'X（6畳なし）':5},
+ 'ダイキン':{'E':1,'C':2,'FN（ノジマ）':3,'A':4,'R':5},
+ '日立':{'D':1,'E':1,'G':2,'WN（ノジマ）':3,'X':4},
+ '三菱':{'GE':1,'R':2,'XD':3,'ZW':4,'FZ':5},
+ 'パナソニック':{'J':1,'C':2,'EX':3,'X':4,'LV（6畳なし）':5}
+};
+
+const upperPairFit={
+ 'ダイキン|A|R':[
+  ['🧼','清潔・お手入れ','どちらも上位の内部清潔機能を重視できる。→ 清潔だけならAでも十分。Rは加湿・換気まで含めた空気環境重視で選ぶ。'],
+  ['💧','除湿の快適性','A・Rとも上位のさらら除湿。→ 夏の除湿目的だけならAでも強い。'],
+  ['🌬️','気流','どちらもサーキュレーション気流で部屋の奥まで冷気を回しやすい。→ 広めのLDKを素早く整えたい人に合う。'],
+  ['👀','自動運転','どちらもAI快適自動・節電自動を使える。→ 細かな設定をせず、おまかせで使いたい人向き。'],
+  ['⭐','独自・上位機能','Rは「うるる加湿」が決め手。→ 冬の乾燥対策までエアコン1台で行いたいならR。高効率スイングコンプレッサーはR・Aを含む全シリーズ共通なので、Rとの価格差ではなく「ダイキンを選ぶ理由」として見られる。']
+ ],
+ '日立|WN（ノジマ）|X':[
+  ['🧼','清潔・お手入れ','Xはファンお掃除ロボ＋凍結洗浄ヒートプラスまで強化。→ キッチン近くのLDKなど、油を含む内部汚れまで気になるならX。'],
+  ['💧','除湿の快適性','Xは再熱方式のカラッと除湿。→ 梅雨・部屋干しで「除湿すると寒い」が苦手ならXが合う。'],
+  ['🌬️','気流','Xは風よけやロング＆ワイド気流まで使える。→ 人に直接当てたくない、離れた場所まで届けたいリビング向き。'],
+  ['👀','自動運転','Xは清潔・快適を自動で任せたい使い方に向く。→ 操作を減らして上位機能を活かしたい人向き。'],
+  ['⭐','独自・上位機能','Xは「内部を徹底して自動で掃除したい人」にぴったり。WNは必要十分な清潔機能と価格のバランスを取りたい人向き。']
+ ],
+ '三菱|XD|ZW':[
+  ['🧼','清潔・お手入れ','ZWは上位の清潔・お手入れ機能を重視。→ 普段の手入れまでラクにしたいならZW。'],
+  ['💧','除湿の快適性','どちらも湿度を意識した除湿ができる。→ 除湿だけで決めるより、センサーか暖房かで選ぶのが分かりやすい。'],
+  ['🌬️','気流','ZWは左右に分かれたフラップを独立制御し、2か所へ風を吹き分けられる。XDも2か所同時空調に対応。→ 家族それぞれの居場所に合わせて風を送り分けたいならZWが合う。'],
+  ['👀','自動運転','ZWは上位センサー制御を活かした快適性重視。→ 暑がり・寒がりが同じ部屋にいる家庭や、おまかせ重視に合う。'],
+  ['⭐','独自・上位機能','XDは暖房能力を強化したモデル。→ 冬の暖房・寒さを優先するならXD。年間を通した細かな快適制御ならZW。']
+ ],
+ '東芝|DZ|DR':[
+  ['🧼','清潔・お手入れ','DR・DZともUV・熱交換器・フィルター掃除まで充実。→ 清潔機能だけならDZでもかなり強い。'],
+  ['💧','除湿の快適性','DRは選べる除湿を細かく使える。→ 梅雨・部屋干しなど除湿を頻繁に使い分けたい人向き。'],
+  ['🌬️','気流','DRはセパレート無風感ルーバー。左右で通常風と無風感を使い分けられる。→ 同じ部屋で「風に当たりたい人／当たりたくない人」がいる家庭に合う。'],
+  ['👀','自動運転','DRはAI快適や節電制御まで含めて、おまかせ運転を重視する人向き。'],
+  ['⭐','独自・上位機能','DZは無風感空調そのものを重視する人に十分。左右で通常風と無風感を使い分けたいならDRを選ぶ理由が明確。']
+ ],
+ 'パナソニック|EX|X':[
+  ['🧼','清潔・お手入れ','X・EXともナノイーX48兆＋お掃除ロボット。→ 清潔・フィルター掃除だけならEXでも上位クラス。'],
+  ['💧','除湿の快適性','Xはパーシャル制御でごく弱い除湿まで可能。→ 梅雨・秋雨に室温を下げすぎず除湿したいならX。'],
+  ['🌬️','気流','Xはロングワイド気流、EXはワイド気流。→ 奥行きのあるLDKや離れた場所まで届けたいならX。コンパクトさ重視ならEX。'],
+  ['👀','自動運転','どちらも自動制御が充実。Xは快適性と省エネをより上位の制御で任せたい人向き。'],
+  ['⭐','独自・上位機能','Xはエネチャージに加え、エコロータリー コンプレッサーを搭載。低能力運転時も効率よく、冷房を長時間つけっぱなしにする使い方に合う。→ 冬の暖房継続性と夏の安定時省エネまで重視するならX。EXは奥行きコンパクトが魅力。']
+ ],
+ 'ゼネラル|W|Z':[
+  ['🧼','清潔・お手入れ','Wは外せる送風路＋フィルター自動おそうじが強み。→ 自分で奥まで掃除したい・日常の手間も減らしたい人にはWが合う。'],
+  ['💧','除湿の快適性','Zは再熱除湿を使う「さらさら冷房」。→ 高気密住宅や梅雨時に、室温を下げすぎず湿度をしっかり取りたい人向き。'],
+  ['🌬️','気流','どちらもロング気流。Zは足元まで含めた快適おまかせ気流を重視。→ 温度ムラや足元の快適性まで任せたいならZ。'],
+  ['👀','自動運転','ZはダブルAIで好みや状況に合わせる制御が特徴。→ 細かな設定をせず自分好みに任せたい人向き。'],
+  ['⭐','独自・上位機能','W＝「掃除しやすさ＋省エネ」の実用派。Z＝「湿度＋AI＋快適性」までこだわる人向き。']
+ ],
+ 'ダイキン|C|FN（ノジマ）':[
+  ['🧼','清潔・お手入れ','Cも水内部クリーンで内部を洗浄。FNはフィルター自動お掃除まで加わる。→ フィルター掃除の手間まで減らしたいならFN。'],
+  ['💧','除湿の快適性','Cはセレクトドライ。FNは「さらら除湿（ハイブリッド方式）」で、運転状況に合わせて除湿方法を切り替える。→ 梅雨や夏の湿気をより快適に取りたいならFN。'],
+  ['🌬️','気流','FNは快適気流・プレミアム冷房を重視。→ 冷房を長時間使い、設定温度到達後の蒸し暑さも抑えたい人に合う。'],
+  ['👀','自動運転','Cはシンプルに使いやすく、FNは快適性を一段高めたい人向け。'],
+  ['⭐','どんな人に合う？','C＝高さ250mmのコンパクトさと清潔機能を重視。FN＝設置性よりも除湿・自動掃除・夏の快適性まで欲しい人に合う。']
+ ],
+ 'ダイキン|E|C':[
+  ['🧼','清潔・お手入れ','Eも水内部クリーンを搭載。Cはクリーン機能をより充実させたコンパクトモデル。'],
+  ['💧','除湿の快適性','どちらもさらら除湿ではなく、セレクトドライを使う。→ 除湿を大きく強化したいならF系以上を検討。'],
+  ['🌬️','気流','どちらも基本の気流制御が中心。→ 高度な快適気流より、本体サイズと価格を重視する人向け。'],
+  ['👀','自動運転','シンプル操作を重視した構成。上位のAI快適自動まで不要なら選びやすい。'],
+  ['⭐','どんな人に合う？','E＝価格と奥行255mmのコンパクトさ重視。C＝高さ250mmで設置しやすく、清潔機能も重視したい人に合う。']
+ ],
+ '日立|D|G':[
+  ['🧼','清潔・お手入れ','Dは凍結洗浄Light＋ステンレス・クリーン。Gはフィルター自動お掃除まで欲しい人に合う。'],
+  ['💧','除湿の快適性','基本の除湿を使うならDでも対応。上位の再熱方式カラッと除湿を重視する場合はX系との違いが大きい。'],
+  ['🌬️','気流','基本の冷暖房を重視するならD。より手間を減らして使いたいならG。'],
+  ['👀','自動運転','Dはベーシック、Gは日常のお手入れを自動化したい人向け。'],
+  ['⭐','どんな人に合う？','D＝価格を抑えて凍結洗浄Lightなどの清潔性は欲しい。G＝フィルター掃除の手間まで減らしたい人に合う。']
+ ],
+ '三菱|GE|R':[
+  ['🧼','清潔・お手入れ','GEもはずせるボディで自分で掃除しやすい。→ 清潔性を保ちながら価格を抑えたい人にも選びやすい。'],
+  ['💧','除湿の快適性','GE・Rともスマート除湿／選べる3モード除湿に対応。→ 除湿だけならGEでも機能をしっかり残している。'],
+  ['🌬️','気流','Rは高さを抑えた室内機とムーブアイを活かした気流制御が魅力。→ 設置性とセンサー制御を両立したいならR。'],
+  ['👀','自動運転','GEはフロアアイ、Rはムーブアイを搭載。→ 人のいる場所まで見て調整したいならRが合う。'],
+  ['⭐','どんな人に合う？','GE＝価格を抑えて床温度センサーと掃除しやすさは欲しい。R＝コンパクト設置＋人を見て快適に調整したい人に合う。']
+ ],
+ '三菱|R|XD':[
+  ['🧼','清潔・お手入れ','どちらも自分で手入れしやすい構造を重視。清潔性だけでなく、設置性か暖房力かで選ぶと分かりやすい。'],
+  ['💧','除湿の快適性','R・XDともスマート除湿／選べる3モード除湿に対応。'],
+  ['🌬️','気流','どちらもセンサーを使った気流制御が可能。Rはコンパクト設置、XDは冬の快適性を重視。'],
+  ['👀','自動運転','センサーで体感を見ながら調整。基本の自動快適性はどちらも期待できる。'],
+  ['⭐','どんな人に合う？','R＝カーテンレールなど設置スペースを抑えたい人。XD＝低温時の暖房能力を重視し、冬もしっかり暖めたい人に合う。']
+ ],
+ '東芝|M|DX':[
+  ['🧼','清潔・お手入れ','Mはセルフクリーン＋マジック洗浄熱交換器。DXはフィルター自動お掃除まで加わり、手間を減らしやすい。'],
+  ['💧','除湿の快適性','どちらも基本の除湿に対応。価格差は無風感・自動掃除などの快適機能で見ると分かりやすい。'],
+  ['🌬️','気流','DXは無風感空調を搭載。→ エアコンの直接風が苦手ならDXへ上げる意味が大きい。'],
+  ['👀','自動運転','Mはシンプル、DXはAI快適など自動制御を使いたい人に合う。'],
+  ['⭐','どんな人に合う？','M＝高さ250mm・奥行230mmの設置性と価格重視。DX＝直接風を抑え、自動掃除まで欲しい人に合う。']
+ ],
+ '東芝|DX|DZ':[
+  ['🧼','清潔・お手入れ','DX・DZともフィルター自動お掃除など清潔機能が充実。'],
+  ['💧','除湿の快適性','基本の除湿性能に加え、DZは上位の快適制御を重視したい人向け。'],
+  ['🌬️','気流','どちらも無風感空調を搭載。→ 直接風が苦手という目的ならDXでも対応できる。'],
+  ['👀','自動運転','DZはより上位の快適制御を求める人に合う。'],
+  ['⭐','どんな人に合う？','DX＝無風感＋自動掃除を価格とのバランスで選びたい。DZ＝高さ250mmを維持しながら、より快適性を高めたい人に合う。']
+ ],
+ 'パナソニック|J|C':[
+  ['🧼','清潔・お手入れ','J・CともナノイーX 9.6兆＋内部クリーン。フィルターお掃除ロボットは非搭載。'],
+  ['💧','除湿の快適性','どちらも冷房除湿モード。快適除湿モードを重視するならEX以上が分かりやすい。'],
+  ['🌬️','気流','どちらも天井シャワー気流など基本の快適気流を使える。'],
+  ['👀','自動運転','シンプルな自動運転を中心に使いたい人向け。'],
+  ['⭐','どんな人に合う？','J＝価格と基本機能のバランス重視。C＝6畳で省エネ基準100%など省エネ性も重視したい人に合う。']
+ ],
+ 'パナソニック|C|EX':[
+  ['🧼','清潔・お手入れ','CはナノイーX 9.6兆でフィルターお掃除ロボットなし。EXはナノイーX 48兆＋お掃除ロボット。→ 清潔と手間削減ならEX。'],
+  ['💧','除湿の快適性','Cは冷房除湿モード。EXは快適除湿＋衣類乾燥にも対応。→ 梅雨・部屋干しまで重視するならEX。'],
+  ['🌬️','気流','EXはワイド気流など快適性を強化。→ リビングなど人が長くいる部屋に合う。'],
+  ['👀','自動運転','EXはセンサー・自動制御をより活かしたい人向け。'],
+  ['⭐','どんな人に合う？','C＝省エネ性と基本清潔機能を重視。EX＝自動掃除・除湿・ナノイーXを一段上げて手間と快適性を重視する人に合う。']
+ ],
+ 'ゼネラル|C（AS-C226T系）|L':[
+  ['🧼','清潔・お手入れ','Cも熱交換器加熱除菌。Lは外せる送風路で、手が届きにくい送風路まで自分で掃除しやすい。'],
+  ['💧','除湿の快適性','どちらも2WAY除湿。→ 除湿だけならCでも基本機能を残している。'],
+  ['🌬️','気流','Cはコンパクト性重視。Lは左右スイングなど気流の使いやすさを高めたい人向け。'],
+  ['👀','自動運転','日常の快適運転を任せつつ、Lは清潔・使い勝手も重視した構成。'],
+  ['⭐','どんな人に合う？','C＝横幅728mm・高さ250mmで設置性重視。L＝送風路を自分で外して掃除したい人に合う。']
+ ],
+ 'ゼネラル|L|W':[
+  ['🧼','清潔・お手入れ','Lも外せる送風路＋熱交換器加熱除菌。Wはさらにフィルター自動おそうじ。→ フィルター掃除まで任せたいならW。'],
+  ['💧','除湿の快適性','どちらも2WAY除湿。→ 除湿目的だけならLでも十分比較対象になる。'],
+  ['🌬️','気流','どちらも左右スイングなど日常の気流機能を使える。'],
+  ['👀','自動運転','基本の快適運転に加え、Wは清潔機能の自動化を重視する人向け。'],
+  ['⭐','どんな人に合う？','L＝自分で奥まで掃除したい人。W＝外せる送風路に加えてフィルター掃除まで自動化したい人に合う。']
+ ]
+};
+function upperPairBenefit(m,s1,s2){
+ const candidates=[
+   [m,s1,s2,false],
+   [m,s2,s1,true]
+ ];
+ for(const [mk,a,b,rev] of candidates){
+   const rows=upperPairFit[mk+'|'+a+'|'+b];
+   if(rows){
+     return `<div class="benefitPanel"><div class="benefitHead"><div><small>${s1} ↔ ${s2}</small><h3>💴 使い方で選ぶ</h3></div></div><div class="benefitList">${rows.map(x=>`<div class="benefitItem"><i>${x[0]}</i><div><b>${x[1]}</b><p>${x[2]}</p></div></div>`).join('')}</div></div>`;
+   }
+ }
+ return null;
+}
+
+const featureExplainRules=[
+ {re:/凍結洗浄Light/, text:'熱交換器を凍らせ、霜を一気に溶かして付着した汚れを洗い流す。→ ベーシック機でもエアコン内部の清潔性を重視したい人に合う。'},
+ {re:/凍結洗浄ヒートプラス/, text:'熱交換器を凍らせて洗浄し、加熱も組み合わせて油汚れまで落としやすくする。→ LDKなど汚れやすい場所で内部清潔を重視する人に合う。'},
+ {re:/凍結洗浄/, text:'熱交換器を凍らせ、霜を溶かす水で付着した汚れを洗い流す。→ 熱交換器を自動で清潔に保ちたい人に合う。'},
+ {re:/カビバスター/, text:'停止中も内部の温度・湿度を見張り、必要に応じて加熱・低湿化してカビを抑制する。→ 冷房後の内部カビが気になる人に合う。'},
+ {re:/ステンレス・クリーン/, text:'通風路やフラップなどにステンレスを採用し、汚れにくく手入れしやすくする。→ 内部の汚れにくさを重視する人に合う。'},
+ {re:/ファンお掃除|ファンロボ/, text:'汚れが付きやすい送風ファンまで自動で掃除する。→ フィルターだけでなく、風が通る奥まで自動清掃したい人に合う。'},
+ {re:/フィルター.*(自動|お掃除)|お掃除ロボット|フィルターおそうじメカ/, text:'フィルターのホコリを自動で取り除き、日常のフィルター掃除の手間を減らす。→ 高い場所の掃除をなるべく減らしたい人に合う。'},
+ {re:/水内部クリーン/, text:'結露水などを利用して熱交換器の汚れを洗い流し、内部を乾燥させる。→ 手間をかけず内部清潔を保ちたい人に合う。'},
+ {re:/熱交換器加熱除菌/, text:'熱交換器を55℃以上に加熱してカビ菌や細菌を除菌する。→ 熱交換器の衛生面を重視する人に合う。'},
+ {re:/外せる送風路/, text:'風が通る送風路の部品を取り外して、自分で奥まで洗いやすい。→ 業者任せだけでなく、自分でもしっかり掃除したい人に合う。'},
+ {re:/はずせるボディ/, text:'前面パネルやフラップを外し、通風路の奥まで手を入れて掃除しやすい。→ 自分で内部まで手入れしたい人に合う。'},
+ {re:/マジック洗浄熱交換器/, text:'熱交換器を特殊コーティングし、結露水で汚れを洗い流しやすくする。→ 熱交換器の汚れ付着を抑えたい人に合う。'},
+ {re:/UVプレミアムクリーン除菌/, text:'運転停止後にUVを照射し、エアコン内部の清潔を保つ。→ 内部の菌対策まで重視したい人に合う。'},
+ {re:/ナノイーX 48兆/, text:'高濃度のナノイーXを使い、お部屋の空気とエアコン内部の清潔をサポートする。→ 空気・ニオイ・内部清潔まで幅広く重視したい人に合う。'},
+ {re:/ナノイーX 9\.6兆/, text:'ナノイーXを使い、お部屋の空気とエアコン内部の清潔をサポートする。→ スタンダード機でも空気と内部清潔を重視したい人に合う。'},
+ {re:/内部クリーン/, text:'冷房・除湿後に内部を乾燥・清潔運転し、カビの成長を抑えやすくする。→ 冷房後の湿った内部をそのままにしたくない人に合う。'},
+ {re:/さらら除湿（リニアハイブリッド方式）/, text:'熱交換器を細かく制御し、季節や室温に合わせて除湿能力を調整する上位除湿。→ 梅雨から夏まで、寒くなりにくさと除湿力を細かく両立したい人に合う。'},
+ {re:/さらら除湿（ハイブリッド方式）/, text:'状況に合わせて複数の除湿方式を切り替える。→ シンプルな弱冷房除湿より、室温を保ちながら湿気を取りたい人に合う。'},
+ {re:/9段階セレクトドライ/, text:'弱冷房除湿の強さを好みに合わせて選べる。→ 高度な再熱除湿までは不要で、シンプルに湿気を取りたい人に合う。'},
+ {re:/さらさら冷房/, text:'設定温度付近で冷房から再熱除湿へ切り替え、室温を保ちながら湿度を下げる。→ 高気密住宅や、冷えすぎず蒸し暑さを取りたい人に合う。'},
+ {re:/再熱除湿|カラッと除湿/, text:'冷やして除湿した空気を温め直して戻し、室温低下を抑えながら湿気を取る。→ 梅雨や肌寒い日の除湿を快適に使いたい人に合う。'},
+ {re:/快適除湿/, text:'室温や湿度を見ながら除湿を調整し、冷えすぎを抑えて快適さを保つ。→ 除湿中の肌寒さが苦手な人に合う。'},
+ {re:/2WAY除湿|やわらかドライ|冷房除湿|ソフト除湿/, text:'冷房の力を利用して湿気を取るシンプルな除湿。→ 除湿機能は必要だが、上位の再熱方式までは求めない人に合う。'},
+ {re:/セパレート無風感ルーバー/, text:'左右で通常の風と無風感を使い分けられる。→ 同じ部屋に「風に当たりたい人」と「当たりたくない人」がいる家庭に合う。'},
+ {re:/無風感空調/, text:'風を細かく拡散して、体に直接風が当たる感覚を抑える。→ 冷房の直風が苦手な人に合う。'},
+ {re:/風よけ/, text:'人の位置を見て直接風を避けるように調整する。→ エアコンの風が体に当たるのが苦手な人に合う。'},
+ {re:/ロング.*気流|ロングワイド気流/, text:'遠くまで風を届け、広い部屋でも温度ムラを抑えやすい。→ LDKなど奥行きのある部屋に合う。'},
+ {re:/サーキュレーション気流/, text:'天井方向へ大きな気流を作り、部屋全体の空気を循環させる。→ 広い部屋を素早く均一に快適にしたい人に合う。'},
+ {re:/天井シャワー気流/, text:'冷風を天井方向へ送り、冷たい風を直接体に当てにくくする。→ 冷房の直風を避けながら部屋を冷やしたい人に合う。'},
+ {re:/ムーブアイmirA\.I\.\+/, text:'人の位置や体感などを細かく見て、左右の風を個別に調整する。→ 家族それぞれの居場所に合わせて快適にしたい人に合う。'},
+ {re:/ムーブアイ/, text:'人や床の温度・位置を見て、体感に合わせて風を調整する。→ センサーに快適運転を任せたい人に合う。'},
+ {re:/フロアアイ/, text:'赤外線センサーで床の温度を測り、夏の冷やしすぎや冬の足元の寒さを抑える。→ スタンダード機でも体感温度を見てほしい人に合う。'},
+ {re:/AI快適学習運転/, text:'使い方や環境を学習して、自動で快適な運転へ調整する。→ 細かい設定をせずエアコンに任せたい人に合う。'},
+ {re:/ダブルAI/, text:'本体側AIとクラウドAIで部屋や好みを学習し、状況に合わせて自動制御する。→ 毎回設定を変えず、使うほど自分に合う快適性を求める人に合う。'},
+ {re:/エオリアAI/, text:'センサー情報などを使って運転を自動調整する。→ 温度・湿度を細かく自分で設定せず任せたい人に合う。'},
+ {re:/高効率スイングコンプレッサー|スイングコンプレッサー/, text:'ローラーとブレードを一体化し、摩耗・振動を抑えたダイキン独自構造。→ 耐久性・効率・低振動/低騒音を重視してメーカーを選びたい人に合う。'},
+ {re:/エコロータリー コンプレッサー/, text:'ベーンとピストンを一体化し、室温安定後の低能力運転でも高効率に運転する。→ 夏に長時間つけっぱなしで使うことが多く、省エネ性を重視する人に合う。'},
+ {re:/エネチャージ/, text:'コンプレッサーの排熱を蓄えて霜取りに活用し、暖房停止を抑える。→ 冬もエアコンを主暖房にして、霜取り中の寒さを抑えたい人に合う。'},
+ {re:/うるる加湿/, text:'外気中の水分を取り込んで給水なしで加湿する。→ 冬の乾燥対策までエアコン1台で済ませたい人に合う。'},
+ {re:/換気/, text:'屋外の空気を取り込みながら運転できる。→ 冷暖房しながら換気も行いたい人に合う。'},
+ {re:/暖房強化|凍結防止ヒーター/, text:'低外気温でも暖房能力を確保しやすい設計。→ 冬の暖房力を優先したい人に合う。'},
+ {re:/コンパクト|高さ250mm|奥行255mm|奥行249mm|奥行229mm|横幅728mm/, text:'室内機を小さく設計し、カーテンレール上など限られたスペースへ設置しやすい。→ 設置場所に余裕が少ない人に合う。'}
+];
+function explainFeatureTerms(terms,k,m,s){
+ const out=[];
+ for(const term of (terms||[])){
+   const rule=featureExplainRules.find(r=>r.re.test(term));
+   if(rule&&!out.includes(rule.text))out.push(rule.text);
+ }
+ if(out.length)return out.slice(0,2).join(' ');
+ return categoryMeaning(k,terms,m,s)+'。';
+}
+function normFeatureTerm(v){
+ return String(v||'').replace(/[（）()]/g,'').replace(/\s+/g,'').toLowerCase();
+}
+function featureTermsFor(m,s,k){
+ const raw=fval(m,s,k);
+ if(!raw||raw==='—'||raw==='この項目の追加機能なし'||raw==='6畳設定なし')return [];
+ return splitFeatureTerms(raw).map(x=>x.trim()).filter(Boolean);
+}
+function featureDelta(m,s1,s2,k){
+ const a=featureTermsFor(m,s1,k), b=featureTermsFor(m,s2,k);
+ const na=new Set(a.map(normFeatureTerm)), nb=new Set(b.map(normFeatureTerm));
+ return {
+   a,b,
+   onlyA:a.filter(x=>!nb.has(normFeatureTerm(x))),
+   onlyB:b.filter(x=>!na.has(normFeatureTerm(x))),
+   common:a.filter(x=>nb.has(normFeatureTerm(x)))
+ };
+}
+function compactTerms(arr,n=3){
+ if(!arr||!arr.length)return '';
+ const v=arr.slice(0,n).join('・');
+ return arr.length>n?v+' など':v;
+}
+function categoryMeaning(k,terms,m,s){
+ const t=(terms||[]).join('／');
+ if(k==='clean'){
+   let points=[];
+   if(/フィルター.*(自動|お掃除)|お掃除ロボ/.test(t))points.push('フィルター掃除の手間を減らせる');
+   if(/ファンお掃除|ファンロボ/.test(t))points.push('送風ファンまで自動で掃除できる');
+   if(/凍結洗浄|水内部クリーン|熱交換器加熱除菌|マジック洗浄/.test(t))points.push('熱交換器など内部の汚れ対策を強化');
+   if(/内部クリーン|カビバスター|ナノイー/.test(t))points.push('運転後の内部カビ対策をしやすい');
+   if(/外せる送風路|はずせるボディ/.test(t))points.push('自分で内部を掃除しやすい');
+   return points.length?[...new Set(points)].join('、'):'清潔機能の内容が異なる';
+ }
+ if(k==='dehumid'){
+   if(/再熱|カラッと|リニアハイブリッド|ハイブリッド|快適除湿|パーシャル|さらら/.test(t))return '室温低下を抑えながら湿気を取りたい使い方に強い';
+   if(/衣類乾燥/.test(t))return '部屋干しにも使いやすい';
+   if(/セレクトドライ|2WAY|やわらかドライ|冷房除湿/.test(t))return 'シンプルな除湿を好みに合わせて使いやすい';
+   return '除湿の使い方・快適性に差がある';
+ }
+ if(k==='airflow'){
+   if(/2か所|匠フラップ|左右.*独立|吹き分け/.test(t))return '人や場所に合わせて風を吹き分けやすい';
+   if(/無風感|風よけ/.test(t))return '直接風を避けたい人に向く';
+   if(/ロング|サーキュレーション|ワイド/.test(t))return '広い部屋や離れた場所まで風を届けやすい';
+   if(/天井|垂直|足元/.test(t))return '風の通り道を工夫して体感を整えやすい';
+   return '風の届け方・風向調整に差がある';
+ }
+ if(k==='sensor'){
+   if(/mirA|ムーブアイ|フロアアイ|ひと|人感|レーダー/.test(t))return '人や床・居場所を見ながら自動調整しやすい';
+   if(/AI|学習|節電自動|快適自動|毎日快適/.test(t))return '運転を細かく設定せず自動で任せやすい';
+   if(/日射|不在/.test(t))return '日差しや不在を見てムダを抑えやすい';
+   return '自動運転で見ている情報・制御内容に差がある';
+ }
+ if(k==='special'){
+   if(/うるる加湿/.test(t))return '給水なしで冬の加湿まで任せられる';
+   if(/エコロータリー/.test(t))return '安定時の低能力運転を効率よく続けやすい';
+   if(/スイングコンプレッサー/.test(t))return 'コンプレッサーの摩耗・振動を抑えた構造を採用';
+   if(/エネチャージ/.test(t))return '霜取り中も暖かさを保ちやすい';
+   if(/暖房強化|凍結防止/.test(t))return '冬の暖房を重視する使い方に向く';
+   if(/コンパクト|mm/.test(t))return '設置スペースを抑えたい場合に選びやすい';
+   return 'そのシリーズ独自の使い勝手・設計に差がある';
+ }
+ return '機能差がある';
+}
+function shortSalesMeaning(k,terms){
+ const t=(terms||[]).join('／');
+ if(k==='clean'){
+  if(/ファンお掃除|ファンロボ/.test(t))return '送風ファンまで自動清掃';
+  if(/フィルター.*(自動|お掃除)|お掃除ロボ/.test(t))return 'フィルター掃除の手間を減らせる';
+  if(/凍結洗浄|水内部クリーン|熱交換器加熱除菌|マジック洗浄/.test(t))return 'エアコン内部の清潔性に強い';
+  if(/カビバスター|内部クリーン|ナノイー/.test(t))return '内部のカビ・清潔対策を強化';
+  if(/外せる送風路|はずせるボディ/.test(t))return '自分で奥まで掃除しやすい';
+  return '清潔機能が充実';
+ }
+ if(k==='dehumid'){
+  if(/再熱|カラッと|さらさら冷房|リニアハイブリッド|ハイブリッド|快適除湿/.test(t))return '冷えすぎを抑えた除湿に強い';
+  if(/衣類乾燥/.test(t))return '部屋干しにも使いやすい';
+  return 'シンプルな除湿';
+ }
+ if(k==='airflow'){
+  if(/2か所|左右.*独立|吹き分け/.test(t))return '人・場所に合わせて風を分けやすい';
+  if(/無風感|風よけ/.test(t))return '直接風を避けやすい';
+  if(/ロング|サーキュレーション|ワイド/.test(t))return '広い部屋へ風を届けやすい';
+  return '風向調整が充実';
+ }
+ if(k==='sensor'){
+  if(/mirA|ムーブアイ|フロアアイ|ひと|人感|レーダー/.test(t))return '人や床を見て自動調整';
+  if(/AI|学習/.test(t))return '自動運転を細かく任せやすい';
+  return '自動制御が充実';
+ }
+ if(k==='special'){
+  if(/うるる加湿/.test(t))return '給水なし加湿ができる';
+  if(/エネチャージ/.test(t))return '冬の霜取り中も暖かさを保ちやすい';
+  if(/暖房強化|凍結防止/.test(t))return '冬の暖房力を重視';
+  if(/コンパクト|mm/.test(t))return '狭い設置スペースに強い';
+  if(/エコロータリー/.test(t))return '長時間運転の省エネ性を重視';
+  if(/スイングコンプレッサー/.test(t))return '耐久性・低振動を重視';
+  return '独自機能がある';
+ }
+ return '機能差あり';
+}
+function compactBenefitText(text){return text;}
+function uniqueFeatureTerms(arr){
+ const seen=new Set(),out=[];
+ for(const x of (arr||[])){
+   const n=normFeatureTerm(x);
+   if(!n||seen.has(n))continue;
+   seen.add(n);out.push(x);
+ }
+ return out;
+}
+function isNegativeFeature(x){
+ return /なし|非搭載|未搭載|非対応/.test(String(x||''));
+}
+function positiveTerms(arr){return uniqueFeatureTerms(arr).filter(x=>!isNegativeFeature(x));}
+function hasFeatureText(arr,re){return (arr||[]).some(x=>re.test(String(x||''))&&!isNegativeFeature(x));}
+function explicitPresenceRows(m1,s1,m2,s2,k){
+ const a=featureTermsFor(m1,s1,k),b=featureTermsFor(m2,s2,k);
+ const rows=[];
+ const add=(label,re,benefit)=>{
+   const A=hasFeatureText(a,re),B=hasFeatureText(b,re);
+   if(A===B)return;
+   rows.push({label,A,B,benefit});
+ };
+ if(k==='clean'){
+   add('フィルター自動お掃除',/フィルター.*(自動|お掃除)|お掃除ロボット|フィルターおそうじメカ/,'フィルター掃除の手間を減らせる');
+   add('送風ファン自動掃除',/ファンお掃除|ファンロボ/,'送風ファンまで自動で掃除できる');
+ }
+ return rows;
+}
+const specialFitGuide={
+ 'ダイキン|R':'うるる加湿で給水なし加湿。換気機能も搭載。冬の乾燥対策までエアコン1台で済ませたい人向け',
+ 'ダイキン|A':'上位クラスの除湿・気流・自動運転を重視し、加湿までは不要な人向け',
+ 'ダイキン|FN（ノジマ）':'フィルター自動お掃除＋ハイブリッド除湿。手入れと除湿の両方を重視する人向け',
+ 'ダイキン|C':'高さ250mmのコンパクト設計。設置スペースを抑えつつ自動掃除も欲しい人向け',
+ 'ダイキン|E':'シンプル機能＋コンパクト。基本性能と設置しやすさを重視する人向け',
+
+ '日立|X':'凍結洗浄ヒートプラス＋ファンお掃除ロボ。熱交換器だけでなくファンまで自動で手入れしたい人向け',
+ '日立|WN（ノジマ）':'凍結洗浄＋フィルター自動お掃除。内部洗浄と普段の手入れ軽減を両立したい人向け',
+ '日立|G':'凍結洗浄＋フィルター自動お掃除。自動清潔機能を重視しつつ上位機能を絞りたい人向け',
+ '日立|D':'凍結洗浄Light＋カビバスター。ベーシックでも熱交換器の自動洗浄とカビ対策が欲しい人向け',
+ '日立|E':'省エネ性と清潔機能のバランスを重視する人向け',
+
+ '三菱|ZW':'ムーブアイmirA.I.+で人や場所に合わせて気流を調整。はずせるボディで自分でも内部を手入れしやすい。自動快適と自分で掃除できる安心感の両方を重視する人向け',
+ '三菱|XD':'暖房を強化しながら、はずせるボディで自分でも手入れしやすい。冬の暖房と清掃性を重視する人向け',
+ '三菱|R':'コンパクト設計＋ムーブアイ。設置性と人を見た自動調整を重視する人向け',
+ '三菱|GE':'はずせるボディで自分で手入れしやすい。シンプル機でも掃除のしやすさを重視する人向け',
+
+ '東芝|DR':'セパレート無風感ルーバーで左右の風を使い分け。家族で「風に当たりたい・避けたい」が分かれる部屋向け',
+ '東芝|DZ':'無風感空調＋コンパクト設計。直接風を避けたい人や設置スペースが限られる部屋向け',
+ '東芝|DX':'無風感空調＋フィルター自動お掃除。直接風を避けつつ日常の手入れも減らしたい人向け',
+ '東芝|M':'マジック洗浄熱交換器＋セルフクリーン。シンプル機でも内部の汚れ対策を重視する人向け',
+
+ 'パナソニック|X':'ナノイーX 48兆＋フィルターお掃除ロボット＋エネチャージ。清潔性と冬の暖房快適性をまとめて重視する人向け',
+ 'パナソニック|EX':'ナノイーX 48兆＋フィルターお掃除ロボットを奥行249mmに搭載。清潔機能と設置性を両立したい人向け',
+ 'パナソニック|J':'ナノイーX 9.6兆＋薄型設計。シンプルでも内部清潔と設置性を重視する人向け',
+ 'パナソニック|C':'ナノイーX 9.6兆＋薄型設計。清潔性・省エネ性・設置性のバランスを重視する人向け',
+
+ 'ゼネラル|Z':'さらさら冷房（再熱除湿）＋AI自動。室温を下げすぎない除湿と自動快適を重視する人向け',
+ 'ゼネラル|W':'フィルター自動おそうじ＋外せる送風路。自動掃除に加えて自分でも内部を手入れしたい人向け',
+ 'ゼネラル|L':'熱交換器加熱除菌＋外せる送風路。内部清潔と自分で掃除しやすいことを重視する人向け',
+ 'ゼネラル|C（AS-C226T系）':'横幅728mm・高さ250mmのコンパクト設計＋熱交換器加熱除菌。設置性と内部清潔を重視する人向け'
+};
+function specialGuidance(m,s){return specialFitGuide[`${m}|${s}`]||'';}
+function effectFit(m,s,k,terms){
+ const t=(terms||[]).join('／');
+ if(k==='special'&&specialGuidance(m,s))return specialGuidance(m,s);
+ if(k==='clean'){
+   if(/ファンお掃除|ファンロボ/.test(t))return 'ファンまで自動で掃除したい人向け';
+   if(/凍結洗浄.*ヒートプラス/.test(t))return '熱交換器の油汚れまで自動洗浄したい人向け';
+   if(/凍結洗浄Light|凍結洗浄/.test(t))return '熱交換器を自動で洗浄したい人向け';
+   if(/フィルター.*(自動|お掃除)|お掃除ロボット|フィルターおそうじ/.test(t))return 'フィルター掃除の手間を減らしたい人向け';
+   if(/熱交換器加熱除菌/.test(t))return '熱交換器を加熱して清潔に保ちたい人向け';
+   if(/外せる送風路|はずせるボディ/.test(t))return '自分で内部まで手入れしたい人向け';
+   if(/UVプレミアム/.test(t))return 'UVを使った内部清潔機能を重視する人向け';
+   if(/ナノイーX/.test(t))return '運転後の内部清潔ケアも使いたい人向け';
+   if(/内部クリーン|カビバスター/.test(t))return '運転後のカビ対策を重視する人向け';
+   return 'この清潔機能を重視する人向け';
+ }
+ if(k==='dehumid'){
+   if(/再熱|カラッと|さらさら冷房/.test(t))return '室温を下げすぎず除湿したい人向け';
+   if(/リニアハイブリッド/.test(t))return '湿度を細かくコントロールしたい人向け';
+   if(/ハイブリッド/.test(t))return '冷えすぎを抑えながら除湿したい人向け';
+   if(/衣類乾燥/.test(t))return '部屋干しにも除湿を使いたい人向け';
+   if(/9段階|セレクトドライ/.test(t))return '除湿の強さを選んで使いたい人向け';
+   return '除湿をよく使う人向け';
+ }
+ if(k==='airflow'){
+   if(/2か所|左右.*独立|吹き分け/.test(t))return '家族で風の好みが違う部屋に向く';
+   if(/無風感|風よけ/.test(t))return 'エアコンの直接風が苦手な人向け';
+   if(/ロング|サーキュレーション/.test(t))return '広めの部屋へ風を届けたい人向け';
+   if(/天井/.test(t))return '冷風を直接当てず部屋へ広げたい人向け';
+   if(/ワイド/.test(t))return '横に広い部屋へ風を届けたい人向け';
+   return '風向きを細かく使い分けたい人向け';
+ }
+ if(k==='sensor'){
+   if(/mirA|ムーブアイ|フロアアイ|ひと|人感|レーダー/.test(t))return '人や場所に合わせた自動調整を任せたい人向け';
+   if(/AI|学習/.test(t))return '運転を細かくおまかせしたい人向け';
+   if(/日射/.test(t))return '日差しの変化に合わせて自動調整したい人向け';
+   return '自動運転を活用したい人向け';
+ }
+ if(k==='special'){
+   if(/うるる加湿/.test(t))return '給水せず冬の乾燥対策もしたい人向け';
+   if(/エネチャージ/.test(t))return '霜取り中の寒さを抑えたい人向け';
+   if(/暖房強化|凍結防止/.test(t))return '冬の暖房使用が多い人向け';
+   if(/換気/.test(t))return 'エアコン運転中の換気も重視する人向け';
+   if(/コンパクト|mm/.test(t))return '設置スペースに制約がある部屋向け';
+   if(/スイングコンプレッサー/.test(t))return '低振動・効率を重視する人向け';
+   if(/エコロータリー/.test(t))return '低負荷時の効率を重視する人向け';
+   return 'この独自機能を重視する人向け';
+ }
+ return 'この機能を重視する人向け';
+}
+function summarizeFeaturePair(m1,s1,m2,s2,k){
+ const an=`${m1} ${s1}`,bn=`${m2} ${s2}`;
+ if(k==='special'){
+   const g1=specialGuidance(m1,s1),g2=specialGuidance(m2,s2);
+   const a=positiveTerms(featureTermsFor(m1,s1,k)),b=positiveTerms(featureTermsFor(m2,s2,k));
+   const nb=new Set(b.map(normFeatureTerm)),na=new Set(a.map(normFeatureTerm));
+   const da=uniqueFeatureTerms(a.filter(x=>!nb.has(normFeatureTerm(x))));
+   const db=uniqueFeatureTerms(b.filter(x=>!na.has(normFeatureTerm(x))));
+   // No model-specific feature difference: do not force a duplicate row.
+   if(!da.length&&!db.length && g1===g2)return '';
+   const f1=da.slice(0,3).join('・');
+   const f2=db.slice(0,3).join('・');
+   let out='<div class="threeLineCompare specialGuide">';
+   if(f1){out+=`<div><b>${an}</b>：${f1}</div><div class="specialExplain">→ ${g1||effectFit(m1,s1,k,da)}</div>`;}
+   else if(g1&&g1!==g2){out+=`<div><b>${an}</b></div><div class="specialExplain">→ ${g1}</div>`;}
+   if(f2){out+=`<div><b>${bn}</b>：${f2}</div><div class="specialExplain">→ ${g2||effectFit(m2,s2,k,db)}</div>`;}
+   else if(g2&&g1!==g2){out+=`<div><b>${bn}</b></div><div class="specialExplain">→ ${g2}</div>`;}
+   return out+'</div>';
+ }
+
+ // Presence/absence differences: always A line / B line / benefit line.
+ const presence=explicitPresenceRows(m1,s1,m2,s2,k);
+ if(presence.length){
+   return presence.map(x=>{
+     const owner=x.A?an:bn;
+     const ownerM=x.A?m1:m2, ownerS=x.A?s1:s2;
+     const ownerTerms=x.A?featureTermsFor(m1,s1,k):featureTermsFor(m2,s2,k);
+     return `<div class="threeLineCompare">
+       <div><b>${an}</b>：${x.A?x.label:x.label+'なし'}</div>
+       <div><b>${bn}</b>：${x.B?x.label:x.label+'なし'}</div>
+       <div class="compareBenefit">→ <b>${owner}</b>：${effectFit(ownerM,ownerS,k,ownerTerms)}</div>
+     </div>`;
+   }).join('');
+ }
+
+ const a=positiveTerms(featureTermsFor(m1,s1,k));
+ const b=positiveTerms(featureTermsFor(m2,s2,k));
+ const na=new Set(a.map(normFeatureTerm)),nb=new Set(b.map(normFeatureTerm));
+ const onlyA=uniqueFeatureTerms(a.filter(x=>!nb.has(normFeatureTerm(x))));
+ const onlyB=uniqueFeatureTerms(b.filter(x=>!na.has(normFeatureTerm(x))));
+ const commonA=uniqueFeatureTerms(a.filter(x=>nb.has(normFeatureTerm(x))));
+
+ // Exactly the same: this is a difference screen, so do not show the category at all.
+ if(!onlyA.length&&!onlyB.length)return '';
+
+ // Different systems/features: A line / B line / one concise practical difference.
+ const av=onlyA.length ? onlyA.slice(0,2).join('・')+(onlyA.length>2?' など':'') : 'なし';
+ const bv=onlyB.length ? onlyB.slice(0,2).join('・')+(onlyB.length>2?' など':'') : 'なし';
+
+ let benefit='';
+ if(onlyA.length&&!onlyB.length) benefit=`→ <b>${an}</b>は${effectFit(m1,s1,k,onlyA.slice(0,2))}`;
+ else if(!onlyA.length&&onlyB.length) benefit=`→ <b>${bn}</b>は${effectFit(m2,s2,k,onlyB.slice(0,2))}`;
+ else {
+   const am=effectFit(m1,s1,k,onlyA.slice(0,2)), bm=effectFit(m2,s2,k,onlyB.slice(0,2));
+   // Avoid repeating identical abstract benefits when the visible model rows already explain enough.
+   if(am!==bm) benefit=`→ <b>${an}</b>は${am} ／ <b>${bn}</b>は${bm}`;
+ }
+ return `<div class="threeLineCompare">
+   <div><b>${an}</b>：${av}</div>
+   <div><b>${bn}</b>：${bv}</div>
+   ${benefit?`<div class="compareBenefit">${benefit}</div>`:''}
+ </div>`;
+}
+function sanitizeComparisonHtml(html){
+ let x=String(html||'');
+ // Defensive rule: never allow a benefit to be grammatically attached to a "なし" row.
+ x=x.replace(/(<div><b>[^<]+<\/b>：なし<\/div>)\s*<div class="compareBenefit">→\s*<b>\1.*?<\/div>/g,'$1');
+ return x;
+}
+function dataDrivenBenefit(m1,s1,m2,s2){
+ const rows=[
+  ['🧼','清潔','clean'],
+  ['💧','除湿','dehumid'],
+  ['🌬️','気流','airflow'],
+  ['👀','自動','sensor'],
+  ['⭐','特徴','special']
+ ];
+ return `<div class="compareTenCards">`+rows.map(([ic,label,key])=>{
+   const summary=sanitizeComparisonHtml(summarizeFeaturePair(m1,s1,m2,s2,key));
+   const f1=featureTermsFor(m1,s1,key).join('・')||'—';
+   const f2=featureTermsFor(m2,s2,key).join('・')||'—';
+   return `
+    <div class="compareCard compareSummaryCard" data-key="${key}">
+      <div class="compareCardTitle"><span>${ic}</span><b>${label}</b></div>
+      ${String(summary||'').trim()?`<div class="diffSummary">${summary}</div>`:''}
+    </div>
+    <div class="compareCard compareFeatureCard" data-key="${key}">
+      <div class="twoModels">
+        <div><b>${m1} ${s1}</b><span>${f1}</span></div>
+        <div><b>${m2} ${s2}</b><span>${f2}</span></div>
+      </div>
+    </div>`;
+ }).join('')+`</div>`;
+}
+
+function practicalBenefit(m,s1,s2){
+ return dataDrivenBenefit(m,s1,m,s2);
+}
+function salesBenefit(m,lo,hi,k,a='',b=''){
+ const same=a===b;
+ const both=(x,y)=>lo===x&&hi===y;
+
+ // 日立：凍結洗浄の「洗い方の強さ」を生活シーンまで翻訳
+ if(m==='日立'){
+  if(k==='clean'){
+   if(/ヒートプラス/.test(b)&&!/ヒートプラス/.test(a))return 'ヒートプラスは洗浄前に加熱して油汚れを落としやすくする。→ キッチンに近いLDK・焼肉や炒め物が多い家ならこちら。';
+   if(/ファンお掃除ロボ/.test(b)&&!/ファンお掃除ロボ/.test(a))return '熱交換器だけでなく、汚れやすい送風ファンも自動でブラッシング。→ 内部の掃除をできるだけ機械に任せたい人向き。';
+   if(/フィルター自動/.test(b)&&!/フィルター自動/.test(a))return 'フィルターのホコリ取りまで自動化。→ 高い場所のフィルター掃除を減らしたい人向き。';
+   if(/Light/.test(a)&&!/Light/.test(b))return 'Lightより内部清潔機能が充実。→ 寝室より、使用時間が長く汚れやすいリビングで価格差が活きやすい。';
+  }
+  if(k==='dehumid'&&/カラッと/.test(b)&&!/カラッと/.test(a))return 'カラッと除湿で、湿度を下げながら室温低下を抑えやすい。→ 梅雨・部屋干しで「除湿すると寒い」が苦手な人向き。';
+  if(k==='airflow'&&/風よけ/.test(b))return '人のいる場所を見て風を避けやすい。→ ソファや食卓で冷風が直接当たるのが苦手な家族に向く。';
+  if(k==='sensor'&&/オートオフ|くらし|人/.test(b))return '人や部屋の状況まで見て自動調整できる。→ つけっぱなし・設定変更の手間を減らしたい人向き。';
+  if(k==='heat'&&/つつみこみ|スピード/.test(b))return '足元を意識した気流や立ち上がりを強化。→ 冬もエアコンを主暖房として使う部屋で価値が出やすい。';
+ }
+
+ // 東芝：DRのセパレート無風感を最優先で具体化
+ if(m==='東芝'){
+  if(k==='airflow'&&hi==='DR'&&lo!=='DR')return 'DRは左右分割のセパレート無風感ルーバー。片側は通常風・片側は無風感にできる。→ 家族で「風に当たりたい／当たりたくない」が分かれるリビング向き。';
+  if(k==='clean'&&/フィルター自動/.test(b)&&!/フィルター自動/.test(a))return 'フィルター掃除を自動化し、ダストボックスのゴミ捨て中心に。→ フィルターをこまめに外して掃除したくない人向き。';
+  if(k==='clean'&&/UVプレミアム/.test(b)&&!/UVプレミアム/.test(a))return '内部清潔がセルフ乾燥中心からUVを使う清潔運転まで強化。→ 清潔性を重視するリビング・寝室で選びやすい。';
+  if(k==='dehumid'&&/選べる/.test(b))return '除湿の強弱や衣類乾燥まで選びやすい。→ 梅雨の湿気取りと部屋干しを1台で使い分けたい人向き。';
+  if(k==='sensor'&&/AI快適/.test(b)&&!/AI快適/.test(a))return 'AIで室内状況に合わせて運転を自動調整。→ 細かな設定をせず「おまかせ」で使いたい人向き。';
+  if(k==='heat'&&/無風感/.test(b)&&!/無風感/.test(a))return '暖房でも直接風を感じにくい無風感が使える。→ 温風が顔や体に当たるのが苦手な人向き。';
+ }
+
+ // 三菱：センサーの違いを「体感」に翻訳
+ if(m==='三菱'){
+  if(k==='sensor'&&/mirA\.I|エモコアイ/.test(b)&&!/mirA\.I|エモコアイ/.test(a))return '上位センサーが人・床・壁などを細かく見て先回り制御。→ 同じ部屋でも暑がり・寒がりがいる家庭や、おまかせ運転重視に向く。';
+  if(k==='sensor'&&/ムーブアイ/.test(b)&&!/ムーブアイ/.test(a))return '床などの温度を見て体感温度に合わせる。→ 設定温度だけでは足元が寒い・暑いと感じやすい人向き。';
+  if(k==='sensor'&&/フロアアイ/.test(b)&&!/フロアアイ/.test(a))return '床温度を見ながら冷やしすぎ・暖めすぎを抑えやすい。→ シンプル機でも体感温度を意識した自動運転が欲しい人向き。';
+  if(k==='dehumid'&&/再熱/.test(b)&&!/再熱/.test(a))return '再熱除湿で室温を下げずに湿気を取りやすい。→ 梅雨や夜間に「除湿すると寒い」が気になる人向き。';
+  if(k==='airflow'&&/2温度2気流|2か所同時/.test(b))return '同じ部屋の2か所へ違う気流を届けられる。→ LDKや2人以上で体感差がある部屋ほど上位の価値が出る。';
+  if(k==='heat'&&/ノンストップ|60℃|急速W/.test(b))return '暖房の立ち上がりや霜取り時の快適性を強化。→ 冬の暖房を重視する人、朝すぐ暖まりたい人向き。';
+  if(k==='clean'&&/おそうじメカ/.test(b)&&!/おそうじメカ/.test(a))return 'フィルター掃除を自動化。→ 普段のお手入れ回数を減らしたい人なら価格差を感じやすい。';
+ }
+
+ // ダイキン：除湿・気流・清潔の使い方へ翻訳
+ if(m==='ダイキン'){
+  if(k==='dehumid'&&/リニアハイブリッド/.test(b)&&!/リニアハイブリッド/.test(a))return '温度と湿度を細かくコントロールする上位のさらら除湿。→ 梅雨や夏に「冷やしすぎず湿気を取りたい」人ほど価値が出る。';
+  if(k==='dehumid'&&/さらら除湿/.test(b)&&!/さらら除湿/.test(a))return 'シンプルな除湿より、室温と湿度のバランスを取りやすい。→ 除湿を長時間使う寝室・LDK向き。';
+  if(k==='clean'&&/フィルター自動/.test(b)&&!/フィルター自動/.test(a))return '水内部クリーンに加えてフィルター掃除も自動化。→ 内部清潔だけでなく普段の掃除負担も減らしたい人向き。';
+  if(k==='airflow'&&/サーキュレーション/.test(b))return '部屋全体の温度ムラを抑える気流制御が強い。→ LDKなど広めの空間や、エアコンから離れた場所も快適にしたい人向き。';
+  if(k==='airflow'&&/天井気流/.test(b)&&!/天井気流/.test(a))return '冷風を天井沿いに送って直接風を抑えやすい。→ 冷房の風が体に当たるのが苦手な人向き。';
+  if(k==='sensor'&&/センサー/.test(b)&&!/センサー/.test(a))return '人のいる場所などを見ながら運転を調整。→ 自分で風向や設定をこまめに変えたくない人向き。';
+  if(k==='heat'&&/加湿/.test(b)&&!/加湿/.test(a))return '暖房しながら外気の水分を使って加湿できる。→ 冬の乾燥が気になる人ならRの価格差が活きる。';
+ }
+
+ // Panasonic：Cを含め、清潔性能・暖房・センサーを生活シーンへ
+ if(m==='パナソニック'){
+  if(k==='clean'&&/48兆/.test(b)&&!/48兆/.test(a))return 'ナノイーXが9.6兆→48兆へ強化。さらに上位は内部清潔機能も充実。→ ニオイ・内部清潔を重視して長時間使う部屋向き。';
+  if(k==='clean'&&/お掃除ロボット/.test(b)&&!/お掃除ロボット/.test(a))return 'フィルター掃除を自動化。→ フィルターを外して掃除する回数を減らしたい人向き。';
+  if(k==='dehumid'&&/快適除湿/.test(b)&&!/快適除湿/.test(a))return '2モード除湿より、室温低下を抑えながら湿度を調整しやすい。→ 梅雨や就寝時に除湿をよく使う人向き。';
+  if(k==='airflow'&&/ロングワイド/.test(b)&&!/ロングワイド/.test(a))return 'より遠く・広く風を届けやすい。→ 細長いLDKやエアコンから離れた場所まで快適にしたい人向き。';
+  if(k==='sensor'&&/ひと|日射|AI/.test(b)&&!/ひと|日射|AI/.test(a))return '人の在・不在や日射などを見て自動調整。→ 「基本おまかせ」で快適・省エネを狙いたい人向き。';
+  if(k==='heat'&&/エネチャージ/.test(b)&&!/エネチャージ/.test(a))return '排熱を蓄えて霜取りなどに活用し、暖房中の室温低下を抑えやすい。→ 冬もエアコン暖房を長時間使う人向き。';
+ }
+
+ // ゼネラル：清掃性を明確な価値へ
+ if(m==='ゼネラル'){
+  if(k==='clean'&&/外せる送風路/.test(b)&&!/外せる送風路/.test(a))return '吹き出し口のパーツを外して、今まで手が届きにくかった送風路まで自分で掃除できる。→ 「業者任せにせず自分で清潔にしたい」人向き。';
+  if(k==='clean'&&/フィルター自動/.test(b)&&!/フィルター自動/.test(a))return '送風路を外して洗えるうえ、フィルター掃除まで自動化。→ お手入れのしやすさと手間削減を両方欲しい人向き。';
+  if(k==='clean'&&/加熱除菌/.test(b)&&!/加熱除菌/.test(a))return '熱交換器を55℃以上に加熱して除菌する清潔機能。→ エアコン内部のカビ・菌対策を重視する人向き。';
+  if(k==='dehumid'&&/再熱|さらさら/.test(b)&&!/再熱|さらさら/.test(a))return '室温を下げにくい再熱除湿。→ 梅雨・秋雨・就寝時など「湿気は取りたいが寒くなりたくない」人向き。';
+  if(k==='airflow'&&/ダブルウイング/.test(b))return 'フラップを細かく制御し、冷暖房の風を必要な場所へ届けやすい。→ 部屋の温度ムラや風向を気にする人向き。';
+  if(k==='sensor'&&/AI/.test(b)&&!/AI/.test(a))return '室内外の状況に合わせて自動調整。→ 設定を細かく触らず、おまかせで使いたい人向き。';
+  if(k==='heat'&&/あったかアップ/.test(b)&&!/あったかアップ/.test(a))return '暖房時の体感を高める運転が使える。→ 朝や帰宅時など、暖かさをもう一段ほしい人向き。';
+ }
+
+ // 共通フォールバックも「機能が増える」で終わらせず、接客判断にする
+ if(same)return 'この項目は大きな差が少ない。→ ここでは価格差を付けず、ほかの項目を優先して選び分け。';
+ if(k==='clean')return '清潔・お手入れ機能が増える。→ 掃除の手間や内部汚れを重視するなら上位側を選ぶ価値あり。';
+ if(k==='dehumid')return '除湿の使い分けが増える。→ 梅雨・部屋干しなど除湿をよく使う人ほど上位側の価値が出る。';
+ if(k==='airflow')return '気流の調整幅が広がる。→ 直接風が苦手、広い部屋、家族で好みが違う場合は上位側が向く。';
+ if(k==='sensor')return '自動制御が細かくなる。→ 設定を頻繁に変えず「おまかせ」で使いたい人は上位側が向く。';
+ if(k==='heat')return '暖房の快適機能が増える。→ 冬も主暖房として長時間使うなら上位側を検討しやすい。';
+ return '使い方に合えば上位側の価格差が活きる。';
+}
+
+function featureCell(m,s,key){
+ if(m==='パナソニック'&&panasonicSales[s]&&key!=='zeroemi')return panasonicFeatureCell(s,key);
+ if(key==='clean')return `<b class="featureText">${termText(fval(m,s,key))}</b>`;
+ return `<b class="featureText">${termText(fval(m,s,key))}</b>`;
+}
+
+function jumpEnergyCurrent(){
+ let pair=activeAcCompare;
+ if(!pair){
+   const m1=$('cmpM1')?.value,s1=$('cmpS1')?.value,m2=$('cmpM2')?.value,s2=$('cmpS2')?.value;
+   if(m1&&s1&&m2&&s2) pair={m1,s1,m2,s2};
+ }
+ if(!pair){alert('先に比較する2機種を選んで「比較する」を押してください。');return;}
+ openEnergyFromCompare(pair.m1,pair.s1,pair.m2,pair.s2);
+}
+
 function renderAcCompare(){
- let m1=$('cmpM1').value,s1=$('cmpS1').value,m2=$('cmpM2').value,s2=$('cmpS2').value,zero=$('zeroOnly').checked;
- let features=[['🧼 内部の清潔','clean'],['💧 除湿','dehumid'],['🌬️ 風の送り方','airflow'],['⭐ 特徴','heat'],['🏷️ 東京ゼロエミ','zeroemi']];
- $('acCompareResult').innerHTML=`${zero?'<div class="zeroBadge">🏷️ 65歳以上等・8万円対象候補を確認<br><small>最終判定は型番単位で確認</small></div>':''}
- <div class="beginCompareHeads"><b>${m1} ${s1}</b><span>VS</span><b>${m2} ${s2}</b></div>
- <div class="featureCompare">${features.map(r=>`<section><h4>${r[0]}</h4><div><b>${fval(m1,s1,r[1])}</b><small>${beginnerMeaning(r[1],fval(m1,s1,r[1]))}</small></div><div><b>${fval(m2,s2,r[1])}</b><small>${beginnerMeaning(r[1],fval(m2,s2,r[1]))}</small></div></section>`).join('')}</div>
- <div class="learnTip">👶 <b>新人向けの見方</b><span>まず「清潔・除湿・風」の違いを見る → 最後に寸法と暖房力・年間kWhを確認</span></div><h3 class="specTitle">📊 必要な数値だけ</h3><div class="specPair">${specCard(m1,s1)}${specCard(m2,s2)}</div>
- <small class="masterNote">数値は6畳クラスを中心に登録。詳細未確認のシリーズは推測で埋めません。</small>`;
+ let m1=$('cmpM1').value,s1=$('cmpS1').value,m2=$('cmpM2').value,s2=$('cmpS2').value;
+ activeAcCompare={m1,s1,m2,s2};
+ let features=[['🧼 清潔','clean'],['💧 除湿','dehumid'],['🌬️ 気流','airflow'],['👀 自動','sensor'],['⭐ 特徴','special']];
+ let featureHtml=`<div class="featureSide"><div class="sideHeads"><b>${m1} ${s1}</b><b>${m2} ${s2}</b></div><div class="compactFeatures">${features.map(r=>`<section class="${r[1]==='zeroemi'?'zeroRow':''}"><h4>${r[0]}</h4><div>${featureCell(m1,s1,r[1])}</div><div>${featureCell(m2,s2,r[1])}</div></section>`).join('')}</div></div>`;
+ let benefit='';
+ benefit=dataDrivenBenefit(m1,s1,m2,s2);
+ $('acCompareResult').innerHTML=`<div class="compareMain">${benefit}${featureHtml}</div>`;
 }
+
+function auditAcAnnualData(){
+ const issues=[];
+ Object.entries(acMaster||{}).forEach(([maker,series])=>{
+   series.forEach(sr=>{
+     if(/6畳なし/.test(sr))return;
+     const d=acBeginnerSpecs[maker+'|'+sr];
+     if(!d||!parseFloat(String(d.annual||'').replace(/[^\d.]/g,'')))issues.push(`${maker} ${sr}`);
+   });
+ });
+ return issues;
+}
+
+function openEnergyFromCompare(m1,s1,m2,s2){
+ const a=acBeginnerSpecs[m1+'|'+s1], b=acBeginnerSpecs[m2+'|'+s2];
+ const no6=[];
+ if(!a||a.no6)no6.push(`${m1} ${s1}`);
+ if(!b||b.no6)no6.push(`${m2} ${s2}`);
+ if(no6.length){
+   alert(`${no6.join(' / ')} は6畳設定がないため、6畳の期間消費電力量では比較できません。`);
+   return;
+ }
+ const num=v=>{const n=parseFloat(String(v??'').replace(/[^\d.]/g,''));return Number.isFinite(n)?n:0};
+ const k1=num(a.annual),k2=num(b.annual);
+ if(!k1||!k2){alert('期間消費電力量データに異常があります。');return;}
+ showAcEnergyCompare({maker:m1,series:s1,model:a.model||s1,kwh:k1},{maker:m2,series:s2,model:b.model||s2,kwh:k2});
+}
+function showAcEnergyCompare(a,b){
+ document.getElementById('acEnergyCompareModal')?.remove();
+ const modal=document.createElement('div');modal.id='acEnergyCompareModal';modal.className='acEnergyCompareModal';
+ modal.innerHTML=`<div class="acEnergyCompareCard">
+   <div class="acEnergyTop"><button type="button" class="acEnergyBack" onclick="document.getElementById('acEnergyCompareModal')?.remove()">← 比較へ戻る</button><h2>⚡ 電気代比較</h2></div>
+   <div class="acEnergyRate"><label>電気料金単価 <input id="acEnergyRateInput" type="number" inputmode="decimal" min="1" step="0.1" value="31"> 円/kWh</label><small>期間消費電力量 × 電気料金単価で比較</small></div>
+   <div class="acEnergyModels">
+    <div class="acEnergyModel"><b>${escapeHtml(a.maker)} ${escapeHtml(a.series)}</b><span>${escapeHtml(a.model)}</span><strong>${a.kwh}<small> kWh/年</small></strong></div>
+    <div class="acEnergyVs">VS</div>
+    <div class="acEnergyModel"><b>${escapeHtml(b.maker)} ${escapeHtml(b.series)}</b><span>${escapeHtml(b.model)}</span><strong>${b.kwh}<small> kWh/年</small></strong></div>
+   </div>
+   <div id="acEnergyResult" class="acEnergyResult"></div>
+   <div class="acEnergyNote">※期間消費電力量はJIS C 9612:2013の規定条件による年間の目安。実際の電気代は地域・使用時間・設定温度・住宅条件などで変わります。</div>
+ </div>`;
+ document.body.appendChild(modal);
+ const input=document.getElementById('acEnergyRateInput');
+ const calc=()=>{
+   const rate=Math.max(0,Number(input.value)||31), c1=a.kwh*rate,c2=b.kwh*rate, diff=Math.abs(c1-c2);
+   const cheaper=c1===c2?'同額':c1<c2?`${a.maker} ${a.series}`:`${b.maker} ${b.series}`;
+   document.getElementById('acEnergyResult').innerHTML=`
+    <div class="acEnergyRow"><span>年間電気代</span><b>${Math.round(c1).toLocaleString()}円</b><b>${Math.round(c2).toLocaleString()}円</b></div>
+    <div class="acEnergyRow emphasis"><span>年間差</span><strong>${Math.round(diff).toLocaleString()}円</strong><small>${escapeHtml(cheaper)}${cheaper==='同額'?'':'の方が目安として安い'}</small></div>
+    <div class="acEnergyYears"><div><span>5年間</span><b>${Math.round(diff*5).toLocaleString()}円差</b></div><div><span>10年間</span><b>${Math.round(diff*10).toLocaleString()}円差</b></div></div>`;
+ };
+ input.addEventListener('input',calc);calc();
+}
+
 function showAcPopular(){
  $('guideBody').innerHTML=`<button class="guideBack" onclick="showGuide('air')">← 戻る</button><div class="hearingQuestion">🔥 人気商品</div><div class="hearingResult"><b>売場で更新できる枠として準備</b><p>人気順は時期や店舗で変わるため、固定ランキングにはせず、よく案内する型番を登録できる形にします。</p></div>`;
 }
-</script></body></body></html>
+</script><div id="catalogTermPop" class="termPop" onclick="if(event.target===this)closeCatalogTerm()"></div></body></body></html>
+<style>.featureSide:after,.benefitFoot{content:none!important;display:none!important;height:0!important;min-height:0!important;margin:0!important;padding:0!important;border:0!important}</style>
