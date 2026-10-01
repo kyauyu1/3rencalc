@@ -109,6 +109,30 @@ header .dealTimer .timerTitle{font-size:10px}
 header .dealTimer .timerSetup button,header .dealTimer .timerRunning button{padding:4px 6px;font-size:9px}
 header .dealTimer .timerRunning b{font-size:15px;min-width:88px}
 header .dealTimer .timerSetup input{padding:4px;width:38px}
+</style><style>
+/* v10 newcomer tool */
+.checkGuide{display:grid;grid-template-columns:1fr 1fr;gap:7px}.checkGuide label,.zeroFilter{background:#f8fafc;border:1px solid #cbd5e1;border-radius:9px;padding:10px;font-size:11px;font-weight:800}.makerGrid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.makerGrid button{padding:12px;text-align:left;border:1px solid #cbd5e1;background:#fff;border-radius:10px}.makerGrid b,.makerGrid small{display:block}.makerGrid small{margin-top:5px;color:#64748b}.comparePick{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}.comparePick>div{border:1px solid #cbd5e1;border-radius:10px;padding:10px}.comparePick select{width:100%;margin-top:7px;padding:9px;border:1px solid #cbd5e1;border-radius:8px;background:#fff}.compareGo{width:100%;margin-top:10px;padding:10px;border:0;border-radius:9px;background:#2563eb;color:#fff;font-weight:900}.zeroFilter{margin-top:8px}.zeroFilter small{display:block;margin:5px 0 0 22px;color:#64748b}.compareTable{display:grid;grid-template-columns:1.05fr 1fr 1fr;margin-top:10px;border:1px solid #cbd5e1;border-radius:10px;overflow:hidden;font-size:10px}.compareTable>div{padding:8px;border-right:1px solid #e2e8f0;border-bottom:1px solid #e2e8f0}.ctHead{font-weight:900;background:#f1f5f9}.ctLabel{font-weight:900;background:#f8fafc}.zeroBadge{margin-top:10px;padding:8px;border-radius:8px;background:#fef3c7;font-size:10px;font-weight:900}.masterNote{display:block;margin-top:7px;color:#64748b}
+@media (orientation:portrait){.wrap{grid-template-columns:1fr!important}.left{min-height:auto}.plans{grid-template-columns:1fr!important}.plan:not(.activePortrait){display:none}.checkGuide,.makerGrid,.comparePick{grid-template-columns:1fr}.miniTool{width:min(94vw,720px)!important}header{flex-wrap:wrap}.dealTimer{order:2;flex-basis:100%;max-width:none!important}}
+</style><style>
+/* v10.1 TODO task board */
+.todoTool{max-width:760px}.todoList{display:flex;flex-direction:column;gap:5px;padding-right:3px}
+.todoRow{grid-template-columns:62px 1fr 44px!important;border:1px solid #e2e8f0!important;border-radius:10px!important;background:#fff;padding:7px 9px!important}
+.todoRow.currentHour{background:#fee2e2!important;border-color:#fecaca!important;box-shadow:inset 4px 0 0 #ef4444}
+.todoRow.hasTask{border-color:#94a3b8!important}.todoRow>b{font-size:13px!important;font-variant-numeric:tabular-nums}
+.todoCheck{display:grid!important;place-items:center;width:34px;height:34px;border-radius:50%;background:#f1f5f9;font-size:0!important;cursor:pointer}
+.todoCheck input{position:absolute;opacity:0}.todoCheck span{font-size:18px;font-weight:900;color:#64748b}
+.todoCheck:has(input:checked){background:#dcfce7}.todoCheck:has(input:checked) span{color:#16a34a}
+.todoNote{background:#f8fafc;border-radius:8px;padding:8px}
+body.theme-dark .todoRow{background:#172033;border-color:#334155!important}body.theme-dark .todoRow.currentHour{background:#4c1d1d!important}
+</style><style>
+/* v10.2 beginner comparison */
+.beginCompareHeads{display:grid;grid-template-columns:1fr 42px 1fr;align-items:center;text-align:center;margin:12px 0 7px}.beginCompareHeads b{padding:9px;border-radius:9px;background:#eff6ff}.beginCompareHeads span{font-weight:1000;color:#64748b}
+.featureCompare{border:1px solid #dbe3ee;border-radius:12px;overflow:hidden}.featureCompare section{display:grid;grid-template-columns:110px 1fr 1fr;border-bottom:1px solid #e2e8f0}.featureCompare section:last-child{border-bottom:0}.featureCompare h4{margin:0;padding:10px;background:#f8fafc;font-size:11px}.featureCompare section>div{padding:9px;border-left:1px solid #e2e8f0}.featureCompare b,.featureCompare small{display:block}.featureCompare b{font-size:11px}.featureCompare small{margin-top:4px;color:#64748b;font-size:9px}
+.specTitle{font-size:13px;margin:14px 0 7px}.specPair{display:grid;grid-template-columns:1fr 1fr;gap:8px}.beginSpec,.specEmpty{border:1px solid #dbe3ee;border-radius:12px;padding:10px;background:#fff}.specModel{font-size:14px;font-weight:1000;margin-bottom:6px}.specModel small{display:block;color:#64748b;font-size:9px}.beginSpec>div:not(.specModel){padding:7px 0;border-top:1px solid #eef2f7}.beginSpec span,.beginSpec b,.beginSpec small{display:block}.beginSpec span{font-size:9px;color:#64748b}.beginSpec b{font-size:11px;margin-top:2px}.beginSpec small{font-size:8px;color:#64748b;margin-top:2px}.beginSpec p{margin:7px 0 0;padding:8px;background:#f0fdf4;border-radius:8px;font-size:10px;font-weight:800}
+@media(max-width:600px),(orientation:portrait){.featureCompare section{grid-template-columns:86px 1fr 1fr}.specPair{grid-template-columns:1fr}.featureCompare h4{font-size:10px;padding:8px 5px}}
+</style><style>
+.learnTip{margin-top:12px;padding:9px 10px;border-radius:10px;background:#fff7ed;border:1px solid #fed7aa;font-size:10px}
+.learnTip b,.learnTip span{display:block}.learnTip span{margin-top:3px;color:#7c2d12}
 </style></head><body><header class="top"><div style="display:flex;gap:6px;align-items:center"><button onclick="toggleToolMenu()" class="settingsBtn menuBtn" title="ツール" aria-label="ツール">☰</button><button onclick="openSettings()" class="settingsBtn" title="設定" aria-label="設定">⚙</button></div><div class="dealTimer" id="dealTimer">
  <div class="timerTitle">⏱ 商談タイマー</div>
  <div id="timerSetup" class="timerSetup">
@@ -189,7 +213,7 @@ header .dealTimer .timerSetup input{padding:4px;width:38px}
   <div class="toolDrawerHead"><b>接客ツール</b><button onclick="toggleToolMenu()">✕</button></div>
   <button class="toolItem" onclick="openEnergyTool()">⚡ <span><b>電気代比較</b><small>年間・複数年の差額を計算</small></span></button>
   <button class="toolItem" onclick="openNewbieTool()">📖 <span><b>新人向けツール</b><small>接客の確認ポイント</small></span></button>
-  <button class="toolItem" onclick="openTodoTool()">☑️ <span><b>TODO</b><small>8:00〜22:00の予定・リマインド</small></span></button>
+  <button class="toolItem" onclick="openTodoTool()">☑️ <span><b>TODO</b><small>7:00〜24:00の予定・リマインド</small></span></button>
 </div>
 
 <div id="energyModal" class="modal" style="background:#0f172acc;padding:18px">
@@ -506,18 +530,18 @@ function openTodoTool(){$('toolMenu').classList.remove('on');$('todoModal').clas
 function renderTodos(){
  let all=loadTodos(),day=todayKey(),data=all[day]||{},now=new Date(),hour=now.getHours();
  $('todoDate').textContent=`${now.getMonth()+1}/${now.getDate()} 今日`;
- $('todoList').innerHTML=Array.from({length:15},(_,i)=>i+8).map(h=>{
+ $('todoList').innerHTML=Array.from({length:18},(_,i)=>i+7).map(h=>{
   let x=data[h]||{},current=h===hour;
-  return `<div class="todoRow ${current?'currentHour':''}"><b>${String(h).padStart(2,'0')}:00</b><input value="${esc(x.text||'')}" placeholder="予定を入力" onchange="setTodo(${h},this.value)"><label><input type="checkbox" ${x.done?'checked':''} onchange="setTodoDone(${h},this.checked)">完了</label></div>`;
+  return `<div class="todoRow ${current?'currentHour':''} ${x.text?'hasTask':''}"><b>${String(h).padStart(2,'0')}:00</b><input value="${esc(x.text||'')}" placeholder="この時間のTODO" onchange="setTodo(${h},this.value)"><label class="todoCheck" title="完了したら消す"><input type="checkbox" onchange="completeTodo(${h})"><span>✓</span></label></div>`;
  }).join('');
 }
 function setTodo(h,v){let a=loadTodos(),d=todayKey();a[d]=a[d]||{};a[d][h]=a[d][h]||{};a[d][h].text=v;saveTodos(a)}
-function setTodoDone(h,v){let a=loadTodos(),d=todayKey();a[d]=a[d]||{};a[d][h]=a[d][h]||{};a[d][h].done=v;saveTodos(a)}
+function completeTodo(h){let a=loadTodos(),d=todayKey();if(a[d]&&a[d][h]){delete a[d][h];saveTodos(a)}renderTodos()}
 function requestTodoNotify(){if('Notification'in window)Notification.requestPermission().then(()=>alert('通知設定を確認しました'));else alert('この環境ではブラウザ通知に対応していません')}
 function checkTodoReminder(){
- let now=new Date(),target=now.getHours()+1;if(target<8||target>22)return;
+ let now=new Date(),target=now.getHours()+1;if(target<7||target>24)return;
  let d=todayKey(),x=(loadTodos()[d]||{})[target],key=d+'-'+target;
- if(x&&x.text&&!x.done&&!todoAlerted[key]&&now.getMinutes()<2){
+ if(x&&x.text&&!todoAlerted[key]&&now.getMinutes()<2){
   todoAlerted[key]=1;let msg=`1時間後 ${String(target).padStart(2,'0')}:00\n${x.text}`;
   if('Notification'in window&&Notification.permission==='granted'){try{new Notification('TODOリマインド',{body:msg})}catch(e){}}
   alert(msg);
@@ -534,31 +558,125 @@ function pauseDealTimer(){if(dealPaused){dealEnd=Date.now()+dealRemain*1000;deal
 function addDealTime(m){dealRemain+=m*60;if(!dealPaused)dealEnd=Date.now()+dealRemain*1000;updateDealTimer()}
 function resetDealTimer(){clearInterval(dealTick);dealRemain=0;dealPaused=false;$('timerRunning').style.display='none';$('timerSetup').style.display='flex';$('dealTimer').classList.remove('timerWarn','timerOver')}
 
+
+const acMaster={
+ 'ダイキン':['R','A','FN（ノジマ）','C','E'],
+ '日立':['X','WN（ノジマ）','G','D','E'],
+ '三菱':['FZ','ZW','XD','ZR','GE'],
+ '東芝':['DR','DZ','DX','M'],
+ 'パナソニック':['X','EX','J','LV','C'],
+ 'ゼネラル':['X','Z','W','L','C（AS-C226T系）']
+};
+
+const acBeginnerSpecs={
+ '東芝|DR':{model:'RAS-V221DR',indoor:'295×798×386mm / 17.5kg',outdoor:'寸法は公式図面で確認 / 32.0kg',rating:'省エネ基準達成率106%・APF 7.0',lowHeat:'4.1kW',annual:'594kWh',talk:'最上位。レーダー＋無風感空調＋プラズマ空清。省エネ性も高い'},
+ '東芝|DZ':{model:'RAS-V221DZ',indoor:'250×798×352mm / 13.5kg',outdoor:'寸法は公式図面で確認 / 32.0kg',rating:'省エネ基準達成率100%・APF 6.6',lowHeat:'3.8kW',annual:'630kWh',talk:'高さ250mm。無風感空調＋プラズマ空清＋フィルター自動掃除を搭載'},
+ '東芝|DX':{model:'RAS-V221DX',indoor:'高さ250mmクラス / 13.5kg',outdoor:'寸法は公式図面で確認 / 20.0kg',rating:'省エネ基準達成率87%・APF 5.8',lowHeat:'2.8kW',annual:'717kWh',talk:'清潔機能を備えた中位候補。上位DZ/DRとの差を確認しやすい'},
+ '東芝|M':{model:'RAS-V221M',indoor:'250×795×230mm / 10.0kg',outdoor:'寸法は公式図面で確認 / 20.0kg',rating:'省エネ基準達成率87%・APF 5.8',lowHeat:'2.8kW',annual:'717kWh',talk:'奥行230mmのコンパクトなスタンダード。設置性を訴求しやすい'},
+ 'パナソニック|X':{model:'CS-X226D',indoor:'295×799×385mm / 14kg',outdoor:'630×799×299mm / 34kg',rating:'省エネ基準達成率106%（2027年度）',lowHeat:'4.5kW',annual:'594kWh',talk:'省エネ・清潔・快適性を重視する上位モデル'},
+ 'パナソニック|C':{model:'CS-C226D',indoor:'290×780×229mm / 9.5kg',outdoor:'630×799×299mm / 34kg',rating:'省エネ基準達成率100%（2027年度）',lowHeat:'3.9kW',annual:'630kWh',talk:'奥行229mm。設置性を確認しやすいスタンダード系'},
+ 'ゼネラル|Z':{model:'AS-Z226T',indoor:'293×798×385mm / 16kg',outdoor:'542×799×290mm / 31kg',rating:'省エネ基準達成率104%（2027年度）',lowHeat:'4.4kW',annual:'603kWh',talk:'熱交換器加熱除菌＋おまかせ気流。清潔・快適性重視'},
+ 'ゼネラル|W':{model:'AS-W226T',indoor:'298×799×348mm / 13kg',outdoor:'541×663×290mm / 21kg',rating:'省エネ基準達成率100%（2027年度）',lowHeat:'3.0kW',annual:'630kWh',talk:'省エネ基準100%をクリアした中位候補'},
+ 'ゼネラル|L':{model:'AS-L226T',indoor:'298×799×305mm / 11kg',outdoor:'541×663×290mm / 21kg',rating:'省エネ基準達成率100%（2027年度）',lowHeat:'3.0kW',annual:'630kWh',talk:'奥行305mm。設置性と省エネのバランス'},
+ 'ゼネラル|C（AS-C226T系）':{model:'AS-C226T',indoor:'250×728×285mm / 9kg',outdoor:'541×663×290mm / 20kg',rating:'省エネ基準達成率87%（2027年度）',lowHeat:'3.0kW',annual:'717kWh',talk:'高さ250mm・幅728mmのコンパクトさが強み'}
+};
+const acFeatureSeed={
+ 'ダイキン|FN（ノジマ）':{clean:'清潔機能を比較',heat:'ノジマオリジナル',dehumid:'除湿機能を比較',airflow:'気流制御を比較',power:'6畳 AN226AFNS を基準に型番別登録',zeroemi:'型番ごとに確認'},
+ '日立|X':{clean:'凍結洗浄系・清潔機能',heat:'プレミアム系',dehumid:'除湿機能を型番別確認',airflow:'センサー・気流制御',power:'6畳 RAS-XR2226S系を型番別登録',zeroemi:'型番ごとに確認'},
+ '日立|WN（ノジマ）':{clean:'凍結洗浄系を比較',heat:'ノジマオリジナル',dehumid:'カラッと除湿系を比較',airflow:'気流制御を比較',power:'型番別に期間消費電力量を登録',zeroemi:'型番ごとに確認'},
+ '三菱|XD':{clean:'内部クリーン／清潔機能',heat:'暖房強化・コンパクト',dehumid:'スマート除湿',airflow:'ムーブアイ系＋気流制御',power:'型番別に期間消費電力量を登録',zeroemi:'65歳以上等8万円：対象型番を個別確認'},
+ 'パナソニック|X':{clean:'ナノイーX＋内部クリーン＋フィルターお掃除',heat:'ハイグレード',dehumid:'シリーズ機能を型番別確認',airflow:'サーキュレーションモード',power:'6畳 CS-X226Dから型番別登録',zeroemi:'型番ごとに確認'},
+ 'パナソニック|EX':{clean:'ナノイーX＋内部クリーン',heat:'高機能モデル',dehumid:'シリーズ機能を型番別確認',airflow:'サーキュレーションモード',power:'型番別に期間消費電力量を登録',zeroemi:'型番ごとに確認'},
+ 'パナソニック|J':{clean:'ナノイーX＋内部清潔',heat:'スタンダード',dehumid:'シリーズ機能を型番別確認',airflow:'サーキュレーション制御',power:'型番別に期間消費電力量を登録',zeroemi:'型番ごとに確認'},
+ 'ゼネラル|C（AS-C226T系）':{clean:'内部清潔機能を型番別確認',heat:'コンパクト系',dehumid:'除湿機能を型番別確認',airflow:'気流機能を型番別確認',power:'AS-C226T：冷房消費電力595W',zeroemi:'型番ごとに確認'},
+ 'ゼネラル|L':{clean:'清潔機能を比較',heat:'2026年 Lシリーズ',dehumid:'除湿機能を比較',airflow:'気流制御を比較',power:'6畳 AS-L226Tから型番別登録',zeroemi:'型番ごとに確認'},
+ 'ゼネラル|W':{clean:'清潔機能を比較',heat:'2026年 Wシリーズ',dehumid:'除湿機能を比較',airflow:'気流制御を比較',power:'6畳 AS-W226Tから型番別登録',zeroemi:'型番ごとに確認'},
+ 'ゼネラル|Z':{clean:'加熱除菌系など清潔機能を比較',heat:'上位省エネ系',dehumid:'除湿機能を比較',airflow:'おまかせ気流系を比較',power:'6畳 AS-Z226Tから型番別登録',zeroemi:'型番ごとに確認'},
+ 'ゼネラル|X':{clean:'清潔・上位機能を比較',heat:'プレミアム系',dehumid:'除湿機能を比較',airflow:'上位気流制御',power:'2026年Xは4.0kW以上のラインアップを確認',zeroemi:'型番ごとに確認'},
+ '東芝|DR':{clean:'UVプレミアムクリーン除菌＋マジック洗浄熱交換器＋フィルター自動掃除',heat:'レーダー搭載のフラッグシップ',dehumid:'除湿中も無風感空調に対応',airflow:'レーダー風あて／風よけ＋無風感空調',power:'594kWh/年（6畳）',zeroemi:'型番ごとに確認'},
+ '東芝|DZ':{clean:'UVプレミアムクリーン除菌＋マジック洗浄熱交換器＋フィルター自動掃除',heat:'高さ250mmのハイスペック',dehumid:'除湿中も無風感空調に対応',airflow:'無風感空調＋上下左右スイング',power:'630kWh/年（6畳）',zeroemi:'型番ごとに確認'},
+ '東芝|DX':{clean:'マジック洗浄熱交換器など清潔機能',heat:'中位モデル',dehumid:'除湿機能あり',airflow:'気流機能を比較',power:'717kWh/年（6畳）',zeroemi:'型番ごとに確認'},
+ '東芝|M':{clean:'セルフクリーン＋マジック洗浄熱交換器',heat:'奥行230mmのスタンダード',dehumid:'除湿機能あり',airflow:'基本の気流制御',power:'717kWh/年（6畳）',zeroemi:'型番ごとに確認'}
+};
 const hearingGuides={
-air:{title:'エアコン',roots:[['🧼','清潔性','a1'],['⚡','電気代・省エネ','a2'],['🛡️','耐久性・お手入れ','a3'],['🏆','人気・売れ筋','a4']],nodes:{
-a1:{q:'どこを特に清潔にしたい？',a:[['熱交換器','熱交換器の洗浄・乾燥機能を比較'],['ファン','ファン清掃機能を比較'],['フィルター','自動フィルター掃除を比較'],['カビ・ニオイ','内部乾燥・除菌系機能を比較']]},
-a2:{q:'省エネで一番気になることは？',a:[['年間電気代','年間消費電力量・省エネ性能を比較'],['長時間使う','APFや低負荷運転を確認'],['暖房も使う','暖房能力・低温時能力も確認'],['今の機種との差','電気代比較ツールで差額を確認']]},
-a3:{q:'安心感で重視するのは？',a:[['掃除の手間','自動掃除と手入れ箇所を確認'],['内部の汚れ','内部清掃・乾燥機能を確認'],['長く使いたい','保証・手入れ性を確認'],['シンプルが良い','必要機能を絞って比較']]},
-a4:{q:'「人気」で知りたいのは？',a:[['定番モデル','価格と機能のバランスを比較'],['上位モデル','快適・省エネ機能を比較'],['価格重視','必要最低限の機能を確認'],['迷っている','清潔・省エネ・価格の優先順位を確認']]}}},
-tv:{title:'テレビ',roots:[['✨','画質','t1'],['🔊','音質','t2'],['🎮','ゲーム・動画','t3'],['🏆','人気・使いやすさ','t4']],nodes:{
-t1:{q:'画質で一番重視するのは？',a:[['明るさ','Mini LEDなど明るさ・コントラストを比較'],['黒の表現','有機ELなど黒表現を比較'],['動き','倍速・動画性能を確認'],['視野角','斜めからの見え方を確認']]},
-t2:{q:'音で重視するのは？',a:[['声の聞きやすさ','セリフ強調・スピーカー構成を確認'],['迫力','ウーファー・出力を比較'],['映画','立体音響対応を確認'],['普通でOK','画質・価格を優先']]},
-t3:{q:'主な使い方は？',a:[['PS5などゲーム','4K/120Hz・VRR・低遅延を確認'],['YouTube・配信','OS・アプリ操作性を確認'],['スポーツ','倍速・動きの見やすさを確認'],['地デジ中心','画質補正・録画機能を確認']]},
-t4:{q:'選び方で近いものは？',a:[['定番が安心','サイズ・価格・主要機能で比較'],['操作が簡単','リモコン・OSを確認'],['録画したい','チューナー数・HDD対応を確認'],['迷っている','サイズ→画質→用途の順で確認']]}}},
-fridge:{title:'冷蔵庫',roots:[['📦','容量・サイズ','f1'],['❄️','冷凍・鮮度','f2'],['⚡','電気代','f3'],['🚪','使いやすさ','f4']],nodes:{
-f1:{q:'まずどこを確認する？',a:[['人数・容量','人数と買い置き量から容量を確認'],['設置幅','本体幅＋放熱スペースを確認'],['搬入経路','玄関・廊下・階段を確認'],['高さ・奥行','設置場所の寸法を確認']]},
-f2:{q:'食品でよく使うのは？',a:[['冷凍食品','冷凍室容量・引き出しを比較'],['肉・魚','鮮度保持・チルド機能を比較'],['野菜','野菜室の位置・鮮度機能を比較'],['作り置き','冷凍・急冷機能を確認']]},
-f3:{q:'省エネで気になることは？',a:[['年間電気代','年間消費電力量を比較'],['今の機種との差','電気代比較ツールで確認'],['大型でも節電','容量と省エネ性能を両方確認'],['開閉が多い','センサー・節電機能を確認']]},
-f4:{q:'使いやすさで重視するのは？',a:[['よく使う部屋','冷蔵・冷凍・野菜室の位置を確認'],['扉の開き方','右・左・フレンチドアを確認'],['掃除しやすさ','棚・ケースの外しやすさを確認'],['取り出しやすさ','棚配置・引き出しを確認']]}}},
-washer:{title:'洗濯機',roots:[['👕','洗浄力','w1'],['💨','乾燥','w2'],['⚡','節水・電気代','w3'],['🧼','お手入れ','w4']],nodes:{
-w1:{q:'洗濯で一番気になることは？',a:[['汚れ落ち','洗浄方式・温水機能を比較'],['衣類の傷み','洗い方・コースを確認'],['大物を洗う','容量・投入口を確認'],['時短したい','洗濯時間・自動投入を確認']]},
-w2:{q:'乾燥はどのくらい使う？',a:[['毎日使う','乾燥方式・電気代を重視'],['雨の日だけ','乾燥容量・時間を確認'],['タオル中心','仕上がり・乾燥方式を比較'],['使わない','洗浄力・価格を優先']]},
-w3:{q:'ランニングコストで重視するのは？',a:[['水道代','使用水量を比較'],['電気代','洗濯・乾燥の消費電力量を確認'],['両方','年間コストで比較'],['分からない','使用頻度から優先度を整理']]},
-w4:{q:'お手入れで気になることは？',a:[['槽の汚れ','槽洗浄・自動お手入れを確認'],['乾燥フィルター','フィルター掃除の手間を比較'],['洗剤投入','自動投入・タンク清掃を確認'],['掃除を減らしたい','自動お手入れ機能を優先']]}}}
+air:{title:'エアコン',roots:[['🎤','ヒアリング項目','a_hear'],['🏭','メーカーの特徴','a_maker'],['⚖️','機種比較','a_compare'],['🔥','人気商品','a_pop']]},
+tv:{title:'テレビ',roots:[['🎤','ヒアリング項目','t1'],['🏭','メーカーの特徴','t2'],['⚖️','機種比較','t3'],['🔥','人気商品','t4']],nodes:{
+t1:{q:'テレビのヒアリング',a:[['サイズ・視聴距離','設置場所と視聴距離を確認'],['画質','明るさ・黒・動きを確認'],['用途','地デジ・動画・ゲームを確認'],['録画','HDD・チューナー数を確認']]},
+t2:{q:'メーカー特徴',a:[['準備中','メーカーごとの特徴を順次登録']]},t3:{q:'機種比較',a:[['準備中','型番比較を順次登録']]},t4:{q:'人気商品',a:[['準備中','売れ筋を更新できる形で登録']]}}},
+fridge:{title:'冷蔵庫',roots:[['🎤','ヒアリング項目','f1'],['🏭','メーカーの特徴','f2'],['⚖️','機種比較','f3'],['🔥','人気商品','f4']],nodes:{
+f1:{q:'冷蔵庫のヒアリング',a:[['人数・容量','家族人数と買い置き量'],['設置・搬入','幅・奥行・搬入経路'],['よく使う部屋','冷蔵・冷凍・野菜室の位置'],['省エネ','年間消費電力量を確認']]},
+f2:{q:'メーカー特徴',a:[['準備中','メーカーごとの特徴を順次登録']]},f3:{q:'機種比較',a:[['準備中','型番比較を順次登録']]},f4:{q:'人気商品',a:[['準備中','売れ筋を更新できる形で登録']]}}},
+washer:{title:'洗濯機',roots:[['🎤','ヒアリング項目','w1'],['🏭','メーカーの特徴','w2'],['⚖️','機種比較','w3'],['🔥','人気商品','w4']],nodes:{
+w1:{q:'洗濯機のヒアリング',a:[['容量','人数・洗濯頻度'],['乾燥','毎日使うか'],['設置','防水パン・搬入'],['お手入れ','フィルター・槽洗浄']]},
+w2:{q:'メーカー特徴',a:[['準備中','メーカーごとの特徴を順次登録']]},w3:{q:'機種比較',a:[['準備中','型番比較を順次登録']]},w4:{q:'人気商品',a:[['準備中','売れ筋を更新できる形で登録']]}}}
 };
 let currentGuide='air';
 function openNewbieTool(){$('toolMenu').classList.remove('on');$('newbieModal').classList.add('on');showGuide('air')}
-function showGuide(c){currentGuide=c;let g=hearingGuides[c];$('guideBody').innerHTML=`<div class="hearingHead"><b>${g.title}</b><span>何を重視しますか？</span></div><div class="hearingCards">${g.roots.map(r=>`<button class="hearingCard" onclick="showHearingNode('${r[2]}')"><span>${r[0]}</span><b>${r[1]}</b></button>`).join('')}</div>`}
-function showHearingNode(id){let g=hearingGuides[currentGuide],n=g.nodes[id];$('guideBody').innerHTML=`<button class="guideBack" onclick="showGuide('${currentGuide}')">← 戻る</button><div class="hearingQuestion">${n.q}</div><div class="answerCards">${n.a.map((a,i)=>`<button onclick="showHearingResult('${id}',${i})">${a[0]}</button>`).join('')}</div>`}
-function showHearingResult(id,i){let g=hearingGuides[currentGuide],n=g.nodes[id],a=n.a[i];$('guideBody').innerHTML=`<button class="guideBack" onclick="showHearingNode('${id}')">← 戻る</button><div class="hearingResult"><small>ヒアリング結果</small><b>${a[0]}</b><p>${a[1]}</p></div><button class="restartGuide" onclick="showGuide('${currentGuide}')">最初から確認</button>`}
+function showGuide(c){currentGuide=c;let g=hearingGuides[c];$('guideBody').innerHTML=`<div class="hearingHead"><b>${g.title}</b><span>確認したい項目を選択</span></div><div class="hearingCards">${g.roots.map(r=>`<button class="hearingCard" onclick="showHearingNode('${r[2]}')"><span>${r[0]}</span><b>${r[1]}</b></button>`).join('')}</div>`}
+function showHearingNode(id){
+ if(currentGuide==='air'){
+  if(id==='a_hear')return showAcHearing();
+  if(id==='a_maker')return showAcMakers();
+  if(id==='a_compare')return showAcCompare();
+  if(id==='a_pop')return showAcPopular();
+ }
+ let g=hearingGuides[currentGuide],n=g.nodes[id];$('guideBody').innerHTML=`<button class="guideBack" onclick="showGuide('${currentGuide}')">← 戻る</button><div class="hearingQuestion">${n.q}</div><div class="answerCards">${n.a.map((a,i)=>`<button onclick="showHearingResult('${id}',${i})">${a[0]}</button>`).join('')}</div>`
+}
+function showHearingResult(id,i){let g=hearingGuides[currentGuide],n=g.nodes[id],a=n.a[i];$('guideBody').innerHTML=`<button class="guideBack" onclick="showHearingNode('${id}')">← 戻る</button><div class="hearingResult"><small>確認ポイント</small><b>${a[0]}</b><p>${a[1]}</p></div><button class="restartGuide" onclick="showGuide('${currentGuide}')">最初から確認</button>`}
+function showAcHearing(){
+ $('guideBody').innerHTML=`<button class="guideBack" onclick="showGuide('air')">← 戻る</button><div class="hearingQuestion">🎤 エアコン ヒアリング項目</div><div class="checkGuide">
+ ${['部屋の広さ・畳数','設置場所・室内機サイズ','100V / 200V・専用回路','冷房中心 / 暖房も使用','除湿をよく使うか','清潔・自動掃除の希望','省エネ・年間電気代','現在のエアコン年数','室外機の設置環境','東京ゼロエミ対象条件'].map(x=>`<label><input type="checkbox"> ${x}</label>`).join('')}</div>`;
+}
+function showAcMakers(){
+ $('guideBody').innerHTML=`<button class="guideBack" onclick="showGuide('air')">← 戻る</button><div class="hearingQuestion">🏭 メーカーの特徴</div><div class="makerGrid">${Object.entries(acMaster).map(([m,ss])=>`<button onclick="showAcMaker('${m}')"><b>${m}</b><small>${ss.join(' / ')}</small></button>`).join('')}</div>`;
+}
+function showAcMaker(m){
+ let notes={'ダイキン':'空調専業メーカー。除湿・気流・清潔機能をシリーズ別に確認。FNはノジマオリジナル。','日立':'凍結洗浄など清潔機能が特徴。WNはノジマオリジナル。','三菱':'ムーブアイ系センサー・気流、お手入れ性。XDは暖房強化系。','東芝':'大清快。清潔機能・除湿・気流をシリーズ別に比較。','パナソニック':'エオリア。ナノイーXなど清潔・空気ケア機能をシリーズ別に確認。','ゼネラル':'ノクリア。加熱除菌・気流などをシリーズ別に比較。'};
+ $('guideBody').innerHTML=`<button class="guideBack" onclick="showAcMakers()">← メーカー一覧</button><div class="hearingResult"><small>${m}</small><b>${acMaster[m].join(' / ')}</b><p>${notes[m]}</p></div>`;
+}
+function makerSelect(id,onchange){
+ return `<select id="${id}" onchange="${onchange}">${Object.keys(acMaster).map(m=>`<option>${m}</option>`).join('')}</select>`;
+}
+function seriesSelect(id,m){return `<select id="${id}">${acMaster[m].map(x=>`<option>${x}</option>`).join('')}</select>`}
+function showAcCompare(){
+ $('guideBody').innerHTML=`<button class="guideBack" onclick="showGuide('air')">← 戻る</button><div class="hearingQuestion">⚖️ 2026年モデル 機種比較</div>
+ <div class="zeroFilter"><label><input id="zeroOnly" type="checkbox"> 🏷️ 65歳以上等・ゼロエミ8万円対象だけで確認</label><small>※多段階評価点3.0以上など制度条件を満たす型番が対象</small></div>
+ <div class="comparePick"><div><b>機種A</b>${makerSelect('cmpM1',"refreshSeries(1)")}${seriesSelect('cmpS1','ダイキン')}</div><div><b>機種B</b>${makerSelect('cmpM2',"refreshSeries(2)")}${seriesSelect('cmpS2','ダイキン')}</div></div>
+ <button class="compareGo" onclick="renderAcCompare()">比較する</button><div id="acCompareResult"></div>`;
+}
+function refreshSeries(n){let m=$('cmpM'+n).value;$('cmpS'+n).innerHTML=acMaster[m].map(x=>`<option>${x}</option>`).join('')}
+function fval(m,s,k){let x=acFeatureSeed[m+'|'+s]||{};return x[k]||'型番データ登録後に表示'}
+function beginnerMeaning(k,v){
+ if(k==='dehumid'){
+   if(/再熱|快適除湿|パーシャル/.test(v)) return '💡 寒くなりにくい除湿';
+   if(/無風感/.test(v)) return '💡 風を直接感じにくくしながら除湿';
+   return '💡 除湿方式の違いを確認';
+ }
+ if(k==='clean') return '💡 エアコン内部をどう清潔に保つか';
+ if(k==='airflow') return '💡 人や部屋に合わせて風をどう届けるか';
+ return '';
+}
+function specCard(m,s){
+ let x=acBeginnerSpecs[m+'|'+s];
+ if(!x)return `<div class="specEmpty">📋 数値データは型番確認後に追加<br><small>未確認の数値は表示しません</small></div>`;
+ return `<div class="beginSpec"><div class="specModel">${x.model}<small>6畳モデル</small></div>
+ <div><span>📐 室内機</span><b>${x.indoor}</b></div>
+ <div><span>📦 室外機</span><b>${x.outdoor}</b></div>
+ <div><span>🌿 多段階・省エネ</span><b>${x.rating}</b></div>
+ <div><span>🔥 低温時暖房能力</span><b>${x.lowHeat}</b><small>外気温2℃時。大きいほど寒い日の暖房力を見る目安</small></div>
+ <div><span>⚡ 期間消費電力量</span><b>${x.annual}</b><small>小さいほど年間の電気使用量を抑えやすい目安</small></div>
+ <p>🗣️ ${x.talk}</p></div>`;
+}
+function renderAcCompare(){
+ let m1=$('cmpM1').value,s1=$('cmpS1').value,m2=$('cmpM2').value,s2=$('cmpS2').value,zero=$('zeroOnly').checked;
+ let features=[['🧼 内部の清潔','clean'],['💧 除湿','dehumid'],['🌬️ 風の送り方','airflow'],['⭐ 特徴','heat'],['🏷️ 東京ゼロエミ','zeroemi']];
+ $('acCompareResult').innerHTML=`${zero?'<div class="zeroBadge">🏷️ 65歳以上等・8万円対象候補を確認<br><small>最終判定は型番単位で確認</small></div>':''}
+ <div class="beginCompareHeads"><b>${m1} ${s1}</b><span>VS</span><b>${m2} ${s2}</b></div>
+ <div class="featureCompare">${features.map(r=>`<section><h4>${r[0]}</h4><div><b>${fval(m1,s1,r[1])}</b><small>${beginnerMeaning(r[1],fval(m1,s1,r[1]))}</small></div><div><b>${fval(m2,s2,r[1])}</b><small>${beginnerMeaning(r[1],fval(m2,s2,r[1]))}</small></div></section>`).join('')}</div>
+ <div class="learnTip">👶 <b>新人向けの見方</b><span>まず「清潔・除湿・風」の違いを見る → 最後に寸法と暖房力・年間kWhを確認</span></div><h3 class="specTitle">📊 必要な数値だけ</h3><div class="specPair">${specCard(m1,s1)}${specCard(m2,s2)}</div>
+ <small class="masterNote">数値は6畳クラスを中心に登録。詳細未確認のシリーズは推測で埋めません。</small>`;
+}
+function showAcPopular(){
+ $('guideBody').innerHTML=`<button class="guideBack" onclick="showGuide('air')">← 戻る</button><div class="hearingQuestion">🔥 人気商品</div><div class="hearingResult"><b>売場で更新できる枠として準備</b><p>人気順は時期や店舗で変わるため、固定ランキングにはせず、よく案内する型番を登録できる形にします。</p></div>`;
+}
 </script></body></body></html>
