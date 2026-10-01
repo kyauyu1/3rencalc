@@ -860,6 +860,147 @@ body.theme-dark .todoRow{background:#172033;border-color:#334155!important}body.
 }
 </style>
 
+
+<style id="marker-portrait-v156">
+/* Sales appeal: subtle red highlighter behind only the practical takeaway. */
+.salesMarker{
+ background:linear-gradient(transparent 52%, rgba(255,82,82,.30) 52%, rgba(255,82,82,.30) 92%, transparent 92%)!important;
+ padding:0 .05em!important;
+ border-radius:2px!important;
+ font-weight:700!important;
+ color:inherit!important;
+ box-decoration-break:clone!important;
+ -webkit-box-decoration-break:clone!important;
+}
+
+/* Portrait calculator fix: never let the calculator canvas keep a landscape-only minimum width. */
+@media (orientation:portrait){
+ body,html{max-width:100vw!important;overflow-x:hidden!important}
+ .app,.main,.mainArea,.workspace,.calculator,.calcArea,.plans,.plansWrap,.planArea,.planGrid{
+   max-width:100%!important;
+   min-width:0!important;
+   box-sizing:border-box!important;
+ }
+ .plans,.plansWrap,.planArea,.planGrid{
+   width:100%!important;
+   overflow-x:auto!important;
+   -webkit-overflow-scrolling:touch!important;
+ }
+ /* Allow multiple plan columns to fit the portrait viewport instead of clipping the right side. */
+ .plan,.planCard,.calcPlan{
+   min-width:0!important;
+   max-width:100%!important;
+   box-sizing:border-box!important;
+ }
+}
+
+/* iPad/tablet portrait: compact controls rather than clipping content off-screen. */
+@media (orientation:portrait) and (min-width:521px){
+ .main,.mainArea,.workspace,.calculator,.calcArea{width:100%!important}
+}
+</style>
+
+
+<style id="dedup-all-v157">
+/* The left column is conclusion/fit only; raw model-feature facts live on the right. */
+#acCompareView .compareSummaryCard .diffSummary:empty{display:none!important}
+</style>
+
+
+<style id="markers-grades-v158">
+/* Stronger but still readable red marker for customer-fit and sales appeal phrases. */
+.salesMarker{
+ background:linear-gradient(transparent 48%, rgba(255,72,72,.34) 48%, rgba(255,72,72,.34) 93%, transparent 93%)!important;
+ font-weight:700!important;
+ padding:0 .04em!important;
+ box-decoration-break:clone!important;
+ -webkit-box-decoration-break:clone!important;
+}
+.fitMarker{
+ background:linear-gradient(transparent 43%, rgba(255,62,62,.40) 43%, rgba(255,62,62,.40) 94%, transparent 94%)!important;
+}
+
+/* Model-name grade bands. Text stays dark for readability. */
+#acCompareView .modelGrade{
+ display:inline-block!important;
+ width:fit-content!important;
+ max-width:100%!important;
+ padding:4px 8px!important;
+ border-radius:6px!important;
+ line-height:1.25!important;
+ color:#242424!important;
+ box-sizing:border-box!important;
+}
+#acCompareView .modelGrade.high{
+ background:linear-gradient(100deg,#d7b24b,#f3dc8b,#c89b2c)!important;
+ border:1px solid #b58b22!important;
+}
+#acCompareView .modelGrade.mid{
+ background:linear-gradient(100deg,#b9bec5,#eef0f2,#aeb4bc)!important;
+ border:1px solid #9ca3ad!important;
+}
+#acCompareView .modelGrade.standard{
+ background:linear-gradient(100deg,#b97845,#dea875,#a96436)!important;
+ border:1px solid #92542d!important;
+}
+</style>
+
+
+<style id="grade-marker-fallback-v159">
+#acCompareView .modelGrade{
+ display:inline!important;
+ width:auto!important;
+ padding:0 .10em!important;
+ border:0!important;
+ border-radius:0!important;
+ color:inherit!important;
+ font-weight:800!important;
+ box-decoration-break:clone!important;
+ -webkit-box-decoration-break:clone!important;
+}
+#acCompareView .modelGrade.high{
+ background:linear-gradient(transparent 42%, rgba(218,168,28,.58) 42%, rgba(246,211,91,.68) 92%, transparent 92%)!important;
+}
+#acCompareView .modelGrade.mid{
+ background:linear-gradient(transparent 42%, rgba(154,163,173,.52) 42%, rgba(218,222,226,.72) 92%, transparent 92%)!important;
+}
+#acCompareView .modelGrade.standard{
+ background:linear-gradient(transparent 42%, rgba(174,103,53,.52) 42%, rgba(218,151,96,.66) 92%, transparent 92%)!important;
+}
+</style>
+
+
+<style id="grade-font-colors-v160">
+#acCompareView b.modelGrade,
+#acCompareView .modelGrade{
+ background:none!important;
+ background-image:none!important;
+ border:0!important;
+ box-shadow:none!important;
+ text-shadow:none!important;
+ padding:0!important;
+ border-radius:0!important;
+ font-weight:900!important;
+ -webkit-text-fill-color:currentColor!important;
+ opacity:1!important;
+}
+#acCompareView b.modelGrade.high,
+#acCompareView .modelGrade.high{
+ color:#B8860B!important;
+ -webkit-text-fill-color:#B8860B!important;
+}
+#acCompareView b.modelGrade.mid,
+#acCompareView .modelGrade.mid{
+ color:#707780!important;
+ -webkit-text-fill-color:#707780!important;
+}
+#acCompareView b.modelGrade.standard,
+#acCompareView .modelGrade.standard{
+ color:#A85D2A!important;
+ -webkit-text-fill-color:#A85D2A!important;
+}
+</style>
+
 </head><body><header class="top"><div style="display:flex;gap:6px;align-items:center"><button onclick="toggleToolMenu()" class="settingsBtn menuBtn" title="ツール" aria-label="ツール">☰</button><button onclick="openSettings()" class="settingsBtn" title="設定" aria-label="設定">⚙</button></div><div class="dealTimer" id="dealTimer">
  <div class="timerTitle">⏱ 商談タイマー</div>
  <div id="timerSetup" class="timerSetup">
@@ -1347,14 +1488,14 @@ const acFeatureSeed={
  'ゼネラル|L':{clean:'熱交換器加熱除菌／外せる送風路／まるごとクリーンタイマー',dehumid:'2WAY除湿（ソフトクール・ひかえめ）',airflow:'上下左右スイング',sensor:'毎日快適モード',heat:'あったかアップ'},
  'ゼネラル|C（AS-C226T系）':{clean:'熱交換器加熱除菌／ハイドロフィリック熱交換器',dehumid:'2WAY除湿（ソフトクール・ひかえめ）',airflow:'上下スイング',sensor:'毎日快適モード',heat:'基本暖房'},
 
- 'ダイキン|R':{clean:'水内部クリーン／ストリーマ内部クリーン／フィルター自動お掃除',dehumid:'さらら除湿（リニアハイブリッド方式）',airflow:'サーキュレーション気流／垂直気流',sensor:'節電自動運転／センサー風向',heat:'無給水加湿（うるる加湿）／垂直気流'},
- 'ダイキン|A':{clean:'水内部クリーン／ストリーマ内部クリーン／フィルター自動お掃除',dehumid:'さらら除湿（リニアハイブリッド方式）',airflow:'サーキュレーション気流／垂直気流',sensor:'節電自動運転／センサー風向',heat:'垂直気流'},
+ 'ダイキン|R':{clean:'水内部クリーン／ストリーマ内部クリーン／フィルター自動お掃除',dehumid:'さらら除湿（リニアハイブリッド方式）',airflow:'サーキュレーション気流／垂直気流／オートスイング（上下・左右・立体）',sensor:'節電自動運転／センサー風向',heat:'無給水加湿（うるる加湿）／垂直気流'},
+ 'ダイキン|A':{clean:'水内部クリーン／ストリーマ内部クリーン／フィルター自動お掃除',dehumid:'さらら除湿（リニアハイブリッド方式）',airflow:'サーキュレーション気流／垂直気流／オートスイング（上下・左右・立体）',sensor:'節電自動運転／センサー風向',heat:'垂直気流'},
  'ダイキン|FN（ノジマ）':{clean:'清潔ドレンパン／水内部クリーン／ストリーマ内部クリーン／フィルター自動お掃除',dehumid:'さらら除湿（ハイブリッド方式）',airflow:'天井気流／オートスイング',sensor:'切り忘れ通知／おかえり運転',heat:'基本暖房'},
  'ダイキン|C':{clean:'水内部クリーン／ストリーマ内部クリーン／フィルター自動お掃除',dehumid:'9段階セレクトドライ',airflow:'天井気流／オートスイング',sensor:'基本自動運転',heat:'基本暖房'},
- 'ダイキン|E':{clean:'水内部クリーン／ストリーマ内部クリーン／フィルター自動お掃除なし',dehumid:'9段階セレクトドライ',airflow:'オートスイング',sensor:'基本自動運転',heat:'基本暖房'},
+ 'ダイキン|E':{clean:'水内部クリーン／ストリーマ内部クリーン／フィルター自動お掃除なし',dehumid:'9段階セレクトドライ',airflow:'オートスイング（上下）',sensor:'基本自動運転',heat:'基本暖房'},
 
- '日立|X':{clean:'凍結洗浄 除菌ヒートプラス／ファンお掃除ロボ／フィルター自動お掃除／室外機凍結洗浄',dehumid:'カラッと除湿／ランドリー除湿',airflow:'風よけエリアセレクト／健康冷房［涼快］',sensor:'LAB制御／eco運転／オートオフ',heat:'つつみこみ暖房／スピード暖房'},
- '日立|WN（ノジマ）':{clean:'凍結洗浄 除菌ヒートプラス／ファンお掃除ロボ／フィルター自動お掃除／カビバスター',dehumid:'カラッと除湿（再熱除湿）／ランドリー除湿',airflow:'上下左右スイング／風よけ',sensor:'人感センサー／ecoこれっきり運転',heat:'基本暖房'},
+ '日立|X':{clean:'凍結洗浄 除菌ヒートプラス／ファンお掃除ロボ／カビバスター／フィルター自動お掃除／ビッグ＆ウェーブファン／銅 排水トレー凍結洗浄',dehumid:'カラッと除湿／ランドリー除湿',airflow:'風よけエリアセレクト／健康冷房［涼快］',sensor:'LAB制御／eco運転／オートオフ',heat:'つつみこみ暖房／スピード暖房'},
+ '日立|WN（ノジマ）':{clean:'凍結洗浄 除菌ヒートプラス／ファンお掃除ロボ／カビバスター／フィルター自動お掃除',dehumid:'カラッと除湿（再熱除湿）／ランドリー除湿',airflow:'上下左右スイング／風よけ',sensor:'人感センサー／ecoこれっきり運転',heat:'基本暖房'},
  '日立|G':{clean:'凍結洗浄 Light／フィルター自動お掃除／カビバスター',dehumid:'カラッと除湿／ランドリー除湿',airflow:'上下左右風向コントロール',sensor:'日射センサー／ecoこれっきり運転',heat:'みはって霜取り'},
  '日立|D':{clean:'凍結洗浄 Light／カビバスター／フィルター自動お掃除なし',dehumid:'ソフト除湿',airflow:'上下左右風向コントロール',sensor:'日射センサー／ecoこれっきり運転',heat:'みはって霜取り'},
  '日立|E':{clean:'凍結洗浄 Light／カビバスター／フィルター自動お掃除なし',dehumid:'ソフト除湿',airflow:'上下左右風向コントロール',sensor:'日射センサー／ecoこれっきり運転',heat:'みはって霜取り'},
@@ -1421,7 +1562,7 @@ const modelCharacter={
  'ダイキン|E':'奥行255mmコンパクト／高効率スイングコンプレッサー',
 
  '日立|X':'ファンお掃除ロボ／凍結洗浄ヒートプラス',
- '日立|WN（ノジマ）':'フィルター自動お掃除／凍結洗浄',
+ '日立|WN（ノジマ）':'凍結洗浄 除菌ヒートプラス／ファンお掃除ロボ／フィルター自動お掃除',
  '日立|G':'フィルター自動お掃除／凍結洗浄',
  '日立|D':'凍結洗浄Light／カビバスター／ステンレス・クリーン',
  '日立|E':'省エネ性と清潔機能を両立した6畳モデル',
@@ -2090,7 +2231,7 @@ const specialFitGuide={
  'ダイキン|E':'シンプル機能＋コンパクト。基本性能と設置しやすさを重視する人向け',
 
  '日立|X':'凍結洗浄ヒートプラス＋ファンお掃除ロボ。熱交換器だけでなくファンまで自動で手入れしたい人向け',
- '日立|WN（ノジマ）':'凍結洗浄＋フィルター自動お掃除。内部洗浄と普段の手入れ軽減を両立したい人向け',
+ '日立|WN（ノジマ）':'凍結洗浄 除菌ヒートプラス／ファンお掃除ロボ／フィルター自動お掃除',
  '日立|G':'凍結洗浄＋フィルター自動お掃除。自動清潔機能を重視しつつ上位機能を絞りたい人向け',
  '日立|D':'凍結洗浄Light＋カビバスター。ベーシックでも熱交換器の自動洗浄とカビ対策が欲しい人向け',
  '日立|E':'省エネ性と清潔機能のバランスを重視する人向け',
@@ -2170,9 +2311,9 @@ function summarizeFeaturePair(m1,s1,m2,s2,k){
  if(k==='special'){
    const g1=specialGuidance(m1,s1),g2=specialGuidance(m2,s2);
    const a=positiveTerms(featureTermsFor(m1,s1,k)),b=positiveTerms(featureTermsFor(m2,s2,k));
-   const nb=new Set(b.map(normFeatureTerm)),na=new Set(a.map(normFeatureTerm));
-   const da=uniqueFeatureTerms(a.filter(x=>!nb.has(normFeatureTerm(x))));
-   const db=uniqueFeatureTerms(b.filter(x=>!na.has(normFeatureTerm(x))));
+   const nb=new Set(b.map(compareFeatureKey)),na=new Set(a.map(compareFeatureKey));
+   const da=uniqueFeatureTerms(a.filter(x=>!nb.has(compareFeatureKey(x))));
+   const db=uniqueFeatureTerms(b.filter(x=>!na.has(compareFeatureKey(x))));
    // No model-specific feature difference: do not force a duplicate row.
    if(!da.length&&!db.length && g1===g2)return '';
    const f1=da.slice(0,3).join('・');
@@ -2202,10 +2343,10 @@ function summarizeFeaturePair(m1,s1,m2,s2,k){
 
  const a=positiveTerms(featureTermsFor(m1,s1,k));
  const b=positiveTerms(featureTermsFor(m2,s2,k));
- const na=new Set(a.map(normFeatureTerm)),nb=new Set(b.map(normFeatureTerm));
- const onlyA=uniqueFeatureTerms(a.filter(x=>!nb.has(normFeatureTerm(x))));
- const onlyB=uniqueFeatureTerms(b.filter(x=>!na.has(normFeatureTerm(x))));
- const commonA=uniqueFeatureTerms(a.filter(x=>nb.has(normFeatureTerm(x))));
+ const na=new Set(a.map(compareFeatureKey)),nb=new Set(b.map(compareFeatureKey));
+ const onlyA=uniqueFeatureTerms(a.filter(x=>!nb.has(compareFeatureKey(x))));
+ const onlyB=uniqueFeatureTerms(b.filter(x=>!na.has(compareFeatureKey(x))));
+ const commonA=uniqueFeatureTerms(a.filter(x=>nb.has(compareFeatureKey(x))));
 
  // Exactly the same: this is a difference screen, so do not show the category at all.
  if(!onlyA.length&&!onlyB.length)return '';
@@ -2234,6 +2375,181 @@ function sanitizeComparisonHtml(html){
  x=x.replace(/(<div><b>[^<]+<\/b>：なし<\/div>)\s*<div class="compareBenefit">→\s*<b>\1.*?<\/div>/g,'$1');
  return x;
 }
+function highlightSalesAppeal(html){
+ const phrases=[
+  '給水せず冬の乾燥対策','給水せず','冬の乾燥対策',
+  'ファンまで自動で掃除','ファンまで自動',
+  'フィルター掃除の手間を減らせる','フィルター掃除の手間を減らしたい',
+  '熱交換器の油汚れまで自動洗浄','熱交換器を自動で洗浄',
+  '自分でも内部を手入れしやすい','自分で内部を手入れしやすい',
+  '霜取り中の寒さを抑えたい','霜取り中の寒さを抑える',
+  '室温を下げすぎず除湿','寒くなりにくい除湿',
+  '家族で風の好みが違う','直接風が苦手',
+  '人や場所に合わせた自動調整','人や場所に合わせて気流を調整',
+  '左右で通常風と無風感を使い分け',
+  '暖房を重視','冬の暖房','設置しやすい','コンパクト',
+  '掃除の手間','お手入れ','省エネ','節電','快適',
+  '加湿','換気','再熱除湿','無風感','2か所同時空調'
+ ];
+ let out=String(html||'');
+ phrases.sort((a,b)=>b.length-a.length).forEach(ph=>{
+   const esc=ph.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
+   out=out.replace(new RegExp(`(?![^<]*>)(${esc})`,'g'),'<span class="salesMarker">$1</span>');
+ });
+ // Always mark the customer-fit conclusion. Avoid crossing HTML tags.
+ out=out.replace(/(?![^<]*>)([^<>。！？<]{1,55}人向け)/g,'<span class="salesMarker fitMarker">$1</span>');
+ // Prevent accidental nested marker spans from overlapping phrase rules.
+ out=out.replace(/<span class="salesMarker"><span class="salesMarker fitMarker">([^<]+)<\/span><\/span>/g,
+                 '<span class="salesMarker fitMarker">$1</span>');
+ return out;
+}
+
+function stripRepeatedModelFeatureLines(html,m1,s1,m2,s2){
+ let out=String(html||'');
+ const names=[
+   `${m1} ${s1}`,`${m2} ${s2}`,
+   `${m1}${s1}`,`${m2}${s2}`
+ ].filter(Boolean);
+ const tmp=document.createElement('div');
+ tmp.innerHTML=out;
+
+ // Remove leading comparison lines whose purpose is only "model name: feature".
+ // Keep arrows/conclusions/fit guidance because those are the useful summary.
+ const blocks=[...tmp.querySelectorAll('div,p,li')];
+ blocks.forEach(el=>{
+   const t=(el.textContent||'').replace(/\s+/g,' ').trim();
+   if(!t) return;
+   const isModelFeature=names.some(n=>{
+     const nn=n.replace(/\s+/g,' ').trim();
+     return t.startsWith(nn+'：') || t.startsWith(nn+':') ||
+            t.startsWith(nn+' ') || t===nn;
+   });
+   const isConclusion=/^[→⇒]/.test(t) || /向け|合う|適する|減らせる|抑え|しやす|使い分け|違い/.test(t);
+   if(isModelFeature && !isConclusion) el.remove();
+ });
+
+ // Handle plain <br>-separated HTML that isn't wrapped in block elements.
+ let cleaned=tmp.innerHTML;
+ names.forEach(n=>{
+   const esc=n.replace(/[.*+?^${}()|[\]\\]/g,'\\$&').replace(/\s+/g,'\\s*');
+   cleaned=cleaned.replace(
+     new RegExp(`(?:<b>|<strong>)?\\s*${esc}\\s*(?:<\\/b>|<\\/strong>)?\\s*[：:]\\s*[^<]*(?:<br\\s*\\/?>|$)`,'gi'),
+     ''
+   );
+ });
+ cleaned=cleaned.replace(/^(?:\s*<br\s*\/?>)+/i,'').replace(/(?:<br\s*\/?>\s*){2,}/gi,'<br>');
+ return cleaned.trim();
+}
+
+function compareFeatureKey(v){
+ let x=normFeatureTerm(v);
+ // Normalize harmless wording variants while preserving meaningful qualifiers/levels.
+ x=x.replace(/フィルター自動掃除/g,'フィルター自動お掃除')
+    .replace(/フィルターおそうじ/g,'フィルター自動お掃除')
+    .replace(/内部クリーン運転/g,'内部クリーン')
+    .replace(/左右風向自動/g,'左右自動')
+    .replace(/上下左右風向コントロール/g,'上下左右自動');
+ // Keep strength / method / range words: Light, ヒートプラス, 再熱, 48兆, 9.6兆,
+ // リニアハイブリッド, 上下/左右/立体 etc. Those are real comparison differences.
+ return x;
+}
+function comparisonOnlyTerms(m1,s1,m2,s2,k){
+ const a=featureTermsFor(m1,s1,k), b=featureTermsFor(m2,s2,k);
+ const posA=positiveTerms(a), posB=positiveTerms(b);
+ const kb=new Set(posB.map(compareFeatureKey)), ka=new Set(posA.map(compareFeatureKey));
+ let da=uniqueFeatureTerms(posA.filter(x=>!kb.has(compareFeatureKey(x))));
+ let db=uniqueFeatureTerms(posB.filter(x=>!ka.has(compareFeatureKey(x))));
+
+ // Preserve explicit "なし" only when the other model actually has that feature family.
+ const negA=a.filter(isNegativeFeature), negB=b.filter(isNegativeFeature);
+ negA.forEach(n=>{
+   const base=compareFeatureKey(n.replace(/なし|非搭載|未搭載|非対応/g,''));
+   if(posB.some(x=>compareFeatureKey(x).includes(base)||base.includes(compareFeatureKey(x)))) da.push(n);
+ });
+ negB.forEach(n=>{
+   const base=compareFeatureKey(n.replace(/なし|非搭載|未搭載|非対応/g,''));
+   if(posA.some(x=>compareFeatureKey(x).includes(base)||base.includes(compareFeatureKey(x)))) db.push(n);
+ });
+ return {a:uniqueFeatureTerms(da),b:uniqueFeatureTerms(db)};
+}
+
+const displayGradeMap={
+ 'ダイキン':{'R':'high','A':'high','FN（ノジマ）':'mid','C':'mid','E':'standard'},
+ '日立':{'X':'high','WN（ノジマ）':'mid','G':'mid','D':'standard','E':'standard'},
+ '三菱':{'FZ':'high','ZW':'high','XD':'mid','R':'mid','GE':'standard'},
+ '東芝':{'DR':'high','DZ':'mid','DX':'mid','M':'standard'},
+ 'パナソニック':{'X':'high','LV（6畳なし）':'high','EX':'mid','C':'mid','J':'standard'},
+ 'ゼネラル':{'X（6畳なし）':'high','Z':'high','W':'mid','L':'mid','C（AS-C226T系）':'standard'}
+};
+function displayGrade(m,s){
+ return (displayGradeMap[m]&&displayGradeMap[m][s])||'standard';
+}
+function gradeLabel(g){
+ return g==='high'?'ハイエンド':g==='mid'?'ミドル':'スタンダード';
+}
+
+function gradeInlineColor(m,s){
+ const g=displayGrade(m,s);
+ if(g==='high') return '#C58A00';      // gold
+ if(g==='mid') return '#66717D';       // silver / metallic gray
+ return '#B45F2A';                     // bronze
+}
+
+function displaySeriesName(s){
+ return String(s||'').replace(/（ノジマ）/g,'');
+}
+function displayModelName(m,s){
+ return `${m} ${displaySeriesName(s)}`.trim();
+}
+function finalDedupSummary(html){
+ const box=document.createElement('div');
+ box.innerHTML=String(html||'');
+
+ // De-duplicate block-level sentences first.
+ const seen=new Set();
+ [...box.querySelectorAll('div,p,li')].forEach(el=>{
+   const key=(el.textContent||'')
+     .replace(/[＊*]/g,'')
+     .replace(/\s+/g,' ')
+     .replace(/（ノジマ）/g,'')
+     .trim();
+   if(!key) return;
+   if(seen.has(key)){ el.remove(); return; }
+   seen.add(key);
+ });
+
+ // Then de-duplicate BR-separated lines, including lines wrapped in <b>/<span>.
+ const holder=document.createElement('div');
+ holder.innerHTML=box.innerHTML;
+ const pieces=holder.innerHTML.split(/<br\s*\/?>/i);
+ const seenLines=new Set(), kept=[];
+ pieces.forEach(piece=>{
+   const probe=document.createElement('div');
+   probe.innerHTML=piece;
+   const key=(probe.textContent||'')
+      .replace(/[＊*]/g,'')
+      .replace(/\s+/g,' ')
+      .replace(/（ノジマ）/g,'')
+      .trim();
+   if(!key){ if(piece.trim()) kept.push(piece); return; }
+   if(seenLines.has(key)) return;
+   seenLines.add(key);
+   kept.push(piece);
+ });
+ return kept.join('<br>').replace(/（ノジマ）/g,'').trim();
+}
+
+function hitachiXWnCleanFit(m1,s1,m2,s2,key,summary){
+ if(key!=='clean') return summary;
+ const pair=new Set([`${m1}|${s1}`,`${m2}|${s2}`]);
+ if(pair.has('日立|X') && pair.has('日立|WN（ノジマ）')){
+   const xFirst=(m1==='日立'&&s1==='X');
+   const xName=xFirst?displayModelName(m1,s1):displayModelName(m2,s2);
+   return `→ <b>${xName}</b>：<span class="salesMarker">ビッグ＆ウェーブファン</span>と銅 排水トレー凍結洗浄を搭載。ファンお掃除ロボと凍結洗浄 除菌ヒートプラスはWNにも搭載`;
+ }
+ return summary;
+}
+
 function dataDrivenBenefit(m1,s1,m2,s2){
  const rows=[
   ['🧼','清潔','clean'],
@@ -2243,9 +2559,13 @@ function dataDrivenBenefit(m1,s1,m2,s2){
   ['⭐','特徴','special']
  ];
  return `<div class="compareTenCards">`+rows.map(([ic,label,key])=>{
-   const summary=sanitizeComparisonHtml(summarizeFeaturePair(m1,s1,m2,s2,key));
-   const f1=featureTermsFor(m1,s1,key).join('・')||'—';
-   const f2=featureTermsFor(m2,s2,key).join('・')||'—';
+   let summary=highlightSalesAppeal(sanitizeComparisonHtml(summarizeFeaturePair(m1,s1,m2,s2,key)));
+   summary=stripRepeatedModelFeatureLines(summary,m1,s1,m2,s2);
+   summary=finalDedupSummary(summary);
+   summary=hitachiXWnCleanFit(m1,s1,m2,s2,key,summary);
+   const visibleDiff=comparisonOnlyTerms(m1,s1,m2,s2,key);
+   const f1=visibleDiff.a.join('・')||'—';
+   const f2=visibleDiff.b.join('・')||'—';
    return `
     <div class="compareCard compareSummaryCard" data-key="${key}">
       <div class="compareCardTitle"><span>${ic}</span><b>${label}</b></div>
@@ -2253,8 +2573,8 @@ function dataDrivenBenefit(m1,s1,m2,s2){
     </div>
     <div class="compareCard compareFeatureCard" data-key="${key}">
       <div class="twoModels">
-        <div><b>${m1} ${s1}</b><span>${f1}</span></div>
-        <div><b>${m2} ${s2}</b><span>${f2}</span></div>
+        <div><b class="modelGrade ${displayGrade(m1,s1)}" style="color:${gradeInlineColor(m1,s1)} !important;-webkit-text-fill-color:${gradeInlineColor(m1,s1)} !important;" title="${gradeLabel(displayGrade(m1,s1))}">${displayModelName(m1,s1)}</b><span>${f1}</span></div>
+        <div><b class="modelGrade ${displayGrade(m2,s2)}" style="color:${gradeInlineColor(m2,s2)} !important;-webkit-text-fill-color:${gradeInlineColor(m2,s2)} !important;" title="${gradeLabel(displayGrade(m2,s2))}">${displayModelName(m2,s2)}</b><span>${f2}</span></div>
       </div>
     </div>`;
  }).join('')+`</div>`;
