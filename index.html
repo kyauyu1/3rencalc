@@ -110,6 +110,11 @@ body.theme-dark .fastLabel{color:#94a3b8}
 body.theme-dark .fastRow.selectedRow{border-color:#60a5fa!important;box-shadow:0 0 0 2px #1e3a8a inset}
 </style><style>
 .hearingGuide{background:transparent!important;padding:8px 0!important}.hearingHead{display:flex;align-items:baseline;gap:10px;margin:5px 2px 12px}.hearingHead b{font-size:20px}.hearingHead span{font-size:11px;color:#64748b}.hearingCards{display:grid;grid-template-columns:1fr 1fr;gap:10px}.hearingCard{min-height:105px;border:1px solid #cbd5e1;background:#fff;border-radius:14px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;font-weight:900}.hearingCard span{font-size:29px}.hearingCard b{font-size:14px;color:#0f172a}.hearingQuestion{font-size:18px;font-weight:950;margin:13px 2px}.answerCards{display:grid;grid-template-columns:1fr 1fr;gap:9px}.answerCards button{min-height:70px;border:1px solid #cbd5e1;background:#fff;border-radius:12px;font-size:13px;font-weight:900;padding:10px}.guideBack{border:0;background:#e2e8f0;border-radius:8px;padding:7px 10px;font-weight:900}.hearingResult{background:#eff6ff;border:1px solid #bfdbfe;border-radius:14px;padding:18px;text-align:center}.hearingResult small{display:block;color:#64748b;font-weight:900}.hearingResult b{display:block;font-size:23px;margin:7px 0;color:#1d4ed8}.hearingResult p{font-size:14px;font-weight:800;margin:8px 0 0}.restartGuide{width:100%;margin-top:10px;border:0;background:#2563eb;color:#fff;border-radius:10px;padding:11px;font-weight:900}body.theme-dark .hearingCard,body.theme-dark .answerCards button{background:#111827;color:#f8fafc;border-color:#334155}body.theme-dark .hearingCard b{color:#f8fafc}body.theme-dark .hearingResult{background:#172554;border-color:#1e40af}body.theme-dark .hearingResult b{color:#93c5fd}
+</style><style id="v1725-hearing-wizard">
+.hwDimensionBox{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:end}.hwDimensionBox label{font-size:12px;font-weight:900}.hwDimensionBox span{padding-bottom:14px;font-weight:950}.hwDimensionBox small{grid-column:1/-1;color:#64748b;line-height:1.5}
+@media(max-width:620px){.hwDimensionBox{grid-template-columns:1fr}.hwDimensionBox span{display:none}.hwDimensionBox small{grid-column:auto}}
+
+.hearingWizard{max-width:760px;margin:0 auto;padding-bottom:calc(24px + env(safe-area-inset-bottom))}.hwTop{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px}.hwStep{font-size:11px;font-weight:900;color:#64748b}.hwProgress{height:7px;background:#e2e8f0;border-radius:999px;overflow:hidden;margin:8px 0 16px}.hwProgress i{display:block;height:100%;background:#2563eb;border-radius:999px}.hwQuestion{font-size:21px;font-weight:950;line-height:1.45;margin:8px 0 5px;color:#0f172a}.hwWhy{font-size:11px;line-height:1.6;color:#64748b;margin:0 0 14px}.hwChoices{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.hwChoice{min-height:74px;border:2px solid #cbd5e1;background:#fff;border-radius:14px;padding:12px;font-size:14px;font-weight:900;color:#0f172a}.hwChoice.selected{border-color:#2563eb;background:#eff6ff;box-shadow:0 0 0 2px #bfdbfe inset}.hwText{width:100%;box-sizing:border-box;border:2px solid #cbd5e1;border-radius:12px;padding:13px;font-size:16px;background:#fff;color:#0f172a}.hwMemo{margin-top:16px;padding:12px;border:1px solid #cbd5e1;border-radius:12px;background:#f8fafc}.hwMemo label{display:block;font-size:12px;font-weight:950;margin-bottom:6px}.hwMemo textarea{width:100%;min-height:68px;box-sizing:border-box;resize:vertical;border:1px solid #cbd5e1;border-radius:9px;padding:10px;font-size:14px;background:#fff;color:#0f172a}.hwNav{display:flex;gap:9px;margin-top:14px}.hwNav button{flex:1;min-height:48px;border:0;border-radius:11px;font-weight:950}.hwPrev{background:#e2e8f0;color:#0f172a}.hwNext{background:#2563eb;color:#fff}.hwNext:disabled{opacity:.4}.hwSheet{background:#fff;border:1px solid #cbd5e1;border-radius:16px;padding:16px}.hwSheet h3{margin:0 0 4px;font-size:20px}.hwSheet>small{color:#64748b}.hwRows{margin-top:14px}.hwRow{display:grid;grid-template-columns:135px 1fr;gap:10px;padding:9px 0;border-bottom:1px solid #e2e8f0}.hwRow b{color:#334155}.hwRow span{font-weight:800}.hwMemoSummary{margin-top:15px;background:#f8fafc;border-radius:12px;padding:12px}.hwMemoSummary b{display:block;margin-bottom:6px;color:#0f172a}.hwMemoSummary div{white-space:pre-wrap;line-height:1.65}.hwDone{width:100%;margin-top:12px;border:0;background:#2563eb;color:#fff;border-radius:11px;padding:13px;font-weight:950}body.theme-dark .hwQuestion,body.theme-dark .hwChoice,body.theme-dark .hwSheet h3,body.theme-dark .hwMemoSummary b{color:#f8fafc}body.theme-dark .hwChoice,body.theme-dark .hwText,body.theme-dark .hwMemo textarea,body.theme-dark .hwSheet{background:#111827;color:#f8fafc;border-color:#334155}body.theme-dark .hwChoice.selected{background:#172554;border-color:#60a5fa;box-shadow:0 0 0 2px #1e3a8a inset}body.theme-dark .hwMemo,body.theme-dark .hwMemoSummary{background:#172033;border-color:#334155}body.theme-dark .hwRow{border-color:#334155}body.theme-dark .hwRow b{color:#cbd5e1}@media(max-width:620px){.hwChoices{grid-template-columns:1fr}.hwChoice.full{grid-column:auto}.hwRow{grid-template-columns:110px 1fr}.hwQuestion{font-size:19px}}
 </style><style>
 /* v9.2 fast keypad size settings */
 body.keys-small .fastKeys .key{height:52px!important;min-height:52px!important;font-size:20px!important}
@@ -1018,6 +1023,21 @@ body.theme-dark .todoRow{background:#172033;border-color:#334155!important}body.
  color:#A85D2A!important;
  -webkit-text-fill-color:#A85D2A!important;
 }
+
+/* v17.29 hearing data home card */
+.hearingDataHome{margin-top:8px;border:1px solid #cbd5e1;border-radius:12px;background:#fff;padding:10px}
+.hearingHeaderIcon{position:relative;min-width:36px!important;width:36px!important;padding:0!important;font-size:16px!important;display:inline-flex!important;align-items:center;justify-content:center}.hearingCountBadge{display:none;position:absolute;right:-5px;top:-6px;min-width:15px;height:15px;padding:0 3px;border-radius:999px;background:#dc2626;color:#fff;font-size:8px;line-height:15px;font-weight:950;text-align:center;border:2px solid #fff;box-sizing:content-box}body.theme-dark .hearingCountBadge{border-color:#111827}
+.hearingDataHead{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:7px}.hearingDataHead b{font-size:12px}.hearingDataHead button{border:0;background:#e2e8f0;border-radius:8px;padding:5px 8px;font-size:9px;font-weight:900}
+.hearingDataList{display:grid;gap:6px}.hearingDataItem{width:100%;text-align:left;border:1px solid #e2e8f0;background:#f8fafc;border-radius:9px;padding:7px 9px;color:#0f172a}.hearingDataItem b{display:block;font-size:10px}.hearingDataItem small{display:block;margin-top:2px;color:#64748b;font-size:8px}.hearingDataEmpty{font-size:9px;color:#64748b;padding:5px 2px}.hearingSavedBadge{font-size:8px;font-weight:900;color:#166534;background:#dcfce7;border-radius:999px;padding:3px 6px}
+.hearingArchive{max-height:65vh;overflow:auto;display:grid;gap:8px;margin-top:10px}.hearingArchiveRow{display:grid;grid-template-columns:1fr auto;gap:7px}.hearingArchiveRow>button:first-child{text-align:left;border:1px solid #cbd5e1;background:#fff;border-radius:10px;padding:9px}.hearingArchiveRow .deleteHear{border:0;background:#fee2e2;border-radius:9px;padding:0 10px}
+body.theme-dark .hearingDataHome,body.theme-dark .hearingDataItem,body.theme-dark .hearingArchiveRow>button:first-child{background:#111827;color:#f8fafc;border-color:#334155}
+/* v17.32 hearing data vertical scroll */
+#hearingDataModal{overflow-y:auto!important;overflow-x:hidden!important;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;touch-action:pan-y;padding-bottom:max(18px,env(safe-area-inset-bottom))!important}
+#hearingDataModal>.miniTool{min-height:0!important;max-height:none!important;margin:0 auto 18px!important}
+#hearingDataModalBody{min-height:0;overflow:visible;touch-action:pan-y}
+#hearingDataModal .hearingArchive{max-height:none!important;overflow:visible!important}
+#hearingDataModal .hearingSavedDetail{min-height:0;overflow:visible;touch-action:pan-y}
+@media (max-width:650px),(orientation:portrait){#hearingDataModal{padding:14px 10px max(14px,env(safe-area-inset-bottom))!important}#hearingDataModal>.miniTool{width:100%!important;margin:0 auto!important}}
 </style>
 
 
@@ -1043,7 +1063,7 @@ body.theme-dark .todoRow{background:#172033;border-color:#334155!important}body.
   <button onclick="addDealTime(5)">＋5分</button><button onclick="resetDealTimer()">終了</button>
  </div>
 </div>
-<div class="tools"><button onclick="openHistory()">🕘 案内履歴</button><button onclick="openPresetManager()">🔖 プリセット管理</button><button class="show iconOnly" onclick="present()" title="お客様提示" aria-label="お客様提示">▣</button><button onclick="resetAll()">↻ リセット</button><button onclick="addPlan()">＋ プラン</button></div></header><main class="main"><section class="left"><div class="box"><div class="label">商品カテゴリ　<span style="font-size:9px;font-weight:600">タップで絞り込み／移動先</span></div><div class="cats">
+<div class="tools"><button onclick="openHistory()">🕘 案内履歴</button><button id="hearingDataIcon" class="hearingHeaderIcon" onclick="openHearingDataList()" title="ヒアリングデータ" aria-label="ヒアリングデータ">📋<span id="hearingDataCount" class="hearingCountBadge"></span></button><button onclick="openPresetManager()">🔖 プリセット管理</button><button class="show iconOnly" onclick="present()" title="お客様提示" aria-label="お客様提示">▣</button><button onclick="resetAll()">↻ リセット</button><button onclick="addPlan()">＋ プラン</button></div></header><main class="main"><section class="left"><div class="box"><div class="label">商品カテゴリ　<span style="font-size:9px;font-weight:600">タップで絞り込み／移動先</span></div><div class="cats">
 <button class="cat" data-c="air" onclick="categoryTap('air')"><svg viewBox="0 0 48 40"><rect x="5" y="4" width="38" height="17" rx="4"/><path d="M10 15h28"/><path d="M13 25c-3 3 3 5 0 8M24 25c-3 3 3 5 0 8M35 25c-3 3 3 5 0 8"/></svg>エアコン</button>
 <button class="cat" data-c="tv" onclick="categoryTap('tv')"><svg viewBox="0 0 48 40"><rect x="6" y="5" width="36" height="25" rx="2"/><path d="M18 35h12M24 30v5"/></svg>テレビ</button>
 <button class="cat" data-c="fridge" onclick="categoryTap('fridge')"><svg viewBox="0 0 48 40"><rect x="13" y="2" width="22" height="35" rx="3"/><path d="M13 17h22M30 9v4M30 22v6"/></svg>冷蔵庫</button>
@@ -1111,6 +1131,14 @@ body.theme-dark .todoRow{background:#172033;border-color:#334155!important}body.
   <button class="toolItem" onclick="openEnergyTool()">⚡ <span><b>電気代比較</b><small>年間・複数年の差額を計算</small></span></button>
   <button class="toolItem" onclick="openNewbieTool()">📖 <span><b>新人向けツール</b><small>接客の確認ポイント</small></span></button>
   <button class="toolItem" onclick="openTodoTool()">☑️ <span><b>TODO</b><small>7:00〜24:00の予定・リマインド</small></span></button>
+</div>
+
+<div id="hearingDataModal" class="modal" style="background:#0f172acc;padding:18px">
+ <div class="miniTool" style="max-width:720px">
+  <button class="miniClose" onclick="$('hearingDataModal').classList.remove('on')">✕</button>
+  <h3>📋 ヒアリングデータ</h3>
+  <div id="hearingDataModalBody"></div>
+ </div>
 </div>
 
 <div id="energyModal" class="modal" style="background:#0f172acc;padding:18px">
@@ -1353,7 +1381,7 @@ function removeRow(p,i){if(ps[p].items.length>1)ps[p].items.splice(i,1);else ps[
  ps=Array.from({length:n},(_,i)=>({code:'ABC'[i],title:'プラン'+'ABC'[i],items:[{name:'商品本体',price:'',op:'+'},{name:'',price:'',op:'+'},{name:'',price:'',op:'+'},{name:'',price:'',op:'+'},{name:'',price:'',op:'+'},{name:'',price:'',op:'+'}]}));
  active={p:0,i:0};expr='';render()}function msg(s){$('toast').textContent=s;$('toast').style.display='block';setTimeout(()=>$('toast').style.display='none',1600)}
 function present(){let e=$('present');e.style.gridTemplateColumns=`repeat(${ps.length},1fr)`;e.innerHTML=ps.map((p,i)=>`<div class="pc"><h3>${p.code}　${esc(p.title)}</h3>${p.items.filter(x=>x.name||x.price).map(x=>`<div class="line"><span>${esc(x.name||'項目')}</span><b>${money(value(x.price))}</b></div>`).join('')}<div class="big">${money(total(i))}</div></div>`).join('');$('modal').classList.add('on')}
-renderPreset();render();if('serviceWorker'in navigator)navigator.serviceWorker.register('./sw.js').catch(()=>{});
+renderPreset();render();renderHearingDataHome();if('serviceWorker'in navigator)navigator.serviceWorker.register('./sw.js').catch(()=>{});
 
 function openSettings(){
  let a=getAppearance();
@@ -1894,10 +1922,94 @@ function showHearingNode(id){$('newbieModal').classList.add('featureFullscreen')
  let g=hearingGuides[currentGuide],n=g.nodes[id];$('guideBody').innerHTML=`<button class="guideBack" onclick="showGuide('${currentGuide}')">← 戻る</button><div class="hearingQuestion">${n.q}</div><div class="answerCards">${n.a.map((a,i)=>`<button onclick="showHearingResult('${id}',${i})">${a[0]}</button>`).join('')}</div>`
 }
 function showHearingResult(id,i){let g=hearingGuides[currentGuide],n=g.nodes[id],a=n.a[i];$('guideBody').innerHTML=`<button class="guideBack" onclick="showHearingNode('${id}')">← 戻る</button><div class="hearingResult"><small>確認ポイント</small><b>${a[0]}</b><p>${a[1]}</p></div><button class="restartGuide" onclick="showGuide('${currentGuide}')">最初から確認</button>`}
-function showAcHearing(){
- $('guideBody').innerHTML=`<button class="guideBack" onclick="showGuide('air')">← 戻る</button><div class="hearingQuestion">🎤 エアコン ヒアリング項目</div><div class="checkGuide">
- ${['部屋の広さ・畳数','設置場所・室内機サイズ','100V / 200V・専用回路','冷房中心 / 暖房も使用','除湿をよく使うか','清潔・自動掃除の希望','省エネ・年間電気代','現在のエアコン年数','室外機の設置環境','東京ゼロエミ対象条件'].map(x=>`<label><input type="checkbox"> ${x}</label>`).join('')}</div>`;
+const AC_HEARING_KEY='acHearingDraftV1728';
+let acHearingState={step:0,answers:{},memos:{}};
+const acHearingSteps=[
+ {id:'installType',q:'今回は新しく取り付けですか？ お買い替えですか？',why:'最初に新規取付か買替かを確認します。買替の場合はゼロエミ確認などの質問が追加されます。',type:'single',choices:['新規取付','買替']},
+ {id:'urgency',q:'いつ頃までに必要ですか？',why:'故障などですぐ必要なのか、比較する時間があるのかを確認します。具体的な日付は下のメモ欄に残してください。',type:'single',choices:['すぐに欲しい','急ぎではない']},
+ {id:'tokyo',q:'東京都にお住まいですか？',why:'東京都の買替支援制度を確認するための入口です。',type:'single',choices:['はい','いいえ']},
+ {id:'years',q:'現在のエアコンは15年以上お使いですか？',why:'ゼロエミの長期使用確認につながります。制度上の最終判定では製造年など必要条件を確認します。',type:'single',when:a=>a.installType==='買替'&&a.tokyo==='はい',choices:['15年以上','15年未満','わからない']},
+ {id:'zeroemiFamily',q:'ご家族に65歳以上、または対象の障害者手帳をお持ちの方はいらっしゃいますか？',why:'ゼロエミの対象可能性を確認します。「いる」だけで適用を確定せず、購入者・対象機種などの条件を確認します。',type:'single',when:a=>a.tokyo==='はい',choices:['いる','いない']},
+ {id:'roomSize',q:'何畳くらいのお部屋ですか？',why:'能力選びの基本です。分からない場合は現在の型番や部屋の広さを後で確認します。',type:'single',choices:['6畳','8畳','10畳','12畳','14畳','18畳','20畳以上','わからない']},
+ {id:'roomUse',q:'どのお部屋で使いますか？',why:'寝室・リビングなど用途によって、除湿・静音・気流・省エネなど重視点が変わります。',type:'single',choices:['寝室','リビング','子ども部屋','仕事部屋','その他']},
+ {id:'homeType',q:'お住まいはどのタイプですか？',why:'搬入や設置条件を確認する入口になります。',type:'single',choices:['戸建て','マンション','団地・集合住宅','その他']},
+ {id:'elevator',q:'エレベーターはありますか？',why:'マンション・団地などの搬入条件として確認します。',type:'single',when:a=>a.homeType==='マンション'||a.homeType==='団地・集合住宅',choices:['あり','なし']},
+ {id:'installFloor',q:'室内機と室外機はどこにありますか？',why:'階違い・屋根置き・壁面など、追加工事の可能性を拾うために確認します。',type:'single',choices:['同じ階・ベランダ等','1階→室外機1階','2階→室外機1階','2階→室外機2階','屋根・壁面など','わからない']},
+ {id:'indoorSpace',q:'室内機を取り付けられるスペースの実寸は分かりますか？',why:'本体寸法だけでなく、ノジマの設置確認では室内機の上下左右にそれぞれ5cm以上の余裕を見ます。高さと横幅を実寸で入力してください。',type:'dimensions'},
+ {id:'outdoorClearance',q:'室外機まわりの空きスペースは確認できていますか？',why:'ノジマの設置確認では、室外機の前面25cm以上・側面5cm以上・背面5cm以上の空きを確認します。',type:'single',choices:['確認できている','まだ確認していない','わからない']},
+ {id:'pipeCover',q:'配管カバーは必要ですか？',why:'見た目や既存カバーの有無も含め、工事内容を先輩へ引き継げるようにします。',type:'single',choices:['必要','不要','わからない']},
+ {id:'construction',q:'そのほか工事で分かっていることはありますか？',why:'電源・配管穴・室外機置場など、分かる範囲で確認します。分からない項目は自己判断せず引き継ぎます。',type:'multi',choices:['専用回路あり','100V','200V','配管穴あり','室外機置場確認済み','よく分からない']},
+ {id:'currentPain',q:'今のエアコンで困っていることはありますか？',why:'お客様の不満が、そのまま機能比較の入口になります。複数選べます。',type:'multi',when:a=>a.installType==='買替',choices:['冷えにくい・暖まりにくい','除湿すると寒い','掃除が大変','カビ・ニオイ','音が気になる','電気代','特にない','その他']},
+ {id:'usage',q:'普段はどんな使い方が多いですか？',why:'使用時間や場面を聞くと、省エネ・除湿・睡眠時の快適性などの提案につながります。',type:'multi',choices:['日中に長時間','夜・就寝時','冷房中心','暖房もよく使う','除湿をよく使う','短時間だけ使う']},
+ {id:'priority',q:'今回、一番重視したいのはどこですか？',why:'価格だけでなく、お客様自身が大事にしているポイントを確認します。複数選べます。',type:'multi',choices:['価格','電気代・省エネ','掃除のしやすさ','除湿','快適性・気流','静かさ','長く安心して使いたい','メーカーのこだわり']},
+ {id:'maker',q:'こだわりのメーカーはありますか？',why:'メーカー名だけでなく、次の質問で「なぜそのメーカーなのか」まで確認します。',type:'single',when:a=>Array.isArray(a.priority)&&a.priority.includes('メーカーのこだわり'),choices:['ダイキン','日立','三菱','パナソニック','ゼネラル','東芝','シャープ','その他']},
+ {id:'makerReason',q:'そのメーカーが良い理由は何ですか？',why:'メーカー固定なのか、欲しい機能や過去の体験が理由なのかを確認します。複数選べます。',type:'multi',when:a=>Array.isArray(a.priority)&&a.priority.includes('メーカーのこだわり'),choices:['今も使っている','長く使えた・壊れにくかった','使いやすかった','家族・知人に勧められた','欲しい機能がある','以前から好き・安心感がある','その他']},
+ {id:'budget',q:'ご予算や「このくらいまで」というイメージはありますか？',why:'金額だけで決めつけず、重視点と合わせて比較するための目安として確認します。',type:'single',choices:['できるだけ抑えたい','10万円前後','15万円前後','20万円前後','価格より内容重視','まだ決めていない']}
+];
+function hearingVisibleSteps(){return acHearingSteps.filter(x=>!x.when||x.when(acHearingState.answers));}
+function hearingCurrentStep(){const v=hearingVisibleSteps();if(acHearingState.step>=v.length)acHearingState.step=Math.max(0,v.length-1);return v[acHearingState.step];}
+function hearingSaveDraft(){try{localStorage.setItem(AC_HEARING_KEY,JSON.stringify(acHearingState))}catch(e){}}
+function hearingEscape(v){return escapeHtml(String(v??''));}
+function showAcHearing(){acHearingState={step:0,answers:{},memos:{}};hearingSaveDraft();renderAcHearingStep();}
+function hearingHasAnswer(st){const v=acHearingState.answers[st.id];if(st.type==='dimensions')return !!(v&&(v.unknown||String(v.height||'').trim()||String(v.width||'').trim()));return Array.isArray(v)?v.length>0:!!String(v||'').trim();}
+function hearingChoiceHtml(st){
+ if(st.type==='dimensions'){
+  const v=acHearingState.answers[st.id]||{};
+  return `<div class="hwDimensionBox"><label>高さ（cm）<input class="hwText" inputmode="decimal" data-hw-dim="height" placeholder="例：35" value="${hearingEscape(v.height||'')}" ${v.unknown?'disabled':''}></label><span>×</span><label>横幅（cm）<input class="hwText" inputmode="decimal" data-hw-dim="width" placeholder="例：90" value="${hearingEscape(v.width||'')}" ${v.unknown?'disabled':''}></label><button type="button" class="hwChoice full ${v.unknown?'selected':''}" data-hw-dim-unknown="1">わからない</button><small>※ 設置可否は本体寸法＋上下左右5cm以上を含めて最終確認</small></div>`;
+ }
+ const val=acHearingState.answers[st.id],selected=Array.isArray(val)?val:[val];
+ return `<div class="hwChoices">${st.choices.map((c,i)=>`<button type="button" class="hwChoice ${selected.includes(c)?'selected':''}" data-hw-choice="${i}">${hearingEscape(c)}</button>`).join('')}</div>`;
 }
+function renderAcHearingStep(){const panel=$('guideBody');if(!panel)return;const steps=hearingVisibleSteps(),st=hearingCurrentStep();if(!st)return renderAcHearingSheet();const pct=Math.round((acHearingState.step/Math.max(1,steps.length))*100);panel.innerHTML=`<div class="hearingWizard"><div class="hwTop"><button class="guideBack" onclick="${acHearingState.step===0?"showGuide('air')":"acHearingPrev()"}">← 戻る</button><span class="hwStep">${acHearingState.step+1} / ${steps.length}</span></div><div class="hwProgress"><i style="width:${pct}%"></i></div><div class="hwQuestion">${hearingEscape(st.q)}</div><div class="hwWhy">💡 ${hearingEscape(st.why)}</div>${hearingChoiceHtml(st)}<div class="hwMemo"><label>📝 この質問で気になったこと</label><textarea id="hwMemo" placeholder="例：希望日は10/10／西日が強い／室外機まで距離がありそう" oninput="acHearingMemo(this.value)">${hearingEscape(acHearingState.memos[st.id]||'')}</textarea></div><div class="hwNav"><button class="hwPrev" onclick="${acHearingState.step===0?"showGuide('air')":"acHearingPrev()"}">← 戻る</button><button id="hwNext" class="hwNext" onclick="acHearingNext()" ${hearingHasAnswer(st)?'':'disabled'}>${acHearingState.step===steps.length-1?'ヒアリング結果へ':'次へ →'}</button></div></div>`;bindAcHearingControls();}
+function bindAcHearingControls(){const root=document.querySelector('.hearingWizard');if(!root)return;root.querySelectorAll('[data-hw-choice]').forEach(btn=>btn.addEventListener('click',()=>{const st=hearingCurrentStep();if(!st)return;acHearingChoose(st.id,st.choices[Number(btn.dataset.hwChoice)]);}));root.querySelectorAll('[data-hw-dim]').forEach(inp=>inp.addEventListener('input',()=>{const st=hearingCurrentStep();if(!st)return;const v=acHearingState.answers[st.id]||{};v.unknown=false;v[inp.dataset.hwDim]=inp.value;acHearingState.answers[st.id]=v;hearingSaveDraft();const next=document.getElementById('hwNext');if(next)next.disabled=!hearingHasAnswer(st);}));const unknown=root.querySelector('[data-hw-dim-unknown]');if(unknown)unknown.addEventListener('click',()=>{const st=hearingCurrentStep();if(!st)return;const v=acHearingState.answers[st.id]||{};v.unknown=!v.unknown;if(v.unknown){v.height='';v.width='';}acHearingState.answers[st.id]=v;hearingSaveDraft();renderAcHearingStep();});}
+function acHearingChoose(id,value){const st=hearingCurrentStep();if(!st||st.id!==id)return;if(st.type==='multi'){let a=Array.isArray(acHearingState.answers[id])?[...acHearingState.answers[id]]:[];if(a.includes(value))a=a.filter(x=>x!==value);else a.push(value);acHearingState.answers[id]=a;}else acHearingState.answers[id]=value;hearingSaveDraft();if(st.type==='single'){renderAcHearingStep();setTimeout(()=>acHearingNext(),120);}else renderAcHearingStep();}
+function acHearingMemo(v){const st=hearingCurrentStep();if(!st)return;acHearingState.memos[st.id]=v;hearingSaveDraft();}
+function acHearingPrev(){if(acHearingState.step>0)acHearingState.step--;hearingSaveDraft();renderAcHearingStep();}
+function acHearingNext(){const st=hearingCurrentStep();if(!st||!hearingHasAnswer(st))return;const steps=hearingVisibleSteps();if(acHearingState.step>=steps.length-1)return renderAcHearingSheet();acHearingState.step++;hearingSaveDraft();renderAcHearingStep();}
+function hearingAnswer(id){const v=acHearingState.answers[id];if(v&&typeof v==='object'&&!Array.isArray(v)){if(v.unknown)return 'わからない';return `高さ ${v.height||'未確認'}cm × 横幅 ${v.width||'未確認'}cm`;}return Array.isArray(v)?v.join('・'):(v||'—');}
+function zeroEmiSummary(a){if(a.tokyo!=='はい')return '対象確認なし';if(a.zeroemiFamily==='いる')return '8万円枠の対象可能性あり・詳細確認';if(a.installType==='買替'&&a.years==='15年以上')return '長期使用買替の対象可能性あり・詳細確認';if(a.installType==='新規取付')return '高効率新規購入の対象可能性あり・詳細確認';return '条件を確認';}
+function renderAcHearingSheet(){const panel=$('guideBody');if(!panel)return;const a=acHearingState.answers;const rows=[['🏠 設置',hearingAnswer('installType')],['📅 希望時期',hearingAnswer('urgency')],['🗼 東京都在住',hearingAnswer('tokyo')],['⚡ ゼロエミ',zeroEmiSummary(a)],['⏳ 使用年数',a.installType==='買替'&&a.tokyo==='はい'?hearingAnswer('years'):'—'],['👤 65歳以上・手帳',a.tokyo==='はい'?hearingAnswer('zeroemiFamily'):'—'],['📐 部屋',`${hearingAnswer('roomSize')} / ${hearingAnswer('roomUse')}`],['🏢 住居',hearingAnswer('homeType')],['🛗 エレベーター',(a.homeType==='マンション'||a.homeType==='団地・集合住宅')?hearingAnswer('elevator'):'—'],['🔧 設置状況',hearingAnswer('installFloor')],['📏 室内機スペース',hearingAnswer('indoorSpace')],['🌿 室外機空間',hearingAnswer('outdoorClearance')],['▰ 配管カバー',hearingAnswer('pipeCover')],['🛠️ 工事確認',hearingAnswer('construction')],['😟 現在の不満',a.installType==='買替'?hearingAnswer('currentPain'):'—'],['🌙 使い方',hearingAnswer('usage')],['⭐ 重視',hearingAnswer('priority')],['🏷️ メーカー希望',Array.isArray(a.priority)&&a.priority.includes('メーカーのこだわり')?hearingAnswer('maker'):'特になし'],['💬 メーカー理由',Array.isArray(a.priority)&&a.priority.includes('メーカーのこだわり')?hearingAnswer('makerReason'):'—'],['💰 予算感',hearingAnswer('budget')]];const memoLines=hearingVisibleSteps().map(st=>{const m=(acHearingState.memos[st.id]||'').trim();return m?`・${st.q}\n　${m}`:'';}).filter(Boolean);panel.innerHTML=`<div class="hearingWizard"><div class="hwTop"><button class="guideBack" onclick="acHearingState.step=Math.max(0,hearingVisibleSteps().length-1);renderAcHearingStep()">← 修正する</button><span class="hwStep">ヒアリング完了</span></div><div class="hwSheet"><h3>📋 エアコン ヒアリングシート</h3><small>この画面を先輩・担当者へそのまま見せられます</small><div class="hwMemoSummary"><b>⚠️ 設置確認基準</b><div>室内機：上下左右＋5cm以上\n室外機：前面25cm以上・側面5cm以上・背面5cm以上\n※ 最終的な設置可否は機種ごとの据付条件と現場条件を確認</div></div><div class="hwRows">${rows.map(r=>`<div class="hwRow"><b>${r[0]}</b><span>${hearingEscape(r[1])}</span></div>`).join('')}</div><div class="hwMemoSummary"><b>📝 接客中メモ</b><div>${memoLines.length?hearingEscape(memoLines.join('\n')):'特になし'}</div></div></div><button class="hwDone" onclick="finishAcHearing()">ヒアリング完了</button></div>`;}
+const AC_HEARING_DATA_KEY='acHearingSavedDataV1729';
+function getAcHearingData(){try{return JSON.parse(localStorage.getItem(AC_HEARING_DATA_KEY)||'[]')}catch(e){return[]}}
+function setAcHearingData(v){localStorage.setItem(AC_HEARING_DATA_KEY,JSON.stringify(v));renderHearingDataHome()}
+function acHearingRecordFromState(){return{id:'hear_'+Date.now(),savedAt:new Date().toISOString(),answers:JSON.parse(JSON.stringify(acHearingState.answers||{})),memos:JSON.parse(JSON.stringify(acHearingState.memos||{}))}}
+function hearingRecordTitle(r){const a=r.answers||{};return `${a.installType||'—'}・${a.roomSize||'畳数未確認'}・${a.roomUse||'用途未確認'}`}
+function hearingRecordDate(r){try{return new Date(r.savedAt).toLocaleString('ja-JP',{month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'})}catch(e){return''}}
+function finishAcHearing(){
+ const save=confirm('ヒアリングデータに登録しますか？');
+ if(save){let data=getAcHearingData();data.unshift(acHearingRecordFromState());data=data.slice(0,30);setAcHearingData(data);msg('ヒアリングデータに登録しました')}
+ try{localStorage.removeItem(AC_HEARING_KEY)}catch(e){}
+ acHearingState={step:0,answers:{},memos:{}};
+ $('newbieModal').classList.remove('on');$('newbieModal').classList.remove('featureFullscreen');
+ renderHearingDataHome();
+}
+function renderHearingDataHome(){
+ const data=getAcHearingData(),badge=$('hearingDataCount');
+ if(badge){badge.textContent=data.length>99?'99+':String(data.length);badge.style.display=data.length?'block':'none'}
+}
+function openHearingDataList(){
+ const data=getAcHearingData(),modal=$('hearingDataModal'),body=$('hearingDataModalBody');
+ modal.classList.add('on');
+ body.innerHTML=data.length?`<div class="hearingArchive">${data.map(r=>`<div class="hearingArchiveRow"><button type="button" class="savedHearingOpen" data-hearing-id="${hearingEscape(r.id)}"><b>${hearingEscape(hearingRecordTitle(r))}</b><br><small>${hearingEscape(hearingRecordDate(r))}</small></button><button type="button" class="deleteHear" data-hearing-delete="${hearingEscape(r.id)}" aria-label="削除">🗑</button></div>`).join('')}</div>`:'<div class="hearingDataEmpty">保存データはありません</div>';
+ body.querySelectorAll('[data-hearing-id]').forEach(btn=>btn.addEventListener('click',()=>openSavedHearing(btn.dataset.hearingId)));
+ body.querySelectorAll('[data-hearing-delete]').forEach(btn=>btn.addEventListener('click',e=>{e.stopPropagation();deleteSavedHearing(btn.dataset.hearingDelete)}));
+}
+function deleteSavedHearing(id){if(!confirm('このヒアリングデータを削除しますか？'))return;setAcHearingData(getAcHearingData().filter(r=>r.id!==id));openHearingDataList()}
+function openSavedHearing(id){
+ const r=getAcHearingData().find(x=>x.id===id);if(!r)return;
+ acHearingState={step:0,answers:JSON.parse(JSON.stringify(r.answers||{})),memos:JSON.parse(JSON.stringify(r.memos||{}))};
+ const guide=$('guideBody'),keep=guide.innerHTML;
+ renderAcHearingSheet();
+ const sheet=guide.querySelector('.hwSheet');
+ const sheetHtml=sheet?sheet.outerHTML:'<div class="hearingDataEmpty">データを表示できませんでした</div>';
+ guide.innerHTML=keep;
+ $('hearingDataModalBody').innerHTML=`<div class="hearingSavedDetail"><div class="hwTop"><button type="button" class="guideBack" id="savedHearingBack">← 一覧へ</button><span class="hwStep">保存済み ${hearingEscape(hearingRecordDate(r))}</span></div>${sheetHtml}<div class="hwNav"><button type="button" class="hwPrev" id="savedHearingDelete">🗑 このデータを削除</button><button type="button" class="hwNext" id="savedHearingClose">閉じる</button></div></div>`;
+ $('savedHearingBack').addEventListener('click',openHearingDataList);
+ $('savedHearingClose').addEventListener('click',()=>{$('hearingDataModal').classList.remove('on');renderHearingDataHome()});
+ $('savedHearingDelete').addEventListener('click',()=>deleteSavedHearing(r.id));
+}
+function renderSavedAcHearingSheet(record){openSavedHearing(record.id)}
+
 function showAcMakers(){
  $('guideBody').innerHTML=`<button class="guideBack" onclick="showGuide('air')">← 戻る</button><div class="hearingQuestion">🎓 接客練習</div><div class="makerGrid">${Object.entries(acMaster).map(([m,ss])=>`<button onclick="showAcMaker('${m}')"><b>${m}</b><small>${ss.join(' / ')}</small></button>`).join('')}</div>`;
 }
