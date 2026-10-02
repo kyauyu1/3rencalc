@@ -1087,6 +1087,36 @@ body.theme-dark .hearingDataHome,body.theme-dark .hearingDataItem,body.theme-dar
   main.main .plans{width:100%!important;max-width:100%!important;min-width:0!important}
 }
 </style>
+
+<style id="v1734-portrait-optimized">
+/* v17.34: portrait-first usability while preserving the existing landscape layout. */
+@media (orientation:portrait){
+  html,body{height:100%;min-height:100%;overflow:hidden!important}
+  header.top{max-width:100vw!important}
+  main.main{
+    display:flex!important;flex-direction:column!important;gap:10px!important;
+    height:auto!important;min-height:0!important;flex:1 1 auto!important;
+    overflow-y:auto!important;overflow-x:hidden!important;padding:8px!important;
+  }
+  main.main>.left{flex:0 0 auto!important;height:auto!important;max-height:none!important}
+  main.main>.left>.box:first-child{max-height:34vh!important;min-height:150px!important;overflow:auto!important}
+  main.main>.left>.calc{position:relative!important;margin-top:0!important}
+  main.main>.right{flex:0 0 auto!important;min-height:0!important;height:auto!important;padding:7px!important;overflow:visible!important}
+  main.main .plans{
+    display:grid!important;grid-template-columns:1fr!important;gap:9px!important;
+    height:auto!important;width:100%!important;overflow:visible!important;
+  }
+  main.main .plan{width:100%!important;min-width:0!important}
+  .row,.ph,.total{min-width:0!important}
+  .fastAmount{min-width:0!important}
+  .display:empty:after{content:'\00a0'}
+}
+@media (orientation:portrait) and (min-width:700px){
+  main.main>.left>.box:first-child{max-height:30vh!important}
+  main.main .plans{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  main.main .plans>.plan:last-child:nth-child(odd){grid-column:1/-1}
+}
+</style>
 </head><body><header class="top"><div style="display:flex;gap:6px;align-items:center"><button onclick="toggleToolMenu()" class="settingsBtn menuBtn" title="ツール" aria-label="ツール">☰</button><button onclick="openSettings()" class="settingsBtn" title="設定" aria-label="設定">⚙</button></div><div class="dealTimer" id="dealTimer">
  <div class="timerTitle">⏱ 商談タイマー</div>
  <div id="timerSetup" class="timerSetup">
@@ -1354,12 +1384,12 @@ function render(){
   <div class="total"><small>お支払総額（税込）</small><b>${money(total(pi))}</b></div>
   <div class="rows fastRows">${p.items.map((x,ii)=>`<div class="row fastRow ${active.p===pi&&active.i===ii?'selectedRow':''}" onclick="select(${pi},${ii})" ondblclick="editRowName(${pi},${ii});event.stopPropagation()" ontouchend="rowTouch(event,${pi},${ii})">
     <div class="fastLabel">${esc(x.name||'ダブルタップで項目名')}</div>
-    <div class="fastAmount"><span class="rowOp">${ii===0?'':displayOp(x.op||'+')}</span><b>${money(Math.abs(value(x.price)))}</b><button class="x fastX" onclick="event.stopPropagation();removeRow(${pi},${ii})">×</button></div>
+    <div class="fastAmount"><span class="rowOp">${String(x.price||'')===''?'':(ii===0?'':displayOp(x.op||'+'))}</span><b>${String(x.price||'')===''?'':money(Math.abs(value(x.price)))}</b><button class="x fastX" onclick="event.stopPropagation();removeRow(${pi},${ii})">×</button></div>
   </div>`).join('')}</div>
  </div>`).join('');
  let it=ps[active.p].items[active.i];
  $('target').textContent='';
- $('display').textContent=expr||'0'
+ $('display').textContent=expr||''
 }
 function displayOp(op){return op==='*'?'×':op==='/'?'÷':op==='-'?'−':'＋'}
 function total(p){
